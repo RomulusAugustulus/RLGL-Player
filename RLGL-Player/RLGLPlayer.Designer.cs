@@ -48,6 +48,8 @@
             this.RLGL_SwitchTimer = new System.Windows.Forms.Timer(this.components);
             this.RLGL_VideoEndTimer = new System.Windows.Forms.Timer(this.components);
             this.RLGL_Metronome = new System.Windows.Forms.Timer(this.components);
+            this.editorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.censorEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.VLC_Panel.SuspendLayout();
             this.RLGL_Layout.SuspendLayout();
@@ -59,6 +61,7 @@
             // 
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.editorToolStripMenuItem,
             this.toolStripMenuItem2});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
@@ -215,6 +218,22 @@
             // 
             this.RLGL_Metronome.Tick += new System.EventHandler(this.RLGL_Metronome_Tick);
             // 
+            // editorToolStripMenuItem
+            // 
+            this.editorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.censorEditorToolStripMenuItem});
+            this.editorToolStripMenuItem.Name = "editorToolStripMenuItem";
+            this.editorToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.editorToolStripMenuItem.Text = "&Editor";
+            // 
+            // censorEditorToolStripMenuItem
+            // 
+            this.censorEditorToolStripMenuItem.Name = "censorEditorToolStripMenuItem";
+            this.censorEditorToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.censorEditorToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.censorEditorToolStripMenuItem.Text = "&Censor Editor...";
+            this.censorEditorToolStripMenuItem.Click += new System.EventHandler(this.censorEditorToolStripMenuItem_Click);
+            // 
             // RLGLPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -262,6 +281,8 @@
         private System.Windows.Forms.TrackBar TB_Volume;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem censorEditorToolStripMenuItem;
     }
 }
 

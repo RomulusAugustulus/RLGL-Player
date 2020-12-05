@@ -446,5 +446,10 @@ public partial class RLGLPlayer : Form
                 ShowCensoring(false);
             }
         }
+        private void censorEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CensorEditorDlg censorEditorDlg = new CensorEditorDlg();
+            censorEditorDlg.Show(this);
+        }
     }
 }

@@ -38,7 +38,7 @@ namespace RLGL_Player
         public string Media { get => media; }
         //The date and time at which the media-file is started.
         public DateTime Start { get => start; set => start = value; }
-        //The duration of the media-file.
+        //The duration of the last phase.
         public TimeSpan End { get => end; set => end = value; }
         //The currently played phase.
         public RLGLPhase CurrentPhase { get => currentPhase; set => currentPhase = value; }
