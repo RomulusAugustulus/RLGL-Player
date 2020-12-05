@@ -30,6 +30,13 @@
         {
             this.ColorPicker = new System.Windows.Forms.ColorDialog();
             this.GB_RLGLSettings = new System.Windows.Forms.GroupBox();
+            this.L_CensorPossibility = new System.Windows.Forms.Label();
+            this.TB_CensorProbability = new System.Windows.Forms.TrackBar();
+            this.L_CensorSize = new System.Windows.Forms.Label();
+            this.COMB_CensorSize = new System.Windows.Forms.ComboBox();
+            this.L_CensorType = new System.Windows.Forms.Label();
+            this.COMB_CensorType = new System.Windows.Forms.ComboBox();
+            this.CB_Censoring = new System.Windows.Forms.CheckBox();
             this.L_MetronomeChance = new System.Windows.Forms.Label();
             this.TB_MetronomeChance = new System.Windows.Forms.TrackBar();
             this.NUD_MaxMetronome = new System.Windows.Forms.NumericUpDown();
@@ -50,26 +57,22 @@
             this.NUD_MinGreen = new System.Windows.Forms.NumericUpDown();
             this.L_GreenMin = new System.Windows.Forms.Label();
             this.GB_ProgramSettings = new System.Windows.Forms.GroupBox();
+            this.B_CensorPath = new System.Windows.Forms.Button();
+            this.TBox_CensorPath = new System.Windows.Forms.TextBox();
+            this.L_CensorPath = new System.Windows.Forms.Label();
+            this.P_CensorColor = new System.Windows.Forms.Panel();
+            this.L_CensorColor = new System.Windows.Forms.Label();
             this.P_RedLightColor = new System.Windows.Forms.Panel();
             this.L_RedLightColor = new System.Windows.Forms.Label();
             this.P_GreenLightColor = new System.Windows.Forms.Panel();
             this.L_GreenLightColor = new System.Windows.Forms.Label();
             this.B_SaveExit = new System.Windows.Forms.Button();
             this.B_Cancel = new System.Windows.Forms.Button();
-            this.P_CensorColor = new System.Windows.Forms.Panel();
-            this.L_CensorColor = new System.Windows.Forms.Label();
-            this.CB_Censoring = new System.Windows.Forms.CheckBox();
-            this.COMB_CensorType = new System.Windows.Forms.ComboBox();
-            this.L_CensorType = new System.Windows.Forms.Label();
-            this.L_CensorSize = new System.Windows.Forms.Label();
-            this.COMB_CensorSize = new System.Windows.Forms.ComboBox();
-            this.L_CensorPossibility = new System.Windows.Forms.Label();
-            this.TB_CensorProbability = new System.Windows.Forms.TrackBar();
-            this.L_CensorPath = new System.Windows.Forms.Label();
-            this.TBox_CensorPath = new System.Windows.Forms.TextBox();
-            this.B_CensorPath = new System.Windows.Forms.Button();
             this.FolderSelector = new System.Windows.Forms.FolderBrowserDialog();
+            this.L_OnlyGreenLight = new System.Windows.Forms.Label();
+            this.L_BothLights = new System.Windows.Forms.Label();
             this.GB_RLGLSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TB_CensorProbability)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TB_MetronomeChance)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxMetronome)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinMetronome)).BeginInit();
@@ -78,11 +81,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxGreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinGreen)).BeginInit();
             this.GB_ProgramSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TB_CensorProbability)).BeginInit();
             this.SuspendLayout();
             // 
             // GB_RLGLSettings
             // 
+            this.GB_RLGLSettings.Controls.Add(this.L_BothLights);
+            this.GB_RLGLSettings.Controls.Add(this.L_OnlyGreenLight);
             this.GB_RLGLSettings.Controls.Add(this.L_CensorPossibility);
             this.GB_RLGLSettings.Controls.Add(this.TB_CensorProbability);
             this.GB_RLGLSettings.Controls.Add(this.L_CensorSize);
@@ -115,6 +119,80 @@
             this.GB_RLGLSettings.TabIndex = 0;
             this.GB_RLGLSettings.TabStop = false;
             this.GB_RLGLSettings.Text = "Red Light Green Light Settings";
+            // 
+            // L_CensorPossibility
+            // 
+            this.L_CensorPossibility.AutoSize = true;
+            this.L_CensorPossibility.Location = new System.Drawing.Point(28, 357);
+            this.L_CensorPossibility.Name = "L_CensorPossibility";
+            this.L_CensorPossibility.Size = new System.Drawing.Size(55, 13);
+            this.L_CensorPossibility.TabIndex = 25;
+            this.L_CensorPossibility.Text = "Possibility:";
+            // 
+            // TB_CensorProbability
+            // 
+            this.TB_CensorProbability.Location = new System.Drawing.Point(102, 344);
+            this.TB_CensorProbability.Minimum = 1;
+            this.TB_CensorProbability.Name = "TB_CensorProbability";
+            this.TB_CensorProbability.Size = new System.Drawing.Size(302, 45);
+            this.TB_CensorProbability.TabIndex = 24;
+            this.TB_CensorProbability.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.TB_CensorProbability.Value = 5;
+            // 
+            // L_CensorSize
+            // 
+            this.L_CensorSize.AutoSize = true;
+            this.L_CensorSize.Location = new System.Drawing.Point(226, 316);
+            this.L_CensorSize.Name = "L_CensorSize";
+            this.L_CensorSize.Size = new System.Drawing.Size(64, 13);
+            this.L_CensorSize.TabIndex = 23;
+            this.L_CensorSize.Text = "Censor size:";
+            // 
+            // COMB_CensorSize
+            // 
+            this.COMB_CensorSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.COMB_CensorSize.FormattingEnabled = true;
+            this.COMB_CensorSize.Items.AddRange(new object[] {
+            "Small",
+            "Medium",
+            "Big",
+            "Unfair"});
+            this.COMB_CensorSize.Location = new System.Drawing.Point(303, 313);
+            this.COMB_CensorSize.Name = "COMB_CensorSize";
+            this.COMB_CensorSize.Size = new System.Drawing.Size(101, 21);
+            this.COMB_CensorSize.TabIndex = 22;
+            // 
+            // L_CensorType
+            // 
+            this.L_CensorType.AutoSize = true;
+            this.L_CensorType.Location = new System.Drawing.Point(28, 316);
+            this.L_CensorType.Name = "L_CensorType";
+            this.L_CensorType.Size = new System.Drawing.Size(66, 13);
+            this.L_CensorType.TabIndex = 21;
+            this.L_CensorType.Text = "Censor type:";
+            // 
+            // COMB_CensorType
+            // 
+            this.COMB_CensorType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.COMB_CensorType.FormattingEnabled = true;
+            this.COMB_CensorType.Items.AddRange(new object[] {
+            "Color",
+            "Image"});
+            this.COMB_CensorType.Location = new System.Drawing.Point(102, 313);
+            this.COMB_CensorType.Name = "COMB_CensorType";
+            this.COMB_CensorType.Size = new System.Drawing.Size(101, 21);
+            this.COMB_CensorType.TabIndex = 20;
+            // 
+            // CB_Censoring
+            // 
+            this.CB_Censoring.AutoSize = true;
+            this.CB_Censoring.Location = new System.Drawing.Point(9, 290);
+            this.CB_Censoring.Name = "CB_Censoring";
+            this.CB_Censoring.Size = new System.Drawing.Size(108, 17);
+            this.CB_Censoring.TabIndex = 19;
+            this.CB_Censoring.Text = "Enable censoring";
+            this.CB_Censoring.UseVisualStyleBackColor = true;
+            this.CB_Censoring.CheckedChanged += new System.EventHandler(this.CB_Censoring_CheckedChanged);
             // 
             // L_MetronomeChance
             // 
@@ -398,6 +476,50 @@
             this.GB_ProgramSettings.TabStop = false;
             this.GB_ProgramSettings.Text = "General Settings";
             // 
+            // B_CensorPath
+            // 
+            this.B_CensorPath.Location = new System.Drawing.Point(383, 162);
+            this.B_CensorPath.Name = "B_CensorPath";
+            this.B_CensorPath.Size = new System.Drawing.Size(31, 23);
+            this.B_CensorPath.TabIndex = 4;
+            this.B_CensorPath.Text = "...";
+            this.B_CensorPath.UseVisualStyleBackColor = true;
+            this.B_CensorPath.Click += new System.EventHandler(this.B_CensorPath_Click);
+            // 
+            // TBox_CensorPath
+            // 
+            this.TBox_CensorPath.Location = new System.Drawing.Point(115, 164);
+            this.TBox_CensorPath.Name = "TBox_CensorPath";
+            this.TBox_CensorPath.Size = new System.Drawing.Size(262, 20);
+            this.TBox_CensorPath.TabIndex = 7;
+            // 
+            // L_CensorPath
+            // 
+            this.L_CensorPath.AutoSize = true;
+            this.L_CensorPath.Location = new System.Drawing.Point(6, 167);
+            this.L_CensorPath.Name = "L_CensorPath";
+            this.L_CensorPath.Size = new System.Drawing.Size(103, 13);
+            this.L_CensorPath.TabIndex = 6;
+            this.L_CensorPath.Text = "Censor images path:";
+            // 
+            // P_CensorColor
+            // 
+            this.P_CensorColor.BackColor = System.Drawing.Color.Black;
+            this.P_CensorColor.Location = new System.Drawing.Point(99, 89);
+            this.P_CensorColor.Name = "P_CensorColor";
+            this.P_CensorColor.Size = new System.Drawing.Size(316, 26);
+            this.P_CensorColor.TabIndex = 5;
+            this.P_CensorColor.Click += new System.EventHandler(this.P_CensorColor_Click);
+            // 
+            // L_CensorColor
+            // 
+            this.L_CensorColor.AutoSize = true;
+            this.L_CensorColor.Location = new System.Drawing.Point(6, 94);
+            this.L_CensorColor.Name = "L_CensorColor";
+            this.L_CensorColor.Size = new System.Drawing.Size(84, 13);
+            this.L_CensorColor.TabIndex = 4;
+            this.L_CensorColor.Text = "Censorbar color:";
+            // 
             // P_RedLightColor
             // 
             this.P_RedLightColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -454,127 +576,28 @@
             this.B_Cancel.Text = "Cancel";
             this.B_Cancel.UseVisualStyleBackColor = true;
             // 
-            // P_CensorColor
-            // 
-            this.P_CensorColor.BackColor = System.Drawing.Color.Black;
-            this.P_CensorColor.Location = new System.Drawing.Point(99, 89);
-            this.P_CensorColor.Name = "P_CensorColor";
-            this.P_CensorColor.Size = new System.Drawing.Size(316, 26);
-            this.P_CensorColor.TabIndex = 5;
-            this.P_CensorColor.Click += new System.EventHandler(this.P_CensorColor_Click);
-            // 
-            // L_CensorColor
-            // 
-            this.L_CensorColor.AutoSize = true;
-            this.L_CensorColor.Location = new System.Drawing.Point(6, 94);
-            this.L_CensorColor.Name = "L_CensorColor";
-            this.L_CensorColor.Size = new System.Drawing.Size(84, 13);
-            this.L_CensorColor.TabIndex = 4;
-            this.L_CensorColor.Text = "Censorbar color:";
-            // 
-            // CB_Censoring
-            // 
-            this.CB_Censoring.AutoSize = true;
-            this.CB_Censoring.Location = new System.Drawing.Point(9, 290);
-            this.CB_Censoring.Name = "CB_Censoring";
-            this.CB_Censoring.Size = new System.Drawing.Size(108, 17);
-            this.CB_Censoring.TabIndex = 19;
-            this.CB_Censoring.Text = "Enable censoring";
-            this.CB_Censoring.UseVisualStyleBackColor = true;
-            this.CB_Censoring.CheckedChanged += new System.EventHandler(this.CB_Censoring_CheckedChanged);
-            // 
-            // COMB_CensorType
-            // 
-            this.COMB_CensorType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.COMB_CensorType.FormattingEnabled = true;
-            this.COMB_CensorType.Items.AddRange(new object[] {
-            "Color",
-            "Image"});
-            this.COMB_CensorType.Location = new System.Drawing.Point(102, 313);
-            this.COMB_CensorType.Name = "COMB_CensorType";
-            this.COMB_CensorType.Size = new System.Drawing.Size(101, 21);
-            this.COMB_CensorType.TabIndex = 20;
-            // 
-            // L_CensorType
-            // 
-            this.L_CensorType.AutoSize = true;
-            this.L_CensorType.Location = new System.Drawing.Point(28, 316);
-            this.L_CensorType.Name = "L_CensorType";
-            this.L_CensorType.Size = new System.Drawing.Size(66, 13);
-            this.L_CensorType.TabIndex = 21;
-            this.L_CensorType.Text = "Censor type:";
-            // 
-            // L_CensorSize
-            // 
-            this.L_CensorSize.AutoSize = true;
-            this.L_CensorSize.Location = new System.Drawing.Point(226, 316);
-            this.L_CensorSize.Name = "L_CensorSize";
-            this.L_CensorSize.Size = new System.Drawing.Size(64, 13);
-            this.L_CensorSize.TabIndex = 23;
-            this.L_CensorSize.Text = "Censor size:";
-            // 
-            // COMB_CensorSize
-            // 
-            this.COMB_CensorSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.COMB_CensorSize.FormattingEnabled = true;
-            this.COMB_CensorSize.Items.AddRange(new object[] {
-            "Small",
-            "Medium",
-            "Big",
-            "Unfair"});
-            this.COMB_CensorSize.Location = new System.Drawing.Point(303, 313);
-            this.COMB_CensorSize.Name = "COMB_CensorSize";
-            this.COMB_CensorSize.Size = new System.Drawing.Size(101, 21);
-            this.COMB_CensorSize.TabIndex = 22;
-            // 
-            // L_CensorPossibility
-            // 
-            this.L_CensorPossibility.AutoSize = true;
-            this.L_CensorPossibility.Location = new System.Drawing.Point(28, 357);
-            this.L_CensorPossibility.Name = "L_CensorPossibility";
-            this.L_CensorPossibility.Size = new System.Drawing.Size(55, 13);
-            this.L_CensorPossibility.TabIndex = 25;
-            this.L_CensorPossibility.Text = "Possibility:";
-            // 
-            // TB_CensorProbability
-            // 
-            this.TB_CensorProbability.Location = new System.Drawing.Point(102, 344);
-            this.TB_CensorProbability.Minimum = 1;
-            this.TB_CensorProbability.Name = "TB_CensorProbability";
-            this.TB_CensorProbability.Size = new System.Drawing.Size(302, 45);
-            this.TB_CensorProbability.TabIndex = 24;
-            this.TB_CensorProbability.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.TB_CensorProbability.Value = 5;
-            // 
-            // L_CensorPath
-            // 
-            this.L_CensorPath.AutoSize = true;
-            this.L_CensorPath.Location = new System.Drawing.Point(6, 167);
-            this.L_CensorPath.Name = "L_CensorPath";
-            this.L_CensorPath.Size = new System.Drawing.Size(103, 13);
-            this.L_CensorPath.TabIndex = 6;
-            this.L_CensorPath.Text = "Censor images path:";
-            // 
-            // TBox_CensorPath
-            // 
-            this.TBox_CensorPath.Location = new System.Drawing.Point(115, 164);
-            this.TBox_CensorPath.Name = "TBox_CensorPath";
-            this.TBox_CensorPath.Size = new System.Drawing.Size(262, 20);
-            this.TBox_CensorPath.TabIndex = 7;
-            // 
-            // B_CensorPath
-            // 
-            this.B_CensorPath.Location = new System.Drawing.Point(383, 162);
-            this.B_CensorPath.Name = "B_CensorPath";
-            this.B_CensorPath.Size = new System.Drawing.Size(31, 23);
-            this.B_CensorPath.TabIndex = 4;
-            this.B_CensorPath.Text = "...";
-            this.B_CensorPath.UseVisualStyleBackColor = true;
-            this.B_CensorPath.Click += new System.EventHandler(this.B_CensorPath_Click);
-            // 
             // FolderSelector
             // 
             this.FolderSelector.RootFolder = System.Environment.SpecialFolder.MyComputer;
+            // 
+            // L_OnlyGreenLight
+            // 
+            this.L_OnlyGreenLight.AutoSize = true;
+            this.L_OnlyGreenLight.Location = new System.Drawing.Point(99, 376);
+            this.L_OnlyGreenLight.Name = "L_OnlyGreenLight";
+            this.L_OnlyGreenLight.Size = new System.Drawing.Size(156, 13);
+            this.L_OnlyGreenLight.TabIndex = 26;
+            this.L_OnlyGreenLight.Text = "|--- censor only on green light ---|";
+            // 
+            // L_BothLights
+            // 
+            this.L_BothLights.AutoSize = true;
+            this.L_BothLights.BackColor = System.Drawing.SystemColors.Control;
+            this.L_BothLights.Location = new System.Drawing.Point(251, 376);
+            this.L_BothLights.Name = "L_BothLights";
+            this.L_BothLights.Size = new System.Drawing.Size(157, 13);
+            this.L_BothLights.TabIndex = 27;
+            this.L_BothLights.Text = "|------- censor on both lights -------|";
             // 
             // PreferencesDlg
             // 
@@ -595,6 +618,7 @@
             this.Text = "Preferences...";
             this.GB_RLGLSettings.ResumeLayout(false);
             this.GB_RLGLSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TB_CensorProbability)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TB_MetronomeChance)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxMetronome)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinMetronome)).EndInit();
@@ -604,7 +628,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinGreen)).EndInit();
             this.GB_ProgramSettings.ResumeLayout(false);
             this.GB_ProgramSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TB_CensorProbability)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -652,5 +675,7 @@
         private System.Windows.Forms.FolderBrowserDialog FolderSelector;
         public System.Windows.Forms.ComboBox COMB_CensorSize;
         public System.Windows.Forms.ComboBox COMB_CensorType;
+        private System.Windows.Forms.Label L_BothLights;
+        private System.Windows.Forms.Label L_OnlyGreenLight;
     }
 }

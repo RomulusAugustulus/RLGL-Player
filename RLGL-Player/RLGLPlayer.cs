@@ -218,9 +218,24 @@ public partial class RLGLPlayer : Form
                         SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinBpm, rlglPreferences.MaxBpm+1));
                     }
 
-                    if(rlglPreferences.Censoring && randomNumberGenerator.Next(1,11) <= rlglPreferences.CensorProbability)
+                    if (rlglPreferences.Censoring)
                     {
-                        ShowCensoring(true);
+                        int rnd = 0;
+                        int probability = rlglPreferences.CensorProbability;
+
+                        if (probability <= 5)
+                        {
+                            rnd = randomNumberGenerator.Next(1, 6);
+                        }
+                        else
+                        {
+                            rnd = randomNumberGenerator.Next(6, 11);
+                        }
+
+                        if (rnd <= probability)
+                        {
+                            ShowCensoring(true);
+                        }
                     }
                     else
                     {
@@ -243,7 +258,7 @@ public partial class RLGLPlayer : Form
 
                     if(rlglPreferences.Censoring && 
                         rlglPreferences.CensorProbability > 5 && 
-                        randomNumberGenerator.Next(1,11) <= rlglPreferences.CensorProbability)
+                        randomNumberGenerator.Next(6,11) <= rlglPreferences.CensorProbability)
                     {
                         ShowCensoring(true);
                     }
@@ -362,8 +377,8 @@ public partial class RLGLPlayer : Form
                         break;
 
                     case RLGLCensorSize.Unfair:
-                        percentX = randomNumberGenerator.Next(30, 41) / 100.0f;
-                        percentY = randomNumberGenerator.Next(30, 41) / 100.0f;
+                        percentX = randomNumberGenerator.Next(40, 48) / 100.0f;
+                        percentY = randomNumberGenerator.Next(40, 48) / 100.0f;
                         break;
                 }
 
