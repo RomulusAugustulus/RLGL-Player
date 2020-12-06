@@ -14,8 +14,10 @@ namespace RLGL_Player
     public partial class CensorEditorDlg : Form
     {
         private RLGLCurrentMedia rlglCurrentMedia;
+        private RLGLCensorData rlglCensorData;
         private bool initMedia;
         private bool isPaused;
+
         public CensorEditorDlg()
         {
             InitializeComponent();

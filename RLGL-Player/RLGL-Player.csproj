@@ -80,6 +80,8 @@
     <Compile Include="CensorEditorDlg.Designer.cs">
       <DependentUpon>CensorEditorDlg.cs</DependentUpon>
     </Compile>
+    <Compile Include="RLGLCensorData.cs" />
+    <Compile Include="RLGLCensorFrame.cs" />
     <Compile Include="RLGLPlayer.cs">
       <SubType>Form</SubType>
     </Compile>
