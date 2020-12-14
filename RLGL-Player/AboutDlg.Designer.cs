@@ -36,7 +36,8 @@
             this.L_Videoplayer = new System.Windows.Forms.Label();
             this.L_LinktToVLC = new System.Windows.Forms.LinkLabel();
             this.B_OK = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.L_License = new System.Windows.Forms.Label();
+            this.L_LinkGNU = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Icon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,7 +58,7 @@
             this.L_AboutInfo.Name = "L_AboutInfo";
             this.L_AboutInfo.Size = new System.Drawing.Size(115, 13);
             this.L_AboutInfo.TabIndex = 1;
-            this.L_AboutInfo.Text = "RLGL-Player    v. 0.3.1";
+            this.L_AboutInfo.Text = "RLGL-Player    v. 0.4.0";
             // 
             // L_Copyright
             // 
@@ -107,14 +108,25 @@
             this.B_OK.Text = "OK";
             this.B_OK.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // L_License
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 125);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(375, 156);
-            this.label1.TabIndex = 7;
-            this.label1.Text = resources.GetString("label1.Text");
+            this.L_License.AutoSize = true;
+            this.L_License.Location = new System.Drawing.Point(9, 125);
+            this.L_License.Name = "L_License";
+            this.L_License.Size = new System.Drawing.Size(375, 156);
+            this.L_License.TabIndex = 7;
+            this.L_License.Text = resources.GetString("L_License.Text");
+            // 
+            // L_LinkGNU
+            // 
+            this.L_LinkGNU.AutoSize = true;
+            this.L_LinkGNU.Location = new System.Drawing.Point(178, 268);
+            this.L_LinkGNU.Name = "L_LinkGNU";
+            this.L_LinkGNU.Size = new System.Drawing.Size(154, 13);
+            this.L_LinkGNU.TabIndex = 8;
+            this.L_LinkGNU.TabStop = true;
+            this.L_LinkGNU.Text = "https://www.gnu.org/licenses/";
+            this.L_LinkGNU.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.L_LinkGNU_LinkClicked);
             // 
             // AboutDlg
             // 
@@ -122,7 +134,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(394, 397);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.L_LinkGNU);
+            this.Controls.Add(this.L_License);
             this.Controls.Add(this.B_OK);
             this.Controls.Add(this.L_LinktToVLC);
             this.Controls.Add(this.L_Videoplayer);
@@ -153,6 +166,7 @@
         private System.Windows.Forms.Label L_Videoplayer;
         private System.Windows.Forms.LinkLabel L_LinktToVLC;
         private System.Windows.Forms.Button B_OK;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label L_License;
+        private System.Windows.Forms.LinkLabel L_LinkGNU;
     }
 }

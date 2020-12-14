@@ -23,6 +23,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 using System.Media;
+using System.Collections.Generic;
 
 namespace RLGL_Player
 {
@@ -34,10 +35,11 @@ public partial class RLGLPlayer : Form
     {
         private RLGLPreferences rlglPreferences;
         private RLGLCurrentMedia rlglCurrentMedia;
+        private RLGLCensorData rlglCensorData;
         private Random randomNumberGenerator;
         private SoundPlayer metronome;
 
-        private Blackbar censorbar;
+        private List<Blackbar> censorbars;
         private bool censoring;
         private static string[] imageFileExtensions = new string[] { ".jpg", ".png", ".bpm" };
 
@@ -46,8 +48,9 @@ public partial class RLGLPlayer : Form
             randomNumberGenerator = new Random();
             rlglPreferences = new RLGLPreferences();
             metronome = new SoundPlayer();
-            censorbar = new Blackbar();
+            censorbars = new List<Blackbar>();
             censoring = false;
+            rlglCensorData = null;
 
             InitializeComponent();
         }
@@ -80,7 +83,31 @@ public partial class RLGLPlayer : Form
                 rlglCurrentMedia = new RLGLCurrentMedia(OpenVideoDlg.FileName, 
                     DateTime.Now, lastDuration, 
                     (RLGLPhase)randomNumberGenerator.Next(0,2));
-                                
+
+                for(int i=0;i<censorbars.Count;i++)
+                {
+                    censorbars[i].Close();
+                }
+
+                censorbars.Clear();
+
+                rlglCensorData = RLGLCensorData.ReadFromFile(OpenVideoDlg.FileName);
+                RLGL_Censor.Stop();
+
+                if(rlglCensorData != null)
+                {
+                    RLGL_Censor.Start();
+
+                    for(int i=0;i<rlglCensorData.Ids.Count;i++)
+                    {
+                        censorbars.Add(new Blackbar());
+                    }
+                }
+                else
+                {
+                    censorbars.Add(new Blackbar());
+                }
+
                 ShowPhase(rlglCurrentMedia.CurrentPhase, false);
 
                 VLC_Control.Play();
@@ -170,6 +197,7 @@ public partial class RLGLPlayer : Form
         {
             RLGL_SwitchTimer.Stop();
             RLGL_VideoEndTimer.Stop();
+            RLGL_Censor.Stop();
 
             switch(rlglPreferences.Ending)
             {
@@ -299,12 +327,21 @@ public partial class RLGLPlayer : Form
         private void ShowCensoring(bool changingImagePossible)
         {
             censoring = true;
-            Point pos = VLC_Control.PointToScreen(Point.Empty);
-            
+            Point initPos = VLC_Control.PointToScreen(Point.Empty);
+            List<CensorbarInfo<Point>> pos = new List<CensorbarInfo<Point>>();
+
             switch(rlglPreferences.CensorType)
             {
                 case RLGLCensorType.Color:
-                    censorbar.BackColor = rlglPreferences.CensorColor;                    
+                    foreach (Blackbar b in censorbars)
+                    {
+                        b.BackColor = rlglPreferences.CensorColor;
+
+                        if(b.PB_CensorImage.Image != null)
+                        {
+                            b.PB_CensorImage.Image = null;
+                        }
+                    }
                     break;
 
                 case RLGLCensorType.Image:
@@ -316,16 +353,25 @@ public partial class RLGLPlayer : Form
                             FileInfo[] censorImages = dinfo.EnumerateFiles().Where(f => imageFileExtensions.Contains(f.Extension.ToLower())).ToArray();
                             if (censorImages.Length == 0)
                             {
-                                censorbar.BackColor = rlglPreferences.CensorColor;
+                                foreach (Blackbar b in censorbars)
+                                {
+                                    b.BackColor = rlglPreferences.CensorColor;
+                                }
                             }
                             else
                             {
-                                censorbar.PB_CensorImage.Image = Bitmap.FromFile(censorImages[randomNumberGenerator.Next(0, censorImages.Length)].FullName);
+                                foreach (Blackbar b in censorbars)
+                                {
+                                    b.PB_CensorImage.Image = Bitmap.FromFile(censorImages[randomNumberGenerator.Next(0, censorImages.Length)].FullName);
+                                }
                             }
                         }
                         else
                         {
-                            censorbar.BackColor = rlglPreferences.CensorColor;
+                            foreach (Blackbar b in censorbars)
+                            {
+                                b.BackColor = rlglPreferences.CensorColor;
+                            }
                         }
                     }
                     break;
@@ -334,9 +380,28 @@ public partial class RLGLPlayer : Form
             int width = VLC_Control.Width;
             int height = VLC_Control.Height;
 
-            pos.X += width / 2;
-            pos.Y += 2 * height / 3;
-            ShowCensorbarAroundPosition(pos);
+            if (rlglCensorData == null)
+            {
+                Point p = initPos;
+
+                p.X += width / 2;
+                p.Y += 2 * height / 3;
+                pos.Add(new CensorbarInfo<Point>(0, 0, p));
+            }
+            else
+            {
+                Dictionary<int, CensorbarInfo<PointF>> relativePositions = rlglCensorData.GetAllCensorPositionsAndSizes((int)(rlglCensorData.Duration.TotalSeconds * VLC_Control.Position));
+                
+                foreach(int id in relativePositions.Keys)
+                {
+                    Point p = initPos;
+                    p.X += (int)(width * relativePositions[id].Position.X);
+                    p.Y += (int)(height * relativePositions[id].Position.Y);
+                    pos.Add(new CensorbarInfo<Point>(id, relativePositions[id].Size, p));
+                }
+            }
+
+            ShowCensorbarsAroundPositions(pos);
         }
 
         //Hide a visible censorbar.
@@ -344,62 +409,107 @@ public partial class RLGLPlayer : Form
         {
             rlglCurrentMedia.ResetCensorDimension();
             censoring = false;
-            censorbar.Hide();
+            foreach (Blackbar b in censorbars)
+            {
+                if (b.Visible)
+                {
+                    b.Hide();
+                }
+            }
         }
 
         //Calculate the size of the censorbar and display it or update its dimension if its still visible.
-        private void ShowCensorbarAroundPosition(Point pos)
+        private void ShowCensorbarsAroundPositions(List<CensorbarInfo<Point>> pos)
         {
             int width = VLC_Control.Width;
             int height = VLC_Control.Height;
+            Point vlcPos = VLC_Control.PointToScreen(Point.Empty);
 
-            float percentX = rlglCurrentMedia.CurrentCensorX;
-            float percentY = rlglCurrentMedia.CurrentCensorY;
-
-            if (percentX < 0.0f &&
-                 percentY < 0.0f)
+            for (int i = 0; i < pos.Count; i++)
             {
-                switch (rlglPreferences.CensorSize)
+                PointF percent = rlglCurrentMedia.GetCensorDimension(pos[i].Id);
+                RLGLCensorSize size = rlglPreferences.CensorSize;
+                
+                if (pos[i].Size > 0)
                 {
-                    case RLGLCensorSize.Small:
-                        percentX = randomNumberGenerator.Next(5, 16) / 100.0f;
-                        percentY = randomNumberGenerator.Next(5, 16) / 100.0f;
-                        break;
-
-                    case RLGLCensorSize.Medium:
-                        percentX = randomNumberGenerator.Next(15, 26) / 100.0f;
-                        percentY = randomNumberGenerator.Next(15, 26) / 100.0f;
-                        break;
-
-                    case RLGLCensorSize.Big:
-                        percentX = randomNumberGenerator.Next(20, 31) / 100.0f;
-                        percentY = randomNumberGenerator.Next(20, 31) / 100.0f;
-                        break;
-
-                    case RLGLCensorSize.Unfair:
-                        percentX = randomNumberGenerator.Next(40, 48) / 100.0f;
-                        percentY = randomNumberGenerator.Next(40, 48) / 100.0f;
-                        break;
+                    size = (RLGLCensorSize)(pos[i].Size - 1);
                 }
 
-                rlglCurrentMedia.CurrentCensorX = percentX;
-                rlglCurrentMedia.CurrentCensorY = percentY;
+                if (percent.X < 0.0f &&
+                 percent.Y < 0.0f)
+                {
+                    switch (size)
+                    {
+                        case RLGLCensorSize.Small:
+                            percent = new PointF(randomNumberGenerator.Next(5, 16) / 100.0f, randomNumberGenerator.Next(5, 16) / 100.0f);
+                            break;
+
+                        case RLGLCensorSize.Medium:
+                            percent = new PointF(randomNumberGenerator.Next(15, 26) / 100.0f, randomNumberGenerator.Next(15, 26) / 100.0f);
+                            break;
+
+                        case RLGLCensorSize.Big:
+                            percent = new PointF(randomNumberGenerator.Next(20, 31) / 100.0f, randomNumberGenerator.Next(20, 31) / 100.0f);
+                            break;
+
+                        case RLGLCensorSize.Unfair:
+                            percent = new PointF(randomNumberGenerator.Next(40, 48) / 100.0f, randomNumberGenerator.Next(40, 48) / 100.0f);
+                            break;
+                    }
+
+                    rlglCurrentMedia.SetCensorDimension(pos[i].Id, percent);
+                }
+
+                int estimatedHeight = (int)(height * 2 * percent.Y);
+                int estimatedWidth = (int)(width * 2 * percent.X);
+
+                int YPosBegin = pos[i].Position.Y - (int)(height * percent.Y);
+                int XPosBegin = pos[i].Position.X - (int)(width * percent.X);
+
+                if(XPosBegin < vlcPos.X)
+                {
+                    XPosBegin = vlcPos.X;
+                }
+
+                if(XPosBegin > vlcPos.X + width)
+                {
+                    XPosBegin = vlcPos.X + width;
+                }
+
+                if(YPosBegin < vlcPos.Y)
+                {
+                    YPosBegin = vlcPos.Y;
+                }
+
+                if(YPosBegin > vlcPos.Y + height)
+                {
+                    YPosBegin = vlcPos.Y + height;
+                }
+
+                if(estimatedWidth + XPosBegin > vlcPos.X + width)
+                {
+                    estimatedWidth = vlcPos.X + width - XPosBegin;
+                }
+
+                if(estimatedHeight + YPosBegin > vlcPos.Y + height)
+                {
+                    estimatedHeight = vlcPos.Y + height - YPosBegin;
+                }
+                
+                censorbars[i].SetBounds(XPosBegin, YPosBegin, estimatedWidth, estimatedHeight);
+
+                if (!censorbars[i].Visible)
+                {
+                    censorbars[i].Show(VLC_Control);
+                }
             }
 
-            int estimatedHeight = (int)(height * 2 * percentY);
-            int realHeight = estimatedHeight;
-            int vlcPosY = VLC_Control.PointToScreen(Point.Empty).Y;
-
-            if (estimatedHeight + pos.Y - (int)(height * percentY) > vlcPosY + height)
+            for(int i=pos.Count;i<censorbars.Count;i++)
             {
-                realHeight = vlcPosY + height - (pos.Y - (int)(height * percentY));
-            }
-
-            censorbar.SetBounds(pos.X - (int)(width * percentX), pos.Y - (int)(height * percentY), (int)(width * 2 * percentX), realHeight);
-
-            if (!censorbar.Visible)
-            {
-                censorbar.Show(VLC_Control);
+                if(censorbars[i].Visible)
+                {
+                    censorbars[i].Hide();
+                }
             }
         }
 
@@ -446,10 +556,48 @@ public partial class RLGLPlayer : Form
                 ShowCensoring(false);
             }
         }
+        
+        //Show the censor editor dialog
         private void censorEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CensorEditorDlg censorEditorDlg = new CensorEditorDlg();
             censorEditorDlg.Show(this);
+        }
+
+        //Update the positions of the censorbars regularily in case there is custom data loaded
+        private void RLGL_Censor_Tick(object sender, EventArgs e)
+        {
+            if(censoring)
+            {
+                Point initPos = VLC_Control.PointToScreen(Point.Empty);
+                List<CensorbarInfo<Point>> pos = new List<CensorbarInfo<Point>>();
+
+                int width = VLC_Control.Width;
+                int height = VLC_Control.Height;
+
+                if (rlglCensorData == null)
+                {
+                    Point p = initPos;
+
+                    p.X += width / 2;
+                    p.Y += 2 * height / 3;
+                    pos.Add(new CensorbarInfo<Point>(0, 0, p));
+                }
+                else
+                {
+                    Dictionary<int, CensorbarInfo<PointF>> relativePositions = rlglCensorData.GetAllCensorPositionsAndSizes((float)(rlglCensorData.Duration.TotalSeconds * VLC_Control.Position));
+
+                    foreach (int id in relativePositions.Keys)
+                    {
+                        Point p = initPos;
+                        p.X += (int)(width * relativePositions[id].Position.X);
+                        p.Y += (int)(height * relativePositions[id].Position.Y);
+                        pos.Add(new CensorbarInfo<Point>(id, relativePositions[id].Size, p));
+                    }
+                }
+
+                ShowCensorbarsAroundPositions(pos);
+            }
         }
     }
 }

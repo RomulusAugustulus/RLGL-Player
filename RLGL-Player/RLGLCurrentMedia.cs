@@ -17,6 +17,8 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace RLGL_Player
 {   
@@ -31,8 +33,7 @@ namespace RLGL_Player
         private DateTime start;
         private TimeSpan end;
         private RLGLPhase currentPhase;
-        private float currentCensorX;
-        private float currentCensorY;
+        private Dictionary<int, PointF> currentCensor;
 
         //Full path to the current played media-file.
         public string Media { get => media; }
@@ -42,16 +43,6 @@ namespace RLGL_Player
         public TimeSpan End { get => end; set => end = value; }
         //The currently played phase.
         public RLGLPhase CurrentPhase { get => currentPhase; set => currentPhase = value; }
-        /*
-         * The relative width of the censorbar in x-dimension. 
-         * Note, that only half of this relative width is stored. Expected values are between 0.0f and 1.0f!
-         */ 
-        public float CurrentCensorX { get => currentCensorX; set => currentCensorX = value; }
-        /*
-         * The relative height of the censorbar in y-dimension. 
-         * Note, that only half of this relative height is stored. Expected values are between 0.0f and 1.0f!
-         */
-        public float CurrentCensorY { get => currentCensorY; set => currentCensorY = value; }
 
         public RLGLCurrentMedia(string media, DateTime start, TimeSpan end, RLGLPhase startPhase)
         {
@@ -59,15 +50,36 @@ namespace RLGL_Player
             this.start = start;
             this.end = end;
             currentPhase = startPhase;
-            currentCensorX = -1.0f;
-            currentCensorY = -1.0f;
+            currentCensor = new Dictionary<int, PointF>();
         }
 
-        //Set the relative width and height of the censorbar to the default values.
+        //Set the relative dimensions of the censorbars to their default values.
         public void ResetCensorDimension()
         {
-            currentCensorX = -1.0f;
-            currentCensorY = -1.0f;
+            currentCensor.Clear();
+        }
+
+        public PointF GetCensorDimension(int id)
+        {
+            PointF value;
+            if (currentCensor.TryGetValue(id, out value))
+            {
+                return value;
+            }
+
+            return new PointF(-1.0f, -1.0f);
+        }
+
+        public void SetCensorDimension(int id, PointF dim)
+        {
+            if(currentCensor.ContainsKey(id))
+            {
+                currentCensor[id] = dim;
+            }
+            else
+            {
+                currentCensor.Add(id, dim);
+            }
         }
     }
 }

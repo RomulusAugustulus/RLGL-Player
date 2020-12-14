@@ -74,11 +74,26 @@
     <Compile Include="Blackbar.Designer.cs">
       <DependentUpon>Blackbar.cs</DependentUpon>
     </Compile>
+    <Compile Include="CensorbarSetting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CensorbarSetting.Designer.cs">
+      <DependentUpon>CensorbarSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="CensorEditorDlg.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CensorEditorDlg.Designer.cs">
       <DependentUpon>CensorEditorDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DecimalBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PaintingOverlay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PaintingOverlay.Designer.cs">
+      <DependentUpon>PaintingOverlay.cs</DependentUpon>
     </Compile>
     <Compile Include="RLGLCensorData.cs" />
     <Compile Include="RLGLCensorFrame.cs" />
@@ -104,8 +119,14 @@
     <EmbeddedResource Include="Blackbar.resx">
       <DependentUpon>Blackbar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CensorbarSetting.resx">
+      <DependentUpon>CensorbarSetting.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CensorEditorDlg.resx">
       <DependentUpon>CensorEditorDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PaintingOverlay.resx">
+      <DependentUpon>PaintingOverlay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RLGLPlayer.resx">
       <DependentUpon>RLGLPlayer.cs</DependentUpon>

@@ -117,42 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="PB_Icon.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAA9FJREFUeF7tldut2zAQBV1IvoKUkw7ykW7ST2q4jaSB1OCAFyAgK2MtJfElnTPA
-        fFm2uNwB/HgaaRyAOA5AHAcgjgMQxwGI4wDEcQDiOABxHIA4DkAcByCOAxDHAYjjAMRxAOI4AHEcgDgO
-        QBwHII4DEMcBiOMAxHEA4jgAcRyAOA5AHAcgzmYAj8fjli6hz+9gKW+fpB+117IEfIp+zF7TCAdwcyMc
-        wM2N2B3Ax8fHJaVZ1tL3riDNko3YFQC9/ErSTFl6/krSTMmI4gDopVdUbbYIB3Dz2SIcwM1ni5gigL9f
-        voXS947Ycravv7+H0vdqSbNFDAuAllwq/V6ptWejJZdKv3dGmi2iawC0zLPSe7asMRst86z0nr3SbBHd
-        AqDl1ZLe986zs9Hyaknv2yPNFtE8AFpYK+n9a4/ORgtrJb2/RJotomkAtKTs88ePT+mzM9I5lh6ZjZaU
-        /fnn16f02RnpHJE0W0SzAGg5yVaLX0rnye6djZaTbLX4pXSeLWm2iCYB0FKSrRe/lM6V3DMbLSXZevFL
-        6VzvpNkiqgdAy0j2XH6Wzlc6Gy0j2XP5WTofSbNFVA2AlpAcsfzs+owls9ESkiOWn12fkaTZIpoH0OM/
-        P3J5xpLZaAE9/vMj1+dcS7NFVAuALj45evnJ5Tmj2ejik6OXn1yek6TZIqoEQJc+m/msW7PRpc9mPitJ
-        s0UUB7AFXfhsbl1S/owufDa3oNki3j6x50fowmf0DgEkt1jOVULZUxvQRc/qVgB00bNaEwfgAM5BFz2r
-        DuB/TgVAlzy7FABd8uzWwgE4gOPQBc+uA3jFATiA49AFz64DeMUBOIDj0AXPrgN4xQE4gOPQBc+uA3jl
-        VAAJuuSZpQASdMkzWwupABJ3CKAmDsABnIcue0YT7wJI0GXPaE1kAshcPYDaOAAHUAe69FlcshVAgi59
-        FltQLYAEXf5o10QBJOjyR9sKB+AA6kJLGCVREkCCljDKllQPIEHL6O0W0fIztIzetqZJAAlaSi9rQkvp
-        ZQ+aBZCg5bS2BbSc1vaiaQAJWlIrW0JLamVPmgeQoGXVtBe0rJqOoEsAGVreWUdAyzvrKLoGkKFF7nUG
-        aJF7Hc2QANbQgsnZoQWTMzFFAGYcDkAcByCOAxDHAYjjAMRxAOI4AHEcgDgOQBwHII4DEMcBiOMAxHEA
-        4jgAcRyAOA5AHAcgjgMQxwGI4wDEcQDiOABxHIA4DkAcByCOAxDHAYjjAMRxAOI4AHEcgDgOQBwHII4D
-        EMcBiOMAxHEA4jgAcRyAOA5AHAcgjgMQxwFI83z+A5Ed3UuFVWRgAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="L_License.Text" xml:space="preserve">
-    <value>This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see 
-</value>
-  </data>
 </root>
