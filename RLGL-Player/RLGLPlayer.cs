@@ -41,7 +41,7 @@ public partial class RLGLPlayer : Form
 
         private List<Blackbar> censorbars;
         private bool censoring;
-        private static string[] imageFileExtensions = new string[] { ".jpg", ".png", ".bpm" };
+        private static string[] imageFileExtensions = new string[] { ".jpg", ".png", ".bmp" };
 
         public RLGLPlayer()
         {
