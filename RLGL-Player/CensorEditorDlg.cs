@@ -87,7 +87,7 @@ namespace RLGL_Player
             }
 
             OpenFileDialog openFileDlg = new OpenFileDialog();
-            openFileDlg.Filter = "All Files (*.*)|*.*";
+            openFileDlg.Filter = "Video files (*.avi , *.flv , *.mkv , *.mov , *.mp4 , *.wmv)|*.avi;*.flv;*.mkv;*.mov;*.mp4;*.wmv";
             openFileDlg.FileName = "";
             openFileDlg.Title = "Select a file...";
 
@@ -116,7 +116,7 @@ namespace RLGL_Player
             }
 
             OpenFileDialog openFileDlg = new OpenFileDialog();
-            openFileDlg.Filter = "All Files (*.*)|*.*";
+            openFileDlg.Filter = "Video files (*.avi , *.flv , *.mkv , *.mov , *.mp4 , *.wmv)|*.avi;*.flv;*.mkv;*.mov;*.mp4;*.wmv";
             openFileDlg.FileName = "";
             openFileDlg.Title = "Select a file...";
 
