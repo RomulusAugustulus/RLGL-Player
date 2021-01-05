@@ -39,6 +39,7 @@ namespace RLGL_Player
         private RLGLCensorFrame selectedKeyframe;
         private bool dirty;
         private int selectedCensorbarSize;
+        private bool freshLoad;
 
         public CensorEditorDlg()
         {
@@ -56,6 +57,7 @@ namespace RLGL_Player
             L_CensorbarIdValue.Text = "";
             L_TimeStampValue.Text = "";
             dirty = false;
+            freshLoad = true;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -174,6 +176,7 @@ namespace RLGL_Player
         //Set up all the relevant controls and datastructures in the editor.
         private void InitEditor()
         {
+            freshLoad = true;
             FileStream fs = File.OpenRead(rlglCurrentMedia.Media);
             VLC_Editor.SetMedia(fs);            
             VLC_Editor.Cursor = Cursors.Cross;
@@ -263,6 +266,7 @@ namespace RLGL_Player
             TB_VideoPosition.Value = 0;
 
             VLC_Editor.Position = (float)TB_VideoPosition.Value / (float)TB_VideoPosition.Maximum;
+            freshLoad = false;
         }
 
         private void MediaParsedChanged(object sender, Vlc.DotNet.Core.VlcMediaParsedChangedEventArgs e)
@@ -635,7 +639,10 @@ namespace RLGL_Player
 
         private void VLC_Editor_Playing(object sender, Vlc.DotNet.Core.VlcMediaPlayerPlayingEventArgs e)
         {
-            this.Invoke(new Action(() => SetMediaDuration()));
+            if (freshLoad)
+            {
+                this.Invoke(new Action(() => SetMediaDuration()));
+            }
         }
     }
 }

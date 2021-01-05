@@ -58,16 +58,16 @@
             this.L_AboutInfo.Name = "L_AboutInfo";
             this.L_AboutInfo.Size = new System.Drawing.Size(115, 13);
             this.L_AboutInfo.TabIndex = 1;
-            this.L_AboutInfo.Text = "RLGL-Player    v. 0.5.1";
+            this.L_AboutInfo.Text = "RLGL-Player    v. 0.5.2";
             // 
             // L_Copyright
             // 
             this.L_Copyright.AutoSize = true;
-            this.L_Copyright.Location = new System.Drawing.Point(121, 62);
+            this.L_Copyright.Location = new System.Drawing.Point(108, 62);
             this.L_Copyright.Name = "L_Copyright";
-            this.L_Copyright.Size = new System.Drawing.Size(149, 13);
+            this.L_Copyright.Size = new System.Drawing.Size(182, 13);
             this.L_Copyright.TabIndex = 2;
-            this.L_Copyright.Text = "Copyright (C) 2020 Augustulus";
+            this.L_Copyright.Text = "Copyright (C) 2020 - 2021 Augustulus";
             // 
             // L_Idea
             // 
