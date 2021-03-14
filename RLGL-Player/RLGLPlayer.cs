@@ -144,19 +144,26 @@ public partial class RLGLPlayer : Form
             RLGL_VideoEndTimer.Stop();
             RLGL_Censor.Stop();
 
-            switch(rlglPreferences.Ending)
+            if (rlglVideoQueue.VideosRemaining() == 0)
             {
-                case RLGLEnding.AlwaysGreen:
-                    ShowPhase(RLGLPhase.Green, true);
-                    break;
+                switch (rlglPreferences.Ending)
+                {
+                    case RLGLEnding.AlwaysGreen:
+                        ShowPhase(RLGLPhase.Green, true);
+                        break;
 
-                case RLGLEnding.AlwaysRed:
-                    ShowPhase(RLGLPhase.Red, true);
-                    break;
+                    case RLGLEnding.AlwaysRed:
+                        ShowPhase(RLGLPhase.Red, true);
+                        break;
 
-                case RLGLEnding.Random:
-                    ShowPhase((RLGLPhase)randomNumberGenerator.Next(0, 2), true);
-                    break;
+                    case RLGLEnding.Random:
+                        ShowPhase((RLGLPhase)randomNumberGenerator.Next(0, 2), true);
+                        break;
+                }
+            }
+            else
+            {
+                ShowPhase(RLGLPhase.Red, true);
             }
         }
 
