@@ -38,6 +38,7 @@ namespace RLGL_Player
             this.B_Up = new System.Windows.Forms.Button();
             this.OpenVideoDlg = new System.Windows.Forms.OpenFileDialog();
             this.B_Delete = new System.Windows.Forms.Button();
+            this.L_FullPath = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // LB_Queue
@@ -46,7 +47,7 @@ namespace RLGL_Player
             this.LB_Queue.HorizontalScrollbar = true;
             this.LB_Queue.Location = new System.Drawing.Point(15, 25);
             this.LB_Queue.Name = "LB_Queue";
-            this.LB_Queue.Size = new System.Drawing.Size(210, 342);
+            this.LB_Queue.Size = new System.Drawing.Size(351, 316);
             this.LB_Queue.TabIndex = 0;
             this.LB_Queue.SelectedIndexChanged += new System.EventHandler(this.LB_Queue_SelectedIndexChanged);
             // 
@@ -61,9 +62,9 @@ namespace RLGL_Player
             // 
             // L_Load
             // 
-            this.L_Load.Location = new System.Drawing.Point(129, 373);
+            this.L_Load.Location = new System.Drawing.Point(133, 373);
             this.L_Load.Name = "L_Load";
-            this.L_Load.Size = new System.Drawing.Size(96, 32);
+            this.L_Load.Size = new System.Drawing.Size(207, 32);
             this.L_Load.TabIndex = 2;
             this.L_Load.Text = "Load...";
             this.L_Load.UseVisualStyleBackColor = true;
@@ -72,7 +73,7 @@ namespace RLGL_Player
             // B_OK
             // 
             this.B_OK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.B_OK.Location = new System.Drawing.Point(239, 415);
+            this.B_OK.Location = new System.Drawing.Point(386, 415);
             this.B_OK.Name = "B_OK";
             this.B_OK.Size = new System.Drawing.Size(75, 23);
             this.B_OK.TabIndex = 3;
@@ -92,7 +93,7 @@ namespace RLGL_Player
             // 
             // B_Down
             // 
-            this.B_Down.Location = new System.Drawing.Point(239, 315);
+            this.B_Down.Location = new System.Drawing.Point(386, 287);
             this.B_Down.Name = "B_Down";
             this.B_Down.Size = new System.Drawing.Size(75, 23);
             this.B_Down.TabIndex = 5;
@@ -102,7 +103,7 @@ namespace RLGL_Player
             // 
             // B_Up
             // 
-            this.B_Up.Location = new System.Drawing.Point(239, 286);
+            this.B_Up.Location = new System.Drawing.Point(386, 258);
             this.B_Up.Name = "B_Up";
             this.B_Up.Size = new System.Drawing.Size(75, 23);
             this.B_Up.TabIndex = 6;
@@ -119,7 +120,7 @@ namespace RLGL_Player
             // 
             // B_Delete
             // 
-            this.B_Delete.Location = new System.Drawing.Point(239, 344);
+            this.B_Delete.Location = new System.Drawing.Point(386, 316);
             this.B_Delete.Name = "B_Delete";
             this.B_Delete.Size = new System.Drawing.Size(75, 23);
             this.B_Delete.TabIndex = 7;
@@ -127,13 +128,25 @@ namespace RLGL_Player
             this.B_Delete.UseVisualStyleBackColor = true;
             this.B_Delete.Click += new System.EventHandler(this.B_Delete_Click);
             // 
+            // L_FullPath
+            // 
+            this.L_FullPath.AutoEllipsis = true;
+            this.L_FullPath.Location = new System.Drawing.Point(12, 349);
+            this.L_FullPath.Name = "L_FullPath";
+            this.L_FullPath.Size = new System.Drawing.Size(449, 21);
+            this.L_FullPath.TabIndex = 8;
+            this.L_FullPath.Text = "label1";
+            this.L_FullPath.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.L_FullPath.UseMnemonic = false;
+            // 
             // RLGLPlayingQueueDlg
             // 
             this.AcceptButton = this.B_OK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.B_Cancel;
-            this.ClientSize = new System.Drawing.Size(326, 450);
+            this.ClientSize = new System.Drawing.Size(473, 450);
+            this.Controls.Add(this.L_FullPath);
             this.Controls.Add(this.B_Delete);
             this.Controls.Add(this.B_Up);
             this.Controls.Add(this.B_Down);
@@ -166,5 +179,6 @@ namespace RLGL_Player
         private System.Windows.Forms.Button B_Up;
         private System.Windows.Forms.OpenFileDialog OpenVideoDlg;
         private System.Windows.Forms.Button B_Delete;
+        private System.Windows.Forms.Label L_FullPath;
     }
 }
