@@ -33,7 +33,7 @@ namespace RLGL_Player
     class RLGLPreferences
     {
         //The current version of the file. Used to preserve backwards-compatibility.
-        private string preferencesFileVersion = "v.1";
+        private string preferencesFileVersion = "v.2";
         private int minGreen;
         private int maxGreen;
         private int minRed;
@@ -51,6 +51,10 @@ namespace RLGL_Player
         private Color greenLightColor;
         private Color redLightColor;
         private Color censorColor;
+        private int leftBorder;
+        private int rightBorder;
+        private int topBorder;
+        private int bottomBorder;
 
         //Minimum number of seconds a green phase will last.
         public int MinGreen { get => minGreen; }
@@ -86,6 +90,14 @@ namespace RLGL_Player
         public Color CensorColor { get => censorColor; }
         //Gets the path where the images are stored, that will censor the played media.
         public string CensorPath { get => censorPath; }
+        //Gets the percentage of the left border.
+        public int LeftBorder { get => leftBorder; }
+        //Gets the percentage of the right border.
+        public int RightBorder { get => rightBorder; }
+        //Gets the percentage of the top border.
+        public int TopBorder { get => topBorder; }
+        //Gets the percentage of the bottom border.
+        public int BottomBorder { get => bottomBorder; }
 
         public RLGLPreferences()
         {
@@ -106,13 +118,18 @@ namespace RLGL_Player
             censorProbability = 5;
             censorColor = Color.FromArgb(255, 0, 0, 0);
             censorPath = "";
+            leftBorder = 10;
+            rightBorder = 10;
+            topBorder = 10;
+            bottomBorder = 10;
         }
 
         public RLGLPreferences(int minGreen, int maxGreen, int minRed, int maxRed, 
                                 RLGLEnding ending, bool metronome, int minBpm, int maxBpm, 
                                 int metronomePossibility, Color greenLightColor, Color redLightColor,
                                 bool censoring, RLGLCensorType censorType, RLGLCensorSize censorSize,
-                                int censorProbability, Color censorColor, string censorPath)
+                                int censorProbability, Color censorColor, string censorPath,
+                                int leftBorder, int rightBorder, int topBorder, int bottomBorder)
         {
             this.minGreen = minGreen;
             this.maxGreen = maxGreen;
@@ -131,6 +148,10 @@ namespace RLGL_Player
             this.censorProbability = censorProbability;
             this.censorColor = censorColor;
             this.censorPath = censorPath;
+            this.leftBorder = leftBorder;
+            this.rightBorder = rightBorder;
+            this.topBorder = topBorder;
+            this.bottomBorder = bottomBorder;
         }
 
         //Sets the controls of a PreferencesDlg object to the currently stored preferences. 
@@ -181,6 +202,11 @@ namespace RLGL_Player
             prefDlg.COMB_CensorType.Enabled = censoring;
             prefDlg.COMB_CensorSize.Enabled = censoring;
             prefDlg.TB_CensorProbability.Enabled = censoring;
+
+            prefDlg.NUD_LeftBorder.Value = leftBorder;
+            prefDlg.NUD_RightBorder.Value = rightBorder;
+            prefDlg.NUD_TopBorder.Value = topBorder;
+            prefDlg.NUD_BottomBorder.Value = bottomBorder;
         }
 
         //Gets the values from the controls of a PreferencesDlg object and stores them locally.
@@ -220,6 +246,11 @@ namespace RLGL_Player
             censorType = (RLGLCensorType)prefDlg.COMB_CensorType.SelectedIndex;
             censorSize = (RLGLCensorSize)prefDlg.COMB_CensorSize.SelectedIndex;
             censorProbability = prefDlg.TB_CensorProbability.Value;
+
+            leftBorder = (int)prefDlg.NUD_LeftBorder.Value;
+            rightBorder = (int)prefDlg.NUD_RightBorder.Value;
+            topBorder = (int)prefDlg.NUD_TopBorder.Value;
+            bottomBorder = (int)prefDlg.NUD_BottomBorder.Value;
         }
 
         //Loads the contents of the file fileName if it exists and stores it locally.
@@ -250,6 +281,10 @@ namespace RLGL_Player
                     censorProbability = int.Parse(prefFile.ReadLine());
                     censorColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                     censorPath = prefFile.ReadLine();
+                    leftBorder = int.Parse(prefFile.ReadLine());
+                    rightBorder = int.Parse(prefFile.ReadLine());
+                    topBorder = int.Parse(prefFile.ReadLine());
+                    bottomBorder = int.Parse(prefFile.ReadLine());
                 }
                 else if(version.StartsWith("v"))
                 {
@@ -270,7 +305,31 @@ namespace RLGL_Player
         //Load older versions of the file to maintain backwards-compatibility. Currently not used!
         private void ReadLegacyVersion(StreamReader prefFile, string version)
         {
-            //No legacy-versions at the moment. Set up for future implementations
+            //Load version 1 of the file-format
+            if(version.Equals("v.1"))
+            {
+                maxGreen = int.Parse(prefFile.ReadLine());
+                maxRed = int.Parse(prefFile.ReadLine());
+                minGreen = int.Parse(prefFile.ReadLine());
+                minRed = int.Parse(prefFile.ReadLine());
+                ending = (RLGLEnding)int.Parse(prefFile.ReadLine());
+                metronome = bool.Parse(prefFile.ReadLine());
+                minBpm = int.Parse(prefFile.ReadLine());
+                maxBpm = int.Parse(prefFile.ReadLine());
+                metronomePossibility = int.Parse(prefFile.ReadLine());
+                greenLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                redLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                censoring = bool.Parse(prefFile.ReadLine());
+                censorType = (RLGLCensorType)int.Parse(prefFile.ReadLine());
+                censorSize = (RLGLCensorSize)int.Parse(prefFile.ReadLine());
+                censorProbability = int.Parse(prefFile.ReadLine());
+                censorColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                censorPath = prefFile.ReadLine();
+            }
+            else
+            {
+                //Not a correct version. Do nothing for now.                
+            }
         }
 
         //Load a file with the first layout of the file.
@@ -329,6 +388,10 @@ namespace RLGL_Player
             prefFile.WriteLine(censorColor.G);
             prefFile.WriteLine(censorColor.B);
             prefFile.WriteLine(censorPath);
+            prefFile.WriteLine(leftBorder);
+            prefFile.WriteLine(rightBorder);
+            prefFile.WriteLine(topBorder);
+            prefFile.WriteLine(bottomBorder);
 
             prefFile.Close();
         }

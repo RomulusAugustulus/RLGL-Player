@@ -81,6 +81,7 @@ public partial class RLGLPlayer : Form
             if(preferencesDlg.ShowDialog() == DialogResult.OK)
             {
                 rlglPreferences.SavePreferences(preferencesDlg);
+                UpdateRLGLLayoutSizes();
             }
         }
 
@@ -115,6 +116,7 @@ public partial class RLGLPlayer : Form
         private void Form1_Load(object sender, EventArgs e)
         {
             rlglPreferences.LoadPreferencesFromFile("Preferences.config");
+            UpdateRLGLLayoutSizes();
             metronome.SoundLocation = "250551__druminfected__metronomeup.wav";
             L_Text.Text = "";            
         }
@@ -585,7 +587,7 @@ public partial class RLGLPlayer : Form
         //Update a censorbars position and size.
         private void Form1_Resize(object sender, EventArgs e)
         {
-            if(censoring)
+            if (censoring)
             {
                 ShowCensoring(false);
             }
@@ -632,6 +634,15 @@ public partial class RLGLPlayer : Form
 
                 ShowCensorbarsAroundPositions(pos);
             }
+        }
+
+        //Set the layout of the main-window according to the preferences.
+        private void UpdateRLGLLayoutSizes()
+        {
+            RLGL_Layout.RowStyles[0].Height = rlglPreferences.TopBorder;
+            RLGL_Layout.RowStyles[2].Height = rlglPreferences.BottomBorder;
+            RLGL_Layout.ColumnStyles[0].Width = rlglPreferences.LeftBorder;
+            RLGL_Layout.ColumnStyles[3].Width = rlglPreferences.RightBorder;
         }
     }
 }

@@ -43,7 +43,6 @@
             this.VLC_Panel = new System.Windows.Forms.Panel();
             this.RLGL_Layout = new System.Windows.Forms.TableLayoutPanel();
             this.VLC_Control = new Vlc.DotNet.Forms.VlcControl();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.L_Text = new System.Windows.Forms.Label();
             this.TB_Volume = new System.Windows.Forms.TrackBar();
             this.OpenVideoDlg = new System.Windows.Forms.OpenFileDialog();
@@ -153,13 +152,13 @@
             // RLGL_Layout
             // 
             this.RLGL_Layout.BackColor = System.Drawing.SystemColors.Control;
-            this.RLGL_Layout.ColumnCount = 3;
+            this.RLGL_Layout.ColumnCount = 4;
             this.RLGL_Layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.RLGL_Layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.RLGL_Layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
             this.RLGL_Layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.RLGL_Layout.Controls.Add(this.VLC_Control, 1, 1);
-            this.RLGL_Layout.Controls.Add(this.panel1, 2, 2);
-            this.RLGL_Layout.Controls.Add(this.L_Text, 1, 2);
+            this.RLGL_Layout.Controls.Add(this.L_Text, 2, 2);
             this.RLGL_Layout.Controls.Add(this.TB_Volume, 0, 2);
             this.RLGL_Layout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RLGL_Layout.Location = new System.Drawing.Point(0, 0);
@@ -174,10 +173,11 @@
             // VLC_Control
             // 
             this.VLC_Control.BackColor = System.Drawing.Color.Black;
+            this.RLGL_Layout.SetColumnSpan(this.VLC_Control, 2);
             this.VLC_Control.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VLC_Control.Location = new System.Drawing.Point(110, 59);
+            this.VLC_Control.Location = new System.Drawing.Point(100, 59);
             this.VLC_Control.Name = "VLC_Control";
-            this.VLC_Control.Size = new System.Drawing.Size(854, 444);
+            this.VLC_Control.Size = new System.Drawing.Size(874, 444);
             this.VLC_Control.Spu = -1;
             this.VLC_Control.TabIndex = 0;
             this.VLC_Control.Text = "vlcControl1";
@@ -187,32 +187,26 @@
             this.VLC_Control.EndReached += new System.EventHandler<Vlc.DotNet.Core.VlcMediaPlayerEndReachedEventArgs>(this.VLC_Control_EndReached);
             this.VLC_Control.Playing += new System.EventHandler<Vlc.DotNet.Core.VlcMediaPlayerPlayingEventArgs>(this.VLC_Control_Playing);
             // 
-            // panel1
-            // 
-            this.panel1.Location = new System.Drawing.Point(970, 509);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(74, 38);
-            this.panel1.TabIndex = 2;
-            // 
             // L_Text
             // 
             this.L_Text.AutoSize = true;
             this.L_Text.Dock = System.Windows.Forms.DockStyle.Fill;
             this.L_Text.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.L_Text.Location = new System.Drawing.Point(110, 506);
+            this.L_Text.Location = new System.Drawing.Point(200, 506);
             this.L_Text.Name = "L_Text";
-            this.L_Text.Size = new System.Drawing.Size(854, 57);
+            this.L_Text.Size = new System.Drawing.Size(774, 57);
             this.L_Text.TabIndex = 1;
             this.L_Text.Text = "label1";
             this.L_Text.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // TB_Volume
             // 
+            this.RLGL_Layout.SetColumnSpan(this.TB_Volume, 2);
             this.TB_Volume.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TB_Volume.Location = new System.Drawing.Point(3, 509);
             this.TB_Volume.Maximum = 100;
             this.TB_Volume.Name = "TB_Volume";
-            this.TB_Volume.Size = new System.Drawing.Size(101, 51);
+            this.TB_Volume.Size = new System.Drawing.Size(191, 51);
             this.TB_Volume.TabIndex = 3;
             this.TB_Volume.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.TB_Volume.Value = 100;
@@ -283,7 +277,6 @@
         private System.Windows.Forms.Label L_Text;
         private System.Windows.Forms.Timer RLGL_SwitchTimer;
         private System.Windows.Forms.Timer RLGL_VideoEndTimer;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Timer RLGL_Metronome;
         private System.Windows.Forms.TrackBar TB_Volume;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;

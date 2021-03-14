@@ -30,6 +30,8 @@
         {
             this.ColorPicker = new System.Windows.Forms.ColorDialog();
             this.GB_RLGLSettings = new System.Windows.Forms.GroupBox();
+            this.L_BothLights = new System.Windows.Forms.Label();
+            this.L_OnlyGreenLight = new System.Windows.Forms.Label();
             this.L_CensorPossibility = new System.Windows.Forms.Label();
             this.TB_CensorProbability = new System.Windows.Forms.TrackBar();
             this.L_CensorSize = new System.Windows.Forms.Label();
@@ -69,8 +71,15 @@
             this.B_SaveExit = new System.Windows.Forms.Button();
             this.B_Cancel = new System.Windows.Forms.Button();
             this.FolderSelector = new System.Windows.Forms.FolderBrowserDialog();
-            this.L_OnlyGreenLight = new System.Windows.Forms.Label();
-            this.L_BothLights = new System.Windows.Forms.Label();
+            this.L_BorderLeft = new System.Windows.Forms.Label();
+            this.NUD_LeftBorder = new System.Windows.Forms.NumericUpDown();
+            this.L_RightBorder = new System.Windows.Forms.Label();
+            this.NUD_RightBorder = new System.Windows.Forms.NumericUpDown();
+            this.NUD_TopBorder = new System.Windows.Forms.NumericUpDown();
+            this.L_TopBorder = new System.Windows.Forms.Label();
+            this.NUD_BottomBorder = new System.Windows.Forms.NumericUpDown();
+            this.L_BottomBorder = new System.Windows.Forms.Label();
+            this.L_Appearing = new System.Windows.Forms.Label();
             this.GB_RLGLSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TB_CensorProbability)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TB_MetronomeChance)).BeginInit();
@@ -81,6 +90,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxGreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinGreen)).BeginInit();
             this.GB_ProgramSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_LeftBorder)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_RightBorder)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_TopBorder)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_BottomBorder)).BeginInit();
             this.SuspendLayout();
             // 
             // GB_RLGLSettings
@@ -119,6 +132,25 @@
             this.GB_RLGLSettings.TabIndex = 0;
             this.GB_RLGLSettings.TabStop = false;
             this.GB_RLGLSettings.Text = "Red Light Green Light Settings";
+            // 
+            // L_BothLights
+            // 
+            this.L_BothLights.AutoSize = true;
+            this.L_BothLights.BackColor = System.Drawing.SystemColors.Control;
+            this.L_BothLights.Location = new System.Drawing.Point(251, 376);
+            this.L_BothLights.Name = "L_BothLights";
+            this.L_BothLights.Size = new System.Drawing.Size(157, 13);
+            this.L_BothLights.TabIndex = 27;
+            this.L_BothLights.Text = "|------- censor on both lights -------|";
+            // 
+            // L_OnlyGreenLight
+            // 
+            this.L_OnlyGreenLight.AutoSize = true;
+            this.L_OnlyGreenLight.Location = new System.Drawing.Point(99, 376);
+            this.L_OnlyGreenLight.Name = "L_OnlyGreenLight";
+            this.L_OnlyGreenLight.Size = new System.Drawing.Size(156, 13);
+            this.L_OnlyGreenLight.TabIndex = 26;
+            this.L_OnlyGreenLight.Text = "|--- censor only on green light ---|";
             // 
             // L_CensorPossibility
             // 
@@ -460,6 +492,15 @@
             // 
             // GB_ProgramSettings
             // 
+            this.GB_ProgramSettings.Controls.Add(this.L_Appearing);
+            this.GB_ProgramSettings.Controls.Add(this.NUD_BottomBorder);
+            this.GB_ProgramSettings.Controls.Add(this.L_BottomBorder);
+            this.GB_ProgramSettings.Controls.Add(this.NUD_TopBorder);
+            this.GB_ProgramSettings.Controls.Add(this.L_TopBorder);
+            this.GB_ProgramSettings.Controls.Add(this.NUD_RightBorder);
+            this.GB_ProgramSettings.Controls.Add(this.L_RightBorder);
+            this.GB_ProgramSettings.Controls.Add(this.NUD_LeftBorder);
+            this.GB_ProgramSettings.Controls.Add(this.L_BorderLeft);
             this.GB_ProgramSettings.Controls.Add(this.B_CensorPath);
             this.GB_ProgramSettings.Controls.Add(this.TBox_CensorPath);
             this.GB_ProgramSettings.Controls.Add(this.L_CensorPath);
@@ -471,7 +512,7 @@
             this.GB_ProgramSettings.Controls.Add(this.L_GreenLightColor);
             this.GB_ProgramSettings.Location = new System.Drawing.Point(439, 12);
             this.GB_ProgramSettings.Name = "GB_ProgramSettings";
-            this.GB_ProgramSettings.Size = new System.Drawing.Size(420, 205);
+            this.GB_ProgramSettings.Size = new System.Drawing.Size(420, 334);
             this.GB_ProgramSettings.TabIndex = 1;
             this.GB_ProgramSettings.TabStop = false;
             this.GB_ProgramSettings.Text = "General Settings";
@@ -580,24 +621,123 @@
             // 
             this.FolderSelector.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
-            // L_OnlyGreenLight
+            // L_BorderLeft
             // 
-            this.L_OnlyGreenLight.AutoSize = true;
-            this.L_OnlyGreenLight.Location = new System.Drawing.Point(99, 376);
-            this.L_OnlyGreenLight.Name = "L_OnlyGreenLight";
-            this.L_OnlyGreenLight.Size = new System.Drawing.Size(156, 13);
-            this.L_OnlyGreenLight.TabIndex = 26;
-            this.L_OnlyGreenLight.Text = "|--- censor only on green light ---|";
+            this.L_BorderLeft.AutoSize = true;
+            this.L_BorderLeft.Location = new System.Drawing.Point(6, 231);
+            this.L_BorderLeft.Name = "L_BorderLeft";
+            this.L_BorderLeft.Size = new System.Drawing.Size(78, 13);
+            this.L_BorderLeft.TabIndex = 8;
+            this.L_BorderLeft.Text = "Left border (%):";
             // 
-            // L_BothLights
+            // NUD_LeftBorder
             // 
-            this.L_BothLights.AutoSize = true;
-            this.L_BothLights.BackColor = System.Drawing.SystemColors.Control;
-            this.L_BothLights.Location = new System.Drawing.Point(251, 376);
-            this.L_BothLights.Name = "L_BothLights";
-            this.L_BothLights.Size = new System.Drawing.Size(157, 13);
-            this.L_BothLights.TabIndex = 27;
-            this.L_BothLights.Text = "|------- censor on both lights -------|";
+            this.NUD_LeftBorder.Location = new System.Drawing.Point(99, 229);
+            this.NUD_LeftBorder.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_LeftBorder.Name = "NUD_LeftBorder";
+            this.NUD_LeftBorder.Size = new System.Drawing.Size(315, 20);
+            this.NUD_LeftBorder.TabIndex = 9;
+            this.NUD_LeftBorder.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // L_RightBorder
+            // 
+            this.L_RightBorder.AutoSize = true;
+            this.L_RightBorder.Location = new System.Drawing.Point(6, 257);
+            this.L_RightBorder.Name = "L_RightBorder";
+            this.L_RightBorder.Size = new System.Drawing.Size(85, 13);
+            this.L_RightBorder.TabIndex = 10;
+            this.L_RightBorder.Text = "Right border (%):";
+            // 
+            // NUD_RightBorder
+            // 
+            this.NUD_RightBorder.Location = new System.Drawing.Point(99, 255);
+            this.NUD_RightBorder.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_RightBorder.Name = "NUD_RightBorder";
+            this.NUD_RightBorder.Size = new System.Drawing.Size(315, 20);
+            this.NUD_RightBorder.TabIndex = 11;
+            this.NUD_RightBorder.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // NUD_TopBorder
+            // 
+            this.NUD_TopBorder.Location = new System.Drawing.Point(99, 281);
+            this.NUD_TopBorder.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_TopBorder.Name = "NUD_TopBorder";
+            this.NUD_TopBorder.Size = new System.Drawing.Size(315, 20);
+            this.NUD_TopBorder.TabIndex = 13;
+            this.NUD_TopBorder.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // L_TopBorder
+            // 
+            this.L_TopBorder.AutoSize = true;
+            this.L_TopBorder.Location = new System.Drawing.Point(6, 283);
+            this.L_TopBorder.Name = "L_TopBorder";
+            this.L_TopBorder.Size = new System.Drawing.Size(79, 13);
+            this.L_TopBorder.TabIndex = 12;
+            this.L_TopBorder.Text = "Top border (%):";
+            // 
+            // NUD_BottomBorder
+            // 
+            this.NUD_BottomBorder.Location = new System.Drawing.Point(99, 307);
+            this.NUD_BottomBorder.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_BottomBorder.Minimum = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.NUD_BottomBorder.Name = "NUD_BottomBorder";
+            this.NUD_BottomBorder.Size = new System.Drawing.Size(315, 20);
+            this.NUD_BottomBorder.TabIndex = 15;
+            this.NUD_BottomBorder.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // L_BottomBorder
+            // 
+            this.L_BottomBorder.AutoSize = true;
+            this.L_BottomBorder.Location = new System.Drawing.Point(6, 309);
+            this.L_BottomBorder.Name = "L_BottomBorder";
+            this.L_BottomBorder.Size = new System.Drawing.Size(93, 13);
+            this.L_BottomBorder.TabIndex = 14;
+            this.L_BottomBorder.Text = "Bottom border (%):";
+            // 
+            // L_Appearing
+            // 
+            this.L_Appearing.AutoSize = true;
+            this.L_Appearing.Location = new System.Drawing.Point(6, 203);
+            this.L_Appearing.Name = "L_Appearing";
+            this.L_Appearing.Size = new System.Drawing.Size(160, 13);
+            this.L_Appearing.TabIndex = 16;
+            this.L_Appearing.Text = "Appearance of phase indicators:";
             // 
             // PreferencesDlg
             // 
@@ -628,6 +768,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinGreen)).EndInit();
             this.GB_ProgramSettings.ResumeLayout(false);
             this.GB_ProgramSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_LeftBorder)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_RightBorder)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_TopBorder)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_BottomBorder)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -677,5 +821,14 @@
         public System.Windows.Forms.ComboBox COMB_CensorType;
         private System.Windows.Forms.Label L_BothLights;
         private System.Windows.Forms.Label L_OnlyGreenLight;
+        private System.Windows.Forms.Label L_Appearing;
+        private System.Windows.Forms.Label L_BottomBorder;
+        private System.Windows.Forms.Label L_TopBorder;
+        private System.Windows.Forms.Label L_RightBorder;
+        private System.Windows.Forms.Label L_BorderLeft;
+        public System.Windows.Forms.NumericUpDown NUD_BottomBorder;
+        public System.Windows.Forms.NumericUpDown NUD_TopBorder;
+        public System.Windows.Forms.NumericUpDown NUD_RightBorder;
+        public System.Windows.Forms.NumericUpDown NUD_LeftBorder;
     }
 }
