@@ -39,6 +39,7 @@ namespace RLGL_Player
             this.OpenVideoDlg = new System.Windows.Forms.OpenFileDialog();
             this.B_Delete = new System.Windows.Forms.Button();
             this.L_FullPath = new System.Windows.Forms.Label();
+            this.CB_Shuffle = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // LB_Queue
@@ -139,6 +140,16 @@ namespace RLGL_Player
             this.L_FullPath.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.L_FullPath.UseMnemonic = false;
             // 
+            // CB_Shuffle
+            // 
+            this.CB_Shuffle.AutoSize = true;
+            this.CB_Shuffle.Location = new System.Drawing.Point(287, 419);
+            this.CB_Shuffle.Name = "CB_Shuffle";
+            this.CB_Shuffle.Size = new System.Drawing.Size(93, 17);
+            this.CB_Shuffle.TabIndex = 9;
+            this.CB_Shuffle.Text = "Shuffle videos";
+            this.CB_Shuffle.UseVisualStyleBackColor = true;
+            // 
             // RLGLPlayingQueueDlg
             // 
             this.AcceptButton = this.B_OK;
@@ -146,6 +157,7 @@ namespace RLGL_Player
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.B_Cancel;
             this.ClientSize = new System.Drawing.Size(473, 450);
+            this.Controls.Add(this.CB_Shuffle);
             this.Controls.Add(this.L_FullPath);
             this.Controls.Add(this.B_Delete);
             this.Controls.Add(this.B_Up);
@@ -180,5 +192,6 @@ namespace RLGL_Player
         private System.Windows.Forms.OpenFileDialog OpenVideoDlg;
         private System.Windows.Forms.Button B_Delete;
         private System.Windows.Forms.Label L_FullPath;
+        private System.Windows.Forms.CheckBox CB_Shuffle;
     }
 }

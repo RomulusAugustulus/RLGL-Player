@@ -70,9 +70,22 @@ namespace RLGL_Player
 
         private void B_OK_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < videos.Count; i++)
+            Random rand = new Random();
+            if (CB_Shuffle.Checked)
             {
-                videoQueue.AddVideo(videos[i].Item2);
+                while (videos.Count != 0)
+                {
+                    int vid = rand.Next(videos.Count);
+                    videoQueue.AddVideo(videos[vid].Item2);
+                    videos.RemoveAt(vid);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < videos.Count; i++)
+                {
+                    videoQueue.AddVideo(videos[i].Item2);
+                }
             }
         }
 
