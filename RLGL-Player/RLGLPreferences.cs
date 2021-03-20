@@ -33,7 +33,7 @@ namespace RLGL_Player
     class RLGLPreferences
     {
         //The current version of the file. Used to preserve backwards-compatibility.
-        private string preferencesFileVersion = "v.2";
+        private string preferencesFileVersion = "v.3";
         private int minGreen;
         private int maxGreen;
         private int minRed;
@@ -55,6 +55,13 @@ namespace RLGL_Player
         private int rightBorder;
         private int topBorder;
         private int bottomBorder;
+        private bool edging;
+        private int edgingWarmup;
+        private int minEdge;
+        private int maxEdge;
+        private int edgeChance;
+        private bool greenAfterEdge;
+        private Color edgeColor;
 
         //Minimum number of seconds a green phase will last.
         public int MinGreen { get => minGreen; }
@@ -98,6 +105,20 @@ namespace RLGL_Player
         public int TopBorder { get => topBorder; }
         //Gets the percentage of the bottom border.
         public int BottomBorder { get => bottomBorder; }
+        //Gets if edging phases appear in a session.
+        public bool Edging { get => edging; }
+        //Gets how many seconds a session will run before edge phases might appear.
+        public int EdgingWarmup { get => edgingWarmup; }
+        //Gets the minimal duration of an edge phase.
+        public int MinEdge { get => minEdge; }
+        //Gets the maximal duration of an edge phase.
+        public int MaxEdge { get => maxEdge; }
+        //Gets the chance that a green phase will end in an edge phase.
+        public int EdgeChance { get => edgeChance; }
+        //Gets if directly after an edge phase another green phase can appear.
+        public bool GreenAfterEdge { get => greenAfterEdge; }
+        //Gets the color of the edge phases.
+        public Color EdgeColor { get => edgeColor; }
 
         public RLGLPreferences()
         {
@@ -122,6 +143,13 @@ namespace RLGL_Player
             rightBorder = 10;
             topBorder = 10;
             bottomBorder = 10;
+            edging = false;
+            edgingWarmup = 60;
+            minEdge = 10;
+            maxEdge = 10;
+            edgeChance = 5;
+            greenAfterEdge = false;
+            edgeColor = Color.FromArgb(255, 0, 0, 255);
         }
 
         public RLGLPreferences(int minGreen, int maxGreen, int minRed, int maxRed, 
@@ -129,7 +157,9 @@ namespace RLGL_Player
                                 int metronomePossibility, Color greenLightColor, Color redLightColor,
                                 bool censoring, RLGLCensorType censorType, RLGLCensorSize censorSize,
                                 int censorProbability, Color censorColor, string censorPath,
-                                int leftBorder, int rightBorder, int topBorder, int bottomBorder)
+                                int leftBorder, int rightBorder, int topBorder, int bottomBorder,
+                                bool edging, int edgingWarmup, int minEdge, int maxEdge, int edgeChance,
+                                bool greenAfterEdge, Color edgeColor)
         {
             this.minGreen = minGreen;
             this.maxGreen = maxGreen;
@@ -152,6 +182,13 @@ namespace RLGL_Player
             this.rightBorder = rightBorder;
             this.topBorder = topBorder;
             this.bottomBorder = bottomBorder;
+            this.edging = edging;
+            this.edgingWarmup = edgingWarmup;
+            this.minEdge = minEdge;
+            this.maxEdge = maxEdge;
+            this.edgeChance = edgeChance;
+            this.greenAfterEdge = greenAfterEdge;
+            this.edgeColor = edgeColor;
         }
 
         //Sets the controls of a PreferencesDlg object to the currently stored preferences. 
@@ -191,6 +228,7 @@ namespace RLGL_Player
 
             prefDlg.P_GreenLightColor.BackColor = greenLightColor;
             prefDlg.P_RedLightColor.BackColor = redLightColor;
+            prefDlg.P_EdgeLightColor.BackColor = edgeColor;
             prefDlg.P_CensorColor.BackColor = censorColor;
             prefDlg.TBox_CensorPath.Text = censorPath;
 
@@ -207,6 +245,19 @@ namespace RLGL_Player
             prefDlg.NUD_RightBorder.Value = rightBorder;
             prefDlg.NUD_TopBorder.Value = topBorder;
             prefDlg.NUD_BottomBorder.Value = bottomBorder;
+
+            prefDlg.CB_EdgePhase.Checked = edging;
+            prefDlg.NUD_EdgeWarmup.Value = edgingWarmup;
+            prefDlg.NUD_MinEdge.Value = minEdge;
+            prefDlg.NUD_MaxEdge.Value = maxEdge;
+            prefDlg.TB_EdgeChance.Value = edgeChance;
+            prefDlg.CB_AllowGreenLight.Checked = greenAfterEdge;
+
+            prefDlg.NUD_EdgeWarmup.Enabled = edging;
+            prefDlg.NUD_MinEdge.Enabled = edging;
+            prefDlg.NUD_MaxEdge.Enabled = edging;
+            prefDlg.TB_EdgeChance.Enabled = edging;
+            prefDlg.CB_AllowGreenLight.Enabled = edging;
         }
 
         //Gets the values from the controls of a PreferencesDlg object and stores them locally.
@@ -239,7 +290,8 @@ namespace RLGL_Player
             
             greenLightColor = prefDlg.P_GreenLightColor.BackColor;
             redLightColor = prefDlg.P_RedLightColor.BackColor;
-            censorColor = prefDlg.P_CensorColor.BackColor;
+            censorColor = prefDlg.P_EdgeLightColor.BackColor;
+            edgeColor = prefDlg.P_EdgeLightColor.BackColor;
             censorPath = prefDlg.TBox_CensorPath.Text.Trim();
 
             censoring = prefDlg.CB_Censoring.Checked;
@@ -251,6 +303,13 @@ namespace RLGL_Player
             rightBorder = (int)prefDlg.NUD_RightBorder.Value;
             topBorder = (int)prefDlg.NUD_TopBorder.Value;
             bottomBorder = (int)prefDlg.NUD_BottomBorder.Value;
+
+            edging = prefDlg.CB_EdgePhase.Checked;
+            edgingWarmup = (int)prefDlg.NUD_EdgeWarmup.Value;
+            minEdge = (int)prefDlg.NUD_MinEdge.Value;
+            maxEdge = (int)prefDlg.NUD_MaxEdge.Value;
+            edgeChance = prefDlg.TB_EdgeChance.Value;
+            greenAfterEdge = prefDlg.CB_AllowGreenLight.Checked;
         }
 
         //Loads the contents of the file fileName if it exists and stores it locally.
@@ -285,6 +344,13 @@ namespace RLGL_Player
                     rightBorder = int.Parse(prefFile.ReadLine());
                     topBorder = int.Parse(prefFile.ReadLine());
                     bottomBorder = int.Parse(prefFile.ReadLine());
+                    edging = bool.Parse(prefFile.ReadLine());
+                    edgingWarmup = int.Parse(prefFile.ReadLine());
+                    minEdge = int.Parse(prefFile.ReadLine());
+                    maxEdge = int.Parse(prefFile.ReadLine());
+                    edgeChance = int.Parse(prefFile.ReadLine());
+                    greenAfterEdge = bool.Parse(prefFile.ReadLine());
+                    edgeColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                 }
                 else if(version.StartsWith("v"))
                 {
@@ -325,6 +391,30 @@ namespace RLGL_Player
                 censorProbability = int.Parse(prefFile.ReadLine());
                 censorColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                 censorPath = prefFile.ReadLine();
+            }
+            else if(version.Equals("v.2"))
+            {
+                maxGreen = int.Parse(prefFile.ReadLine());
+                maxRed = int.Parse(prefFile.ReadLine());
+                minGreen = int.Parse(prefFile.ReadLine());
+                minRed = int.Parse(prefFile.ReadLine());
+                ending = (RLGLEnding)int.Parse(prefFile.ReadLine());
+                metronome = bool.Parse(prefFile.ReadLine());
+                minBpm = int.Parse(prefFile.ReadLine());
+                maxBpm = int.Parse(prefFile.ReadLine());
+                metronomePossibility = int.Parse(prefFile.ReadLine());
+                greenLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                redLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                censoring = bool.Parse(prefFile.ReadLine());
+                censorType = (RLGLCensorType)int.Parse(prefFile.ReadLine());
+                censorSize = (RLGLCensorSize)int.Parse(prefFile.ReadLine());
+                censorProbability = int.Parse(prefFile.ReadLine());
+                censorColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                censorPath = prefFile.ReadLine();
+                leftBorder = int.Parse(prefFile.ReadLine());
+                rightBorder = int.Parse(prefFile.ReadLine());
+                topBorder = int.Parse(prefFile.ReadLine());
+                bottomBorder = int.Parse(prefFile.ReadLine());
             }
             else
             {
@@ -392,6 +482,16 @@ namespace RLGL_Player
             prefFile.WriteLine(rightBorder);
             prefFile.WriteLine(topBorder);
             prefFile.WriteLine(bottomBorder);
+            prefFile.WriteLine(edging);
+            prefFile.WriteLine(edgingWarmup);
+            prefFile.WriteLine(minEdge);
+            prefFile.WriteLine(maxEdge);
+            prefFile.WriteLine(edgeChance);
+            prefFile.WriteLine(greenAfterEdge);
+            prefFile.WriteLine(edgeColor.A);
+            prefFile.WriteLine(edgeColor.R);
+            prefFile.WriteLine(edgeColor.G);
+            prefFile.WriteLine(edgeColor.B);
 
             prefFile.Close();
         }

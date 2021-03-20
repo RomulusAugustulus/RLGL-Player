@@ -119,7 +119,7 @@ namespace RLGL_Player
         {
             if (ColorPicker.ShowDialog() == DialogResult.OK)
             {
-                P_CensorColor.BackColor = ColorPicker.Color;
+                P_EdgeLightColor.BackColor = ColorPicker.Color;
             }
         }
 
@@ -140,6 +140,45 @@ namespace RLGL_Player
             TB_CensorProbability.Enabled = check;
             COMB_CensorSize.Enabled = check;
             COMB_CensorType.Enabled = check;
+        }
+
+        //Get the color from the color dialog.
+        private void P_EdgeLightColor_Click(object sender, EventArgs e)
+        {
+            if (ColorPicker.ShowDialog() == DialogResult.OK)
+            {
+                P_EdgeLightColor.BackColor = ColorPicker.Color;
+            }
+        }
+
+        //Enable/Disable settings for edge phases
+        private void CB_EdgePhase_CheckedChanged(object sender, EventArgs e)
+        {
+            bool check = CB_EdgePhase.Checked;
+
+            TB_EdgeChance.Enabled = check;
+            CB_AllowGreenLight.Enabled = check;
+            NUD_EdgeWarmup.Enabled = check;
+            NUD_MaxEdge.Enabled = check;
+            NUD_MinEdge.Enabled = check;
+        }
+
+        //Maximal value can not be lower than minimal value.
+        private void NUD_MaxEdge_ValueChanged(object sender, EventArgs e)
+        {
+            if (NUD_MinEdge.Value > NUD_MaxEdge.Value)
+            {
+                NUD_MinEdge.Value = NUD_MaxEdge.Value;
+            }
+        }
+
+        //Minimum value can not be higher than maximal value.
+        private void NUD_MinEdge_ValueChanged(object sender, EventArgs e)
+        {
+            if (NUD_MaxEdge.Value < NUD_MinEdge.Value)
+            {
+                NUD_MaxEdge.Value = NUD_MinEdge.Value;
+            }
         }
     }
 }
