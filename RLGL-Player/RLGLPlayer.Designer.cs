@@ -50,6 +50,7 @@
             this.RLGL_VideoEndTimer = new System.Windows.Forms.Timer(this.components);
             this.RLGL_Metronome = new System.Windows.Forms.Timer(this.components);
             this.RLGL_Censor = new System.Windows.Forms.Timer(this.components);
+            this.RLGL_EdgingTimer = new System.Windows.Forms.Timer(this.components);
             this.MainMenu.SuspendLayout();
             this.VLC_Panel.SuspendLayout();
             this.RLGL_Layout.SuspendLayout();
@@ -235,6 +236,10 @@
             this.RLGL_Censor.Interval = 250;
             this.RLGL_Censor.Tick += new System.EventHandler(this.RLGL_Censor_Tick);
             // 
+            // RLGL_EdgingTimer
+            // 
+            this.RLGL_EdgingTimer.Tick += new System.EventHandler(this.RLGL_EdgingTimer_Tick);
+            // 
             // RLGLPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -284,6 +289,7 @@
         private System.Windows.Forms.ToolStripMenuItem editorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem censorEditorToolStripMenuItem;
         private System.Windows.Forms.Timer RLGL_Censor;
+        private System.Windows.Forms.Timer RLGL_EdgingTimer;
     }
 }
 

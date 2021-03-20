@@ -22,7 +22,7 @@ using System.Drawing;
 
 namespace RLGL_Player
 {   
-    public enum RLGLPhase { Green, Red }
+    public enum RLGLPhase { Green, Red, Edge }
 
     /*
      * The RLGLCurrentMedia class encapsulates relevant working data

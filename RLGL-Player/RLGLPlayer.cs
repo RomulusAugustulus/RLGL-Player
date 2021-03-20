@@ -42,6 +42,7 @@ public partial class RLGLPlayer : Form
 
         private List<Blackbar> censorbars;
         private bool censoring;
+        private bool edging;
         private static string[] imageFileExtensions = new string[] { ".jpg", ".png", ".bmp" };
 
         public RLGLPlayer()
@@ -51,6 +52,7 @@ public partial class RLGLPlayer : Form
             metronome = new SoundPlayer();
             censorbars = new List<Blackbar>();
             censoring = false;
+            edging = false;
             rlglCensorData = null;
             rlglVideoQueue = null;
             InitializeComponent();
@@ -67,6 +69,12 @@ public partial class RLGLPlayer : Form
 
                 if (rlglVideoQueue.VideosRemaining() > 0)
                 {
+                    edging = false;
+                    if (rlglPreferences.Edging)
+                    {
+                        SetEdging();
+                    }
+
                     PlayNextVideo();
                 }
             }
@@ -81,6 +89,7 @@ public partial class RLGLPlayer : Form
             if(preferencesDlg.ShowDialog() == DialogResult.OK)
             {
                 rlglPreferences.SavePreferences(preferencesDlg);
+                RLGL_EdgingTimer.Interval = rlglPreferences.EdgingWarmup;
                 UpdateRLGLLayoutSizes();
             }
         }
@@ -96,13 +105,33 @@ public partial class RLGLPlayer : Form
         {
             if(rlglCurrentMedia.CurrentPhase == RLGLPhase.Green)
             {
-                ShowPhase(RLGLPhase.Red, false);
-                rlglCurrentMedia.CurrentPhase = RLGLPhase.Red;
-                RLGL_SwitchTimer.Stop();
-                RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed) * 1000;
-                RLGL_SwitchTimer.Start();
+                bool edge = false;
+                if(edging)
+                {
+                    if(randomNumberGenerator.Next(1,11) <= rlglPreferences.EdgeChance)
+                    {
+                        edge = true;
+                    }
+                }
+
+                if (edge)
+                {
+                    ShowPhase(RLGLPhase.Edge, false);
+                    rlglCurrentMedia.CurrentPhase = RLGLPhase.Edge;
+                    RLGL_SwitchTimer.Stop();
+                    RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinEdge, rlglPreferences.MaxEdge) * 1000;
+                    RLGL_SwitchTimer.Start();
+                }
+                else
+                {
+                    ShowPhase(RLGLPhase.Red, false);
+                    rlglCurrentMedia.CurrentPhase = RLGLPhase.Red;
+                    RLGL_SwitchTimer.Stop();
+                    RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed) * 1000;
+                    RLGL_SwitchTimer.Start();
+                }
             }
-            else
+            else if(rlglCurrentMedia.CurrentPhase == RLGLPhase.Red)
             {
                 ShowPhase(RLGLPhase.Green, false);
                 rlglCurrentMedia.CurrentPhase = RLGLPhase.Green;
@@ -110,12 +139,38 @@ public partial class RLGLPlayer : Form
                 RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen) * 1000;
                 RLGL_SwitchTimer.Start();
             }
+            else
+            {
+                bool green = false;
+                if(rlglPreferences.GreenAfterEdge)
+                {
+                    green = randomNumberGenerator.Next(0, 2) < 1;
+                }
+
+                if(green)
+                {
+                    ShowPhase(RLGLPhase.Green, false);
+                    rlglCurrentMedia.CurrentPhase = RLGLPhase.Green;
+                    RLGL_SwitchTimer.Stop();
+                    RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen) * 1000;
+                    RLGL_SwitchTimer.Start();
+                }
+                else
+                {
+                    ShowPhase(RLGLPhase.Red, false);
+                    rlglCurrentMedia.CurrentPhase = RLGLPhase.Red;
+                    RLGL_SwitchTimer.Stop();
+                    RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed) * 1000;
+                    RLGL_SwitchTimer.Start();
+                }
+            }
         }
 
         //Load necessary files at startup.
         private void Form1_Load(object sender, EventArgs e)
         {
             rlglPreferences.LoadPreferencesFromFile("Preferences.config");
+            RLGL_EdgingTimer.Interval = rlglPreferences.EdgingWarmup;
             UpdateRLGLLayoutSizes();
             metronome.SoundLocation = "250551__druminfected__metronomeup.wav";
             L_Text.Text = "";            
@@ -250,6 +305,37 @@ public partial class RLGLPlayer : Form
                     }
 
                     break;
+
+                case RLGLPhase.Edge:
+                    RLGL_Layout.BackColor = rlglPreferences.EdgeColor;
+                    L_Text.BackColor = rlglPreferences.EdgeColor;
+                    StopMetronome();
+                    L_Text.Text = "Edge!";
+
+                    if (rlglPreferences.Censoring)
+                    {
+                        int rnd = 0;
+                        int probability = rlglPreferences.CensorProbability;
+
+                        if (probability <= 5)
+                        {
+                            rnd = randomNumberGenerator.Next(1, 6);
+                        }
+                        else
+                        {
+                            rnd = randomNumberGenerator.Next(6, 11);
+                        }
+
+                        if (rnd <= probability)
+                        {
+                            ShowCensoring(true);
+                        }
+                    }
+                    else
+                    {
+                        HideCensoring();
+                    }
+                    break;
             }            
         }
 
@@ -344,6 +430,11 @@ public partial class RLGLPlayer : Form
             {
                 PlayNextVideo();
             }
+            else
+            {
+                edging = false;
+                StopEdging();
+            }
         }
 
         //Start a metronome with a speed bpm in beats per minute.
@@ -357,6 +448,19 @@ public partial class RLGLPlayer : Form
         private void StopMetronome()
         {
             RLGL_Metronome.Stop();
+        }
+
+        //Starts the edging timer. Stops it if it is already running.
+        private void SetEdging()
+        {
+            StopEdging();
+            RLGL_EdgingTimer.Start();
+        }
+
+        //Stops the edging timer.
+        private void StopEdging()
+        {
+            RLGL_EdgingTimer.Stop();
         }
 
         //Show a censorbar according to the users preferences or simply update a visible one.
@@ -643,6 +747,12 @@ public partial class RLGLPlayer : Form
             RLGL_Layout.RowStyles[2].Height = rlglPreferences.BottomBorder;
             RLGL_Layout.ColumnStyles[0].Width = rlglPreferences.LeftBorder;
             RLGL_Layout.ColumnStyles[3].Width = rlglPreferences.RightBorder;
+        }
+
+        private void RLGL_EdgingTimer_Tick(object sender, EventArgs e)
+        {
+            edging = true;
+            RLGL_EdgingTimer.Stop();
         }
     }
 }
