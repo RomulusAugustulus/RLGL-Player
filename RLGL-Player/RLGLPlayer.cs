@@ -89,7 +89,7 @@ public partial class RLGLPlayer : Form
             if(preferencesDlg.ShowDialog() == DialogResult.OK)
             {
                 rlglPreferences.SavePreferences(preferencesDlg);
-                RLGL_EdgingTimer.Interval = rlglPreferences.EdgingWarmup;
+                RLGL_EdgingTimer.Interval = rlglPreferences.EdgingWarmup * 1000;
                 UpdateRLGLLayoutSizes();
             }
         }
@@ -170,7 +170,7 @@ public partial class RLGLPlayer : Form
         private void Form1_Load(object sender, EventArgs e)
         {
             rlglPreferences.LoadPreferencesFromFile("Preferences.config");
-            RLGL_EdgingTimer.Interval = rlglPreferences.EdgingWarmup;
+            RLGL_EdgingTimer.Interval = rlglPreferences.EdgingWarmup * 1000;
             UpdateRLGLLayoutSizes();
             metronome.SoundLocation = "250551__druminfected__metronomeup.wav";
             L_Text.Text = "";            
@@ -749,6 +749,7 @@ public partial class RLGLPlayer : Form
             RLGL_Layout.ColumnStyles[3].Width = rlglPreferences.RightBorder;
         }
 
+        //Enable edging phases.
         private void RLGL_EdgingTimer_Tick(object sender, EventArgs e)
         {
             edging = true;

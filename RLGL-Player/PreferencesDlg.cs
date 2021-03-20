@@ -119,7 +119,7 @@ namespace RLGL_Player
         {
             if (ColorPicker.ShowDialog() == DialogResult.OK)
             {
-                P_EdgeLightColor.BackColor = ColorPicker.Color;
+                P_CensorColor.BackColor = ColorPicker.Color;
             }
         }
 

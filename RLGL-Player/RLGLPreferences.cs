@@ -290,7 +290,7 @@ namespace RLGL_Player
             
             greenLightColor = prefDlg.P_GreenLightColor.BackColor;
             redLightColor = prefDlg.P_RedLightColor.BackColor;
-            censorColor = prefDlg.P_EdgeLightColor.BackColor;
+            censorColor = prefDlg.P_CensorColor.BackColor;
             edgeColor = prefDlg.P_EdgeLightColor.BackColor;
             censorPath = prefDlg.TBox_CensorPath.Text.Trim();
 

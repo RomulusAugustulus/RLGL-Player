@@ -30,6 +30,16 @@
         {
             this.ColorPicker = new System.Windows.Forms.ColorDialog();
             this.GB_RLGLSettings = new System.Windows.Forms.GroupBox();
+            this.CB_AllowGreenLight = new System.Windows.Forms.CheckBox();
+            this.L_EdgeChance = new System.Windows.Forms.Label();
+            this.TB_EdgeChance = new System.Windows.Forms.TrackBar();
+            this.NUD_MaxEdge = new System.Windows.Forms.NumericUpDown();
+            this.L_MaxEdge = new System.Windows.Forms.Label();
+            this.NUD_MinEdge = new System.Windows.Forms.NumericUpDown();
+            this.L_MinEdge = new System.Windows.Forms.Label();
+            this.NUD_EdgeWarmup = new System.Windows.Forms.NumericUpDown();
+            this.L_EdgeWarmup = new System.Windows.Forms.Label();
+            this.CB_EdgePhase = new System.Windows.Forms.CheckBox();
             this.L_BothLights = new System.Windows.Forms.Label();
             this.L_OnlyGreenLight = new System.Windows.Forms.Label();
             this.L_CensorPossibility = new System.Windows.Forms.Label();
@@ -59,6 +69,8 @@
             this.NUD_MinGreen = new System.Windows.Forms.NumericUpDown();
             this.L_GreenMin = new System.Windows.Forms.Label();
             this.GB_ProgramSettings = new System.Windows.Forms.GroupBox();
+            this.P_CensorColor = new System.Windows.Forms.Panel();
+            this.L_CensorColor = new System.Windows.Forms.Label();
             this.L_Appearing = new System.Windows.Forms.Label();
             this.NUD_BottomBorder = new System.Windows.Forms.NumericUpDown();
             this.L_BottomBorder = new System.Windows.Forms.Label();
@@ -80,22 +92,14 @@
             this.B_SaveExit = new System.Windows.Forms.Button();
             this.B_Cancel = new System.Windows.Forms.Button();
             this.FolderSelector = new System.Windows.Forms.FolderBrowserDialog();
-            this.P_CensorColor = new System.Windows.Forms.Panel();
-            this.L_CensorColor = new System.Windows.Forms.Label();
-            this.CB_EdgePhase = new System.Windows.Forms.CheckBox();
-            this.L_EdgeWarmup = new System.Windows.Forms.Label();
-            this.NUD_EdgeWarmup = new System.Windows.Forms.NumericUpDown();
-            this.NUD_MaxEdge = new System.Windows.Forms.NumericUpDown();
-            this.L_MaxEdge = new System.Windows.Forms.Label();
-            this.NUD_MinEdge = new System.Windows.Forms.NumericUpDown();
-            this.L_MinEdge = new System.Windows.Forms.Label();
             this.TAB_Preferences = new System.Windows.Forms.TabControl();
             this.TAB_RLGLSettings = new System.Windows.Forms.TabPage();
             this.TAB_GeneralSettings = new System.Windows.Forms.TabPage();
-            this.L_EdgeChance = new System.Windows.Forms.Label();
-            this.TB_EdgeChance = new System.Windows.Forms.TrackBar();
-            this.CB_AllowGreenLight = new System.Windows.Forms.CheckBox();
             this.GB_RLGLSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TB_EdgeChance)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxEdge)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_MinEdge)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_EdgeWarmup)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TB_CensorProbability)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TB_MetronomeChance)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxMetronome)).BeginInit();
@@ -109,13 +113,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.NUD_TopBorder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_RightBorder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_LeftBorder)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUD_EdgeWarmup)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxEdge)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUD_MinEdge)).BeginInit();
             this.TAB_Preferences.SuspendLayout();
             this.TAB_RLGLSettings.SuspendLayout();
             this.TAB_GeneralSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TB_EdgeChance)).BeginInit();
             this.SuspendLayout();
             // 
             // GB_RLGLSettings
@@ -164,6 +164,136 @@
             this.GB_RLGLSettings.TabIndex = 0;
             this.GB_RLGLSettings.TabStop = false;
             this.GB_RLGLSettings.Text = "Red Light Green Light Settings";
+            // 
+            // CB_AllowGreenLight
+            // 
+            this.CB_AllowGreenLight.AutoSize = true;
+            this.CB_AllowGreenLight.Location = new System.Drawing.Point(31, 302);
+            this.CB_AllowGreenLight.Name = "CB_AllowGreenLight";
+            this.CB_AllowGreenLight.Size = new System.Drawing.Size(186, 17);
+            this.CB_AllowGreenLight.TabIndex = 37;
+            this.CB_AllowGreenLight.Text = "Allow green light after edge phase";
+            this.CB_AllowGreenLight.UseVisualStyleBackColor = true;
+            // 
+            // L_EdgeChance
+            // 
+            this.L_EdgeChance.AutoSize = true;
+            this.L_EdgeChance.Location = new System.Drawing.Point(28, 264);
+            this.L_EdgeChance.Name = "L_EdgeChance";
+            this.L_EdgeChance.Size = new System.Drawing.Size(55, 13);
+            this.L_EdgeChance.TabIndex = 36;
+            this.L_EdgeChance.Text = "Possibility:";
+            // 
+            // TB_EdgeChance
+            // 
+            this.TB_EdgeChance.Location = new System.Drawing.Point(102, 251);
+            this.TB_EdgeChance.Minimum = 1;
+            this.TB_EdgeChance.Name = "TB_EdgeChance";
+            this.TB_EdgeChance.Size = new System.Drawing.Size(449, 45);
+            this.TB_EdgeChance.TabIndex = 35;
+            this.TB_EdgeChance.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.TB_EdgeChance.Value = 5;
+            // 
+            // NUD_MaxEdge
+            // 
+            this.NUD_MaxEdge.Location = new System.Drawing.Point(184, 225);
+            this.NUD_MaxEdge.Maximum = new decimal(new int[] {
+            3600,
+            0,
+            0,
+            0});
+            this.NUD_MaxEdge.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_MaxEdge.Name = "NUD_MaxEdge";
+            this.NUD_MaxEdge.Size = new System.Drawing.Size(367, 20);
+            this.NUD_MaxEdge.TabIndex = 34;
+            this.NUD_MaxEdge.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_MaxEdge.ValueChanged += new System.EventHandler(this.NUD_MaxEdge_ValueChanged);
+            // 
+            // L_MaxEdge
+            // 
+            this.L_MaxEdge.AutoSize = true;
+            this.L_MaxEdge.Location = new System.Drawing.Point(28, 227);
+            this.L_MaxEdge.Name = "L_MaxEdge";
+            this.L_MaxEdge.Size = new System.Drawing.Size(150, 13);
+            this.L_MaxEdge.TabIndex = 33;
+            this.L_MaxEdge.Text = "Maximal duration of edge light:";
+            // 
+            // NUD_MinEdge
+            // 
+            this.NUD_MinEdge.Location = new System.Drawing.Point(184, 197);
+            this.NUD_MinEdge.Maximum = new decimal(new int[] {
+            3600,
+            0,
+            0,
+            0});
+            this.NUD_MinEdge.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_MinEdge.Name = "NUD_MinEdge";
+            this.NUD_MinEdge.Size = new System.Drawing.Size(367, 20);
+            this.NUD_MinEdge.TabIndex = 32;
+            this.NUD_MinEdge.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_MinEdge.ValueChanged += new System.EventHandler(this.NUD_MinEdge_ValueChanged);
+            // 
+            // L_MinEdge
+            // 
+            this.L_MinEdge.AutoSize = true;
+            this.L_MinEdge.Location = new System.Drawing.Point(28, 199);
+            this.L_MinEdge.Name = "L_MinEdge";
+            this.L_MinEdge.Size = new System.Drawing.Size(147, 13);
+            this.L_MinEdge.TabIndex = 31;
+            this.L_MinEdge.Text = "Minimal duration of edge light:";
+            // 
+            // NUD_EdgeWarmup
+            // 
+            this.NUD_EdgeWarmup.Location = new System.Drawing.Point(184, 169);
+            this.NUD_EdgeWarmup.Maximum = new decimal(new int[] {
+            3600,
+            0,
+            0,
+            0});
+            this.NUD_EdgeWarmup.Name = "NUD_EdgeWarmup";
+            this.NUD_EdgeWarmup.Size = new System.Drawing.Size(367, 20);
+            this.NUD_EdgeWarmup.TabIndex = 30;
+            this.NUD_EdgeWarmup.Value = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            // 
+            // L_EdgeWarmup
+            // 
+            this.L_EdgeWarmup.AutoSize = true;
+            this.L_EdgeWarmup.Location = new System.Drawing.Point(28, 171);
+            this.L_EdgeWarmup.Name = "L_EdgeWarmup";
+            this.L_EdgeWarmup.Size = new System.Drawing.Size(108, 13);
+            this.L_EdgeWarmup.TabIndex = 29;
+            this.L_EdgeWarmup.Text = "Initial no edge period:";
+            // 
+            // CB_EdgePhase
+            // 
+            this.CB_EdgePhase.AutoSize = true;
+            this.CB_EdgePhase.Location = new System.Drawing.Point(6, 151);
+            this.CB_EdgePhase.Name = "CB_EdgePhase";
+            this.CB_EdgePhase.Size = new System.Drawing.Size(123, 17);
+            this.CB_EdgePhase.TabIndex = 28;
+            this.CB_EdgePhase.Text = "Enable edge phases";
+            this.CB_EdgePhase.UseVisualStyleBackColor = true;
+            this.CB_EdgePhase.CheckedChanged += new System.EventHandler(this.CB_EdgePhase_CheckedChanged);
             // 
             // L_BothLights
             // 
@@ -544,12 +674,30 @@
             this.GB_ProgramSettings.Controls.Add(this.L_RedLightColor);
             this.GB_ProgramSettings.Controls.Add(this.P_GreenLightColor);
             this.GB_ProgramSettings.Controls.Add(this.L_GreenLightColor);
-            this.GB_ProgramSettings.Location = new System.Drawing.Point(6, 6);
+            this.GB_ProgramSettings.Location = new System.Drawing.Point(3, 6);
             this.GB_ProgramSettings.Name = "GB_ProgramSettings";
-            this.GB_ProgramSettings.Size = new System.Drawing.Size(571, 462);
+            this.GB_ProgramSettings.Size = new System.Drawing.Size(574, 462);
             this.GB_ProgramSettings.TabIndex = 1;
             this.GB_ProgramSettings.TabStop = false;
             this.GB_ProgramSettings.Text = "General Settings";
+            // 
+            // P_CensorColor
+            // 
+            this.P_CensorColor.BackColor = System.Drawing.Color.Black;
+            this.P_CensorColor.Location = new System.Drawing.Point(99, 121);
+            this.P_CensorColor.Name = "P_CensorColor";
+            this.P_CensorColor.Size = new System.Drawing.Size(466, 26);
+            this.P_CensorColor.TabIndex = 18;
+            this.P_CensorColor.Click += new System.EventHandler(this.P_CensorColor_Click);
+            // 
+            // L_CensorColor
+            // 
+            this.L_CensorColor.AutoSize = true;
+            this.L_CensorColor.Location = new System.Drawing.Point(6, 126);
+            this.L_CensorColor.Name = "L_CensorColor";
+            this.L_CensorColor.Size = new System.Drawing.Size(84, 13);
+            this.L_CensorColor.TabIndex = 17;
+            this.L_CensorColor.Text = "Censorbar color:";
             // 
             // L_Appearing
             // 
@@ -773,125 +921,6 @@
             // 
             this.FolderSelector.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
-            // P_CensorColor
-            // 
-            this.P_CensorColor.BackColor = System.Drawing.Color.Black;
-            this.P_CensorColor.Location = new System.Drawing.Point(99, 121);
-            this.P_CensorColor.Name = "P_CensorColor";
-            this.P_CensorColor.Size = new System.Drawing.Size(466, 26);
-            this.P_CensorColor.TabIndex = 18;
-            this.P_CensorColor.Click += new System.EventHandler(this.P_CensorColor_Click);
-            // 
-            // L_CensorColor
-            // 
-            this.L_CensorColor.AutoSize = true;
-            this.L_CensorColor.Location = new System.Drawing.Point(6, 126);
-            this.L_CensorColor.Name = "L_CensorColor";
-            this.L_CensorColor.Size = new System.Drawing.Size(84, 13);
-            this.L_CensorColor.TabIndex = 17;
-            this.L_CensorColor.Text = "Censorbar color:";
-            // 
-            // CB_EdgePhase
-            // 
-            this.CB_EdgePhase.AutoSize = true;
-            this.CB_EdgePhase.Location = new System.Drawing.Point(6, 151);
-            this.CB_EdgePhase.Name = "CB_EdgePhase";
-            this.CB_EdgePhase.Size = new System.Drawing.Size(123, 17);
-            this.CB_EdgePhase.TabIndex = 28;
-            this.CB_EdgePhase.Text = "Enable edge phases";
-            this.CB_EdgePhase.UseVisualStyleBackColor = true;
-            this.CB_EdgePhase.CheckedChanged += new System.EventHandler(this.CB_EdgePhase_CheckedChanged);
-            // 
-            // L_EdgeWarmup
-            // 
-            this.L_EdgeWarmup.AutoSize = true;
-            this.L_EdgeWarmup.Location = new System.Drawing.Point(28, 171);
-            this.L_EdgeWarmup.Name = "L_EdgeWarmup";
-            this.L_EdgeWarmup.Size = new System.Drawing.Size(108, 13);
-            this.L_EdgeWarmup.TabIndex = 29;
-            this.L_EdgeWarmup.Text = "Initial no edge period:";
-            // 
-            // NUD_EdgeWarmup
-            // 
-            this.NUD_EdgeWarmup.Location = new System.Drawing.Point(184, 169);
-            this.NUD_EdgeWarmup.Maximum = new decimal(new int[] {
-            3600,
-            0,
-            0,
-            0});
-            this.NUD_EdgeWarmup.Name = "NUD_EdgeWarmup";
-            this.NUD_EdgeWarmup.Size = new System.Drawing.Size(367, 20);
-            this.NUD_EdgeWarmup.TabIndex = 30;
-            this.NUD_EdgeWarmup.Value = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
-            // 
-            // NUD_MaxEdge
-            // 
-            this.NUD_MaxEdge.Location = new System.Drawing.Point(184, 225);
-            this.NUD_MaxEdge.Maximum = new decimal(new int[] {
-            3600,
-            0,
-            0,
-            0});
-            this.NUD_MaxEdge.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.NUD_MaxEdge.Name = "NUD_MaxEdge";
-            this.NUD_MaxEdge.Size = new System.Drawing.Size(367, 20);
-            this.NUD_MaxEdge.TabIndex = 34;
-            this.NUD_MaxEdge.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.NUD_MaxEdge.ValueChanged += new System.EventHandler(this.NUD_MaxEdge_ValueChanged);
-            // 
-            // L_MaxEdge
-            // 
-            this.L_MaxEdge.AutoSize = true;
-            this.L_MaxEdge.Location = new System.Drawing.Point(28, 227);
-            this.L_MaxEdge.Name = "L_MaxEdge";
-            this.L_MaxEdge.Size = new System.Drawing.Size(150, 13);
-            this.L_MaxEdge.TabIndex = 33;
-            this.L_MaxEdge.Text = "Maximal duration of edge light:";
-            // 
-            // NUD_MinEdge
-            // 
-            this.NUD_MinEdge.Location = new System.Drawing.Point(184, 197);
-            this.NUD_MinEdge.Maximum = new decimal(new int[] {
-            3600,
-            0,
-            0,
-            0});
-            this.NUD_MinEdge.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.NUD_MinEdge.Name = "NUD_MinEdge";
-            this.NUD_MinEdge.Size = new System.Drawing.Size(367, 20);
-            this.NUD_MinEdge.TabIndex = 32;
-            this.NUD_MinEdge.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.NUD_MinEdge.ValueChanged += new System.EventHandler(this.NUD_MinEdge_ValueChanged);
-            // 
-            // L_MinEdge
-            // 
-            this.L_MinEdge.AutoSize = true;
-            this.L_MinEdge.Location = new System.Drawing.Point(28, 199);
-            this.L_MinEdge.Name = "L_MinEdge";
-            this.L_MinEdge.Size = new System.Drawing.Size(147, 13);
-            this.L_MinEdge.TabIndex = 31;
-            this.L_MinEdge.Text = "Minimal duration of edge light:";
-            // 
             // TAB_Preferences
             // 
             this.TAB_Preferences.Controls.Add(this.TAB_RLGLSettings);
@@ -925,35 +954,6 @@
             this.TAB_GeneralSettings.TabIndex = 1;
             this.TAB_GeneralSettings.Text = "General Settings";
             // 
-            // L_EdgeChance
-            // 
-            this.L_EdgeChance.AutoSize = true;
-            this.L_EdgeChance.Location = new System.Drawing.Point(28, 264);
-            this.L_EdgeChance.Name = "L_EdgeChance";
-            this.L_EdgeChance.Size = new System.Drawing.Size(55, 13);
-            this.L_EdgeChance.TabIndex = 36;
-            this.L_EdgeChance.Text = "Possibility:";
-            // 
-            // TB_EdgeChance
-            // 
-            this.TB_EdgeChance.Location = new System.Drawing.Point(102, 251);
-            this.TB_EdgeChance.Minimum = 1;
-            this.TB_EdgeChance.Name = "TB_EdgeChance";
-            this.TB_EdgeChance.Size = new System.Drawing.Size(449, 45);
-            this.TB_EdgeChance.TabIndex = 35;
-            this.TB_EdgeChance.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.TB_EdgeChance.Value = 5;
-            // 
-            // CB_AllowGreenLight
-            // 
-            this.CB_AllowGreenLight.AutoSize = true;
-            this.CB_AllowGreenLight.Location = new System.Drawing.Point(31, 302);
-            this.CB_AllowGreenLight.Name = "CB_AllowGreenLight";
-            this.CB_AllowGreenLight.Size = new System.Drawing.Size(186, 17);
-            this.CB_AllowGreenLight.TabIndex = 37;
-            this.CB_AllowGreenLight.Text = "Allow green light after edge phase";
-            this.CB_AllowGreenLight.UseVisualStyleBackColor = true;
-            // 
             // PreferencesDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -972,6 +972,10 @@
             this.Text = "Preferences...";
             this.GB_RLGLSettings.ResumeLayout(false);
             this.GB_RLGLSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TB_EdgeChance)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxEdge)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_MinEdge)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_EdgeWarmup)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TB_CensorProbability)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TB_MetronomeChance)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxMetronome)).EndInit();
@@ -986,13 +990,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.NUD_TopBorder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_RightBorder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_LeftBorder)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUD_EdgeWarmup)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxEdge)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUD_MinEdge)).EndInit();
             this.TAB_Preferences.ResumeLayout(false);
             this.TAB_RLGLSettings.ResumeLayout(false);
             this.TAB_GeneralSettings.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.TB_EdgeChance)).EndInit();
             this.ResumeLayout(false);
 
         }
