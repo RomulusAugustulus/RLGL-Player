@@ -30,6 +30,9 @@ namespace RLGL_Player
     /*
      * RLGLPlayer is the main form of the application. 
      * It contains all the logic to play the different phases to any media.
+     * 
+     * RLGL_Timer is currently for debugging purposes. If you need the elapsed time of a video, uncommend
+     * the code.
      */
 public partial class RLGLPlayer : Form
     {
@@ -76,6 +79,7 @@ public partial class RLGLPlayer : Form
                     }
 
                     PlayNextVideo();
+                    //RLGL_Timer.Start();
                 }
             }
         }
@@ -173,7 +177,8 @@ public partial class RLGLPlayer : Form
             RLGL_EdgingTimer.Interval = rlglPreferences.EdgingWarmup * 1000;
             UpdateRLGLLayoutSizes();
             metronome.SoundLocation = "250551__druminfected__metronomeup.wav";
-            L_Text.Text = "";            
+            L_Text.Text = "";
+            L_TimePassed.Text = "";
         }
 
         //Save the preferences to the disc.
@@ -214,7 +219,14 @@ public partial class RLGLPlayer : Form
                         break;
 
                     case RLGLEnding.Random:
-                        ShowPhase((RLGLPhase)randomNumberGenerator.Next(0, 2), true);
+                        if (rlglCurrentMedia.Ending == RLGLSpecificEnding.Cum)
+                        {
+                            ShowPhase(RLGLPhase.Green, true);
+                        }
+                        else if(rlglCurrentMedia.Ending == RLGLSpecificEnding.Denied)
+                        {
+                            ShowPhase(RLGLPhase.Red, true);
+                        }
                         break;
                 }
             }
@@ -227,7 +239,7 @@ public partial class RLGLPlayer : Form
         //Calculates the duration of the video and sets the timer accordingly.
         private void SetVideoEndTimer()
         {
-            RLGL_VideoEndTimer.Interval = (int)(VLC_Control.GetCurrentMedia().Duration - (rlglCurrentMedia.End + TimeSpan.FromSeconds(20))).TotalMilliseconds;
+            RLGL_VideoEndTimer.Interval = (int)(VLC_Control.GetCurrentMedia().Duration - (rlglCurrentMedia.End + TimeSpan.FromSeconds(2))).TotalMilliseconds;
             RLGL_VideoEndTimer.Start();
         }
 
@@ -347,6 +359,7 @@ public partial class RLGLPlayer : Form
             VLC_Control.SetMedia(fs);
 
             TimeSpan lastDuration = TimeSpan.FromSeconds(0);
+            RLGLSpecificEnding ending = RLGLSpecificEnding.Denied;
 
             if (rlglVideoQueue.VideosRemaining() == 0)
             {
@@ -354,6 +367,7 @@ public partial class RLGLPlayer : Form
                 {
                     case RLGLEnding.AlwaysGreen:
                         lastDuration = TimeSpan.FromSeconds(randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen));
+                        ending = RLGLSpecificEnding.Cum;
                         break;
 
                     case RLGLEnding.AlwaysRed:
@@ -361,7 +375,15 @@ public partial class RLGLPlayer : Form
                         break;
 
                     case RLGLEnding.Random:
-                        lastDuration = TimeSpan.FromSeconds(randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen));
+                        ending = (RLGLSpecificEnding)randomNumberGenerator.Next(0, 2);
+                        if (ending == RLGLSpecificEnding.Cum)
+                        {
+                            lastDuration = TimeSpan.FromSeconds(randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen));
+                        }
+                        else if(ending == RLGLSpecificEnding.Denied)
+                        {
+                            lastDuration = TimeSpan.FromSeconds(randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed));
+                        }
                         break;
                 }
             }
@@ -372,7 +394,8 @@ public partial class RLGLPlayer : Form
 
             rlglCurrentMedia = new RLGLCurrentMedia(fileName,
                 DateTime.Now, lastDuration,
-                (RLGLPhase)randomNumberGenerator.Next(0, 2));
+                (RLGLPhase)randomNumberGenerator.Next(0, 2),
+                ending);
 
             for (int i = 0; i < censorbars.Count; i++)
             {
@@ -434,6 +457,7 @@ public partial class RLGLPlayer : Form
             {
                 edging = false;
                 StopEdging();
+                //RLGL_Timer.Stop();
             }
         }
 
@@ -755,5 +779,10 @@ public partial class RLGLPlayer : Form
             edging = true;
             RLGL_EdgingTimer.Stop();
         }
+
+        /*private void RLGL_Timer_Tick(object sender, EventArgs e)
+        {
+            L_TimePassed.Text = (DateTime.Now - rlglCurrentMedia.Start).ToString(@"hh\:mm\:ss");
+        }*/
     }
 }

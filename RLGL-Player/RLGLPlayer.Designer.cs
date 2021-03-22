@@ -51,6 +51,8 @@
             this.RLGL_Metronome = new System.Windows.Forms.Timer(this.components);
             this.RLGL_Censor = new System.Windows.Forms.Timer(this.components);
             this.RLGL_EdgingTimer = new System.Windows.Forms.Timer(this.components);
+            this.L_TimePassed = new System.Windows.Forms.Label();
+            this.RLGL_Timer = new System.Windows.Forms.Timer(this.components);
             this.MainMenu.SuspendLayout();
             this.VLC_Panel.SuspendLayout();
             this.RLGL_Layout.SuspendLayout();
@@ -161,6 +163,7 @@
             this.RLGL_Layout.Controls.Add(this.VLC_Control, 1, 1);
             this.RLGL_Layout.Controls.Add(this.L_Text, 2, 2);
             this.RLGL_Layout.Controls.Add(this.TB_Volume, 0, 2);
+            this.RLGL_Layout.Controls.Add(this.L_TimePassed, 3, 2);
             this.RLGL_Layout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RLGL_Layout.Location = new System.Drawing.Point(0, 0);
             this.RLGL_Layout.Name = "RLGL_Layout";
@@ -240,6 +243,21 @@
             // 
             this.RLGL_EdgingTimer.Tick += new System.EventHandler(this.RLGL_EdgingTimer_Tick);
             // 
+            // L_TimePassed
+            // 
+            this.L_TimePassed.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.L_TimePassed.Location = new System.Drawing.Point(980, 506);
+            this.L_TimePassed.Name = "L_TimePassed";
+            this.L_TimePassed.Size = new System.Drawing.Size(93, 57);
+            this.L_TimePassed.TabIndex = 4;
+            this.L_TimePassed.Text = "Time";
+            this.L_TimePassed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // RLGL_Timer
+            // 
+            this.RLGL_Timer.Interval = 1000;
+            this.RLGL_Timer.Tick += new System.EventHandler(this.RLGL_Timer_Tick);
+            // 
             // RLGLPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -290,6 +308,8 @@
         private System.Windows.Forms.ToolStripMenuItem censorEditorToolStripMenuItem;
         private System.Windows.Forms.Timer RLGL_Censor;
         private System.Windows.Forms.Timer RLGL_EdgingTimer;
+        private System.Windows.Forms.Label L_TimePassed;
+        private System.Windows.Forms.Timer RLGL_Timer;
     }
 }
 

@@ -203,7 +203,7 @@
             0,
             0});
             this.NUD_MaxEdge.Minimum = new decimal(new int[] {
-            10,
+            1,
             0,
             0,
             0});
@@ -235,7 +235,7 @@
             0,
             0});
             this.NUD_MinEdge.Minimum = new decimal(new int[] {
-            10,
+            1,
             0,
             0,
             0});
@@ -533,7 +533,7 @@
             0,
             0});
             this.NUD_MaxRed.Minimum = new decimal(new int[] {
-            10,
+            1,
             0,
             0,
             0});
@@ -565,7 +565,7 @@
             0,
             0});
             this.NUD_MinRed.Minimum = new decimal(new int[] {
-            10,
+            1,
             0,
             0,
             0});
@@ -597,7 +597,7 @@
             0,
             0});
             this.NUD_MaxGreen.Minimum = new decimal(new int[] {
-            10,
+            1,
             0,
             0,
             0});
@@ -629,7 +629,7 @@
             0,
             0});
             this.NUD_MinGreen.Minimum = new decimal(new int[] {
-            10,
+            1,
             0,
             0,
             0});

@@ -24,6 +24,8 @@ namespace RLGL_Player
 {   
     public enum RLGLPhase { Green, Red, Edge }
 
+    public enum RLGLSpecificEnding { Cum, Denied }
+
     /*
      * The RLGLCurrentMedia class encapsulates relevant working data
      */ 
@@ -34,6 +36,7 @@ namespace RLGL_Player
         private TimeSpan end;
         private RLGLPhase currentPhase;
         private Dictionary<int, PointF> currentCensor;
+        private RLGLSpecificEnding ending;
 
         //Full path to the current played media-file.
         public string Media { get => media; }
@@ -43,14 +46,17 @@ namespace RLGL_Player
         public TimeSpan End { get => end; set => end = value; }
         //The currently played phase.
         public RLGLPhase CurrentPhase { get => currentPhase; set => currentPhase = value; }
+        //The ending for this video. It is currently only used for the last video in a playlist!
+        public RLGLSpecificEnding Ending { get => ending; }
 
-        public RLGLCurrentMedia(string media, DateTime start, TimeSpan end, RLGLPhase startPhase)
+        public RLGLCurrentMedia(string media, DateTime start, TimeSpan end, RLGLPhase startPhase, RLGLSpecificEnding ending)
         {
             this.media = media;
             this.start = start;
             this.end = end;
             currentPhase = startPhase;
             currentCensor = new Dictionary<int, PointF>();
+            this.ending = ending;
         }
 
         //Set the relative dimensions of the censorbars to their default values.
