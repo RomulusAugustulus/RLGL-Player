@@ -139,10 +139,10 @@ namespace RLGL_Player
             censorProbability = 5;
             censorColor = Color.FromArgb(255, 0, 0, 0);
             censorPath = "";
-            leftBorder = 50;
-            rightBorder = 50;
-            topBorder = 50;
-            bottomBorder = 50;
+            leftBorder = 100;
+            rightBorder = 100;
+            topBorder = 100;
+            bottomBorder = 80;
             edging = false;
             edgingWarmup = 60;
             minEdge = 10;
