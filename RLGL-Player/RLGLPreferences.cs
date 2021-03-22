@@ -139,10 +139,10 @@ namespace RLGL_Player
             censorProbability = 5;
             censorColor = Color.FromArgb(255, 0, 0, 0);
             censorPath = "";
-            leftBorder = 10;
-            rightBorder = 10;
-            topBorder = 10;
-            bottomBorder = 10;
+            leftBorder = 50;
+            rightBorder = 50;
+            topBorder = 50;
+            bottomBorder = 50;
             edging = false;
             edgingWarmup = 60;
             minEdge = 10;
@@ -362,6 +362,12 @@ namespace RLGL_Player
                     //Load the first layout of the file. This has no version stored in it,
                     //so it has to handled separately.
                     ReadFirstVersion(prefFile, version);
+                }
+
+                //prevent having a too small bottom border by updating from older versions.
+                if(bottomBorder < 80)
+                {
+                    bottomBorder = 80;
                 }
 
                 prefFile.Close();

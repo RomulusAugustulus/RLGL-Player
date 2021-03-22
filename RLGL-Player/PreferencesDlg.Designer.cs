@@ -711,13 +711,8 @@
             // NUD_BottomBorder
             // 
             this.NUD_BottomBorder.Location = new System.Drawing.Point(99, 318);
-            this.NUD_BottomBorder.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             this.NUD_BottomBorder.Minimum = new decimal(new int[] {
-            4,
+            80,
             0,
             0,
             0});
@@ -725,7 +720,7 @@
             this.NUD_BottomBorder.Size = new System.Drawing.Size(466, 20);
             this.NUD_BottomBorder.TabIndex = 15;
             this.NUD_BottomBorder.Value = new decimal(new int[] {
-            10,
+            100,
             0,
             0,
             0});
@@ -742,16 +737,11 @@
             // NUD_TopBorder
             // 
             this.NUD_TopBorder.Location = new System.Drawing.Point(99, 292);
-            this.NUD_TopBorder.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             this.NUD_TopBorder.Name = "NUD_TopBorder";
             this.NUD_TopBorder.Size = new System.Drawing.Size(466, 20);
             this.NUD_TopBorder.TabIndex = 13;
             this.NUD_TopBorder.Value = new decimal(new int[] {
-            10,
+            100,
             0,
             0,
             0});
@@ -768,16 +758,11 @@
             // NUD_RightBorder
             // 
             this.NUD_RightBorder.Location = new System.Drawing.Point(99, 266);
-            this.NUD_RightBorder.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             this.NUD_RightBorder.Name = "NUD_RightBorder";
             this.NUD_RightBorder.Size = new System.Drawing.Size(466, 20);
             this.NUD_RightBorder.TabIndex = 11;
             this.NUD_RightBorder.Value = new decimal(new int[] {
-            10,
+            100,
             0,
             0,
             0});
@@ -794,16 +779,11 @@
             // NUD_LeftBorder
             // 
             this.NUD_LeftBorder.Location = new System.Drawing.Point(99, 240);
-            this.NUD_LeftBorder.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             this.NUD_LeftBorder.Name = "NUD_LeftBorder";
             this.NUD_LeftBorder.Size = new System.Drawing.Size(466, 20);
             this.NUD_LeftBorder.TabIndex = 9;
             this.NUD_LeftBorder.Value = new decimal(new int[] {
-            10,
+            100,
             0,
             0,
             0});

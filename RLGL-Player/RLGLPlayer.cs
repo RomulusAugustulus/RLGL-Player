@@ -767,10 +767,10 @@ public partial class RLGLPlayer : Form
         //Set the layout of the main-window according to the preferences.
         private void UpdateRLGLLayoutSizes()
         {
-            RLGL_Layout.RowStyles[0].Height = rlglPreferences.TopBorder;
-            RLGL_Layout.RowStyles[2].Height = rlglPreferences.BottomBorder;
-            RLGL_Layout.ColumnStyles[0].Width = rlglPreferences.LeftBorder;
-            RLGL_Layout.ColumnStyles[3].Width = rlglPreferences.RightBorder;
+            RLGL_Layout.RowStyles[0].Height = (float)rlglPreferences.TopBorder/100.0f * 50;
+            RLGL_Layout.RowStyles[2].Height = (float)rlglPreferences.BottomBorder/100.0f * 50;
+            RLGL_Layout.ColumnStyles[0].Width = (float)rlglPreferences.LeftBorder/100.0f * 50;
+            RLGL_Layout.ColumnStyles[3].Width = (float)rlglPreferences.RightBorder/100.0f * 50;
         }
 
         //Enable edging phases.
@@ -780,9 +780,9 @@ public partial class RLGLPlayer : Form
             RLGL_EdgingTimer.Stop();
         }
 
-        /*private void RLGL_Timer_Tick(object sender, EventArgs e)
-        {
-            L_TimePassed.Text = (DateTime.Now - rlglCurrentMedia.Start).ToString(@"hh\:mm\:ss");
-        }*/
+       private void RLGL_Timer_Tick(object sender, EventArgs e)
+       {
+            //L_TimePassed.Text = (DateTime.Now - rlglCurrentMedia.Start).ToString(@"hh\:mm\:ss");
+       }
     }
 }
