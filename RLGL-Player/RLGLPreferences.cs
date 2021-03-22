@@ -142,7 +142,7 @@ namespace RLGL_Player
             leftBorder = 100;
             rightBorder = 100;
             topBorder = 100;
-            bottomBorder = 80;
+            bottomBorder = 100;
             edging = false;
             edgingWarmup = 60;
             minEdge = 10;
