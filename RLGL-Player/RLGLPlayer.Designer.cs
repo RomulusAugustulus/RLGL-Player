@@ -212,6 +212,7 @@
             this.TB_Volume.Name = "TB_Volume";
             this.TB_Volume.Size = new System.Drawing.Size(144, 44);
             this.TB_Volume.TabIndex = 3;
+            this.TB_Volume.TickFrequency = 10;
             this.TB_Volume.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.TB_Volume.Value = 100;
             this.TB_Volume.ValueChanged += new System.EventHandler(this.TB_Volume_ValueChanged);

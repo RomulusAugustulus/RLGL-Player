@@ -92,7 +92,7 @@ namespace RLGL_Player
             
             NUD_MinMetronome.Enabled = check;
             NUD_MaxMetronome.Enabled = check;
-            TB_MetronomeChance.Enabled = check;
+            ETB_MetronomeChance.Enabled = check;
             
         }
 
@@ -137,9 +137,10 @@ namespace RLGL_Player
         {
             bool check = CB_Censoring.Checked;
 
-            TB_CensorProbability.Enabled = check;
+            ETB_CensorChance.Enabled = check;
             COMB_CensorSize.Enabled = check;
             COMB_CensorType.Enabled = check;
+            CB_CensorOnlyGreen.Enabled = check;
         }
 
         //Get the color from the color dialog.
@@ -156,7 +157,7 @@ namespace RLGL_Player
         {
             bool check = CB_EdgePhase.Checked;
 
-            TB_EdgeChance.Enabled = check;
+            ETB_EdgeChance.Enabled = check;
             CB_AllowGreenLight.Enabled = check;
             NUD_EdgeWarmup.Enabled = check;
             NUD_MaxEdge.Enabled = check;

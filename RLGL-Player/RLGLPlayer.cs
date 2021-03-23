@@ -112,7 +112,7 @@ public partial class RLGLPlayer : Form
                 bool edge = false;
                 if(edging)
                 {
-                    if(randomNumberGenerator.Next(1,11) <= rlglPreferences.EdgeChance)
+                    if(randomNumberGenerator.Next(1,101) <= rlglPreferences.EdgeChance)
                     {
                         edge = true;
                     }
@@ -261,7 +261,7 @@ public partial class RLGLPlayer : Form
                         L_Text.Text = "Stroke";                        
                     }
 
-                    if(rlglPreferences.Metronome && randomNumberGenerator.Next(1,11) <= rlglPreferences.MetronomePossibility)
+                    if(rlglPreferences.Metronome && randomNumberGenerator.Next(1,101) <= rlglPreferences.MetronomeChance)
                     {
                         L_Text.Text += " - follow the beat";
                         SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinBpm, rlglPreferences.MaxBpm+1));
@@ -269,19 +269,7 @@ public partial class RLGLPlayer : Form
 
                     if (rlglPreferences.Censoring)
                     {
-                        int rnd = 0;
-                        int probability = rlglPreferences.CensorProbability;
-
-                        if (probability <= 5)
-                        {
-                            rnd = randomNumberGenerator.Next(1, 6);
-                        }
-                        else
-                        {
-                            rnd = randomNumberGenerator.Next(6, 11);
-                        }
-
-                        if (rnd <= probability)
+                        if (randomNumberGenerator.Next(1, 101) <= rlglPreferences.CensorChance)
                         {
                             ShowCensoring(true);
                         }
@@ -306,8 +294,8 @@ public partial class RLGLPlayer : Form
                     }
 
                     if(rlglPreferences.Censoring && 
-                        rlglPreferences.CensorProbability > 5 && 
-                        randomNumberGenerator.Next(6,11) <= rlglPreferences.CensorProbability)
+                        !rlglPreferences.CensorOnlyGreen && 
+                        randomNumberGenerator.Next(1,101) <= rlglPreferences.CensorChance)
                     {
                         ShowCensoring(true);
                     }
@@ -326,19 +314,7 @@ public partial class RLGLPlayer : Form
 
                     if (rlglPreferences.Censoring)
                     {
-                        int rnd = 0;
-                        int probability = rlglPreferences.CensorProbability;
-
-                        if (probability <= 5)
-                        {
-                            rnd = randomNumberGenerator.Next(1, 6);
-                        }
-                        else
-                        {
-                            rnd = randomNumberGenerator.Next(6, 11);
-                        }
-
-                        if (rnd <= probability)
+                        if (randomNumberGenerator.Next(1, 101) <= rlglPreferences.CensorChance)
                         {
                             ShowCensoring(true);
                         }

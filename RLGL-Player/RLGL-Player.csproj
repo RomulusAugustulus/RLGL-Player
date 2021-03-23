@@ -89,6 +89,12 @@
     <Compile Include="DecimalBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ExtendedTrackBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExtendedTrackBar.Designer.cs">
+      <DependentUpon>ExtendedTrackBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="PaintingOverlay.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CensorEditorDlg.resx">
       <DependentUpon>CensorEditorDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtendedTrackBar.resx">
+      <DependentUpon>ExtendedTrackBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PaintingOverlay.resx">
       <DependentUpon>PaintingOverlay.cs</DependentUpon>

@@ -33,7 +33,7 @@ namespace RLGL_Player
     class RLGLPreferences
     {
         //The current version of the file. Used to preserve backwards-compatibility.
-        private string preferencesFileVersion = "v.3";
+        private string preferencesFileVersion = "v.4";
         private int minGreen;
         private int maxGreen;
         private int minRed;
@@ -42,11 +42,12 @@ namespace RLGL_Player
         private bool metronome;
         private int minBpm;
         private int maxBpm;
-        private int metronomePossibility;
+        private int metronomeChance;
         private bool censoring;
         private RLGLCensorType censorType;
         private RLGLCensorSize censorSize;
-        private int censorProbability;
+        private int censorChance;
+        private bool censorOnlyGreen;
         private string censorPath;
         private Color greenLightColor;
         private Color redLightColor;
@@ -78,7 +79,7 @@ namespace RLGL_Player
         //The color displayed while at a red phase.
         public Color RedLightColor { get => redLightColor; }
         //Getss how likely a metronome will be played at green phase.
-        public int MetronomePossibility { get => metronomePossibility; }
+        public int MetronomeChance { get => metronomeChance; }
         //The fastes speed the metronome will play in beats per minute.
         public int MaxBpm { get => maxBpm; }
         //The slowest speed the metronome will play in beats per minute.
@@ -92,7 +93,7 @@ namespace RLGL_Player
         //Gets the preferred size of the censorbars.
         public RLGLCensorSize CensorSize { get => censorSize; }
         //Gets how likely censorbars will appear.
-        public int CensorProbability { get => censorProbability; }
+        public int CensorChance { get => censorChance; }
         //Gets the color of the censorbars.
         public Color CensorColor { get => censorColor; }
         //Gets the path where the images are stored, that will censor the played media.
@@ -119,6 +120,8 @@ namespace RLGL_Player
         public bool GreenAfterEdge { get => greenAfterEdge; }
         //Gets the color of the edge phases.
         public Color EdgeColor { get => edgeColor; }
+        //Gets if only on green/edge phases censorbars should appear or on all phases.
+        public bool CensorOnlyGreen { get => censorOnlyGreen; }
 
         public RLGLPreferences()
         {
@@ -132,11 +135,11 @@ namespace RLGL_Player
             metronome = true;
             minBpm = 10;
             maxBpm = 10;
-            metronomePossibility = 5;
+            metronomeChance = 50;
             censoring = false;
             censorType = RLGLCensorType.Color;
             censorSize = RLGLCensorSize.Medium;
-            censorProbability = 5;
+            censorChance = 50;
             censorColor = Color.FromArgb(255, 0, 0, 0);
             censorPath = "";
             leftBorder = 100;
@@ -147,16 +150,17 @@ namespace RLGL_Player
             edgingWarmup = 60;
             minEdge = 10;
             maxEdge = 10;
-            edgeChance = 5;
+            edgeChance = 50;
             greenAfterEdge = false;
             edgeColor = Color.FromArgb(255, 0, 0, 255);
+            censorOnlyGreen = false;
         }
 
         public RLGLPreferences(int minGreen, int maxGreen, int minRed, int maxRed, 
                                 RLGLEnding ending, bool metronome, int minBpm, int maxBpm, 
-                                int metronomePossibility, Color greenLightColor, Color redLightColor,
+                                int metronomeChance, Color greenLightColor, Color redLightColor,
                                 bool censoring, RLGLCensorType censorType, RLGLCensorSize censorSize,
-                                int censorProbability, Color censorColor, string censorPath,
+                                int censorChance, bool censorOnlyGreen, Color censorColor, string censorPath,
                                 int leftBorder, int rightBorder, int topBorder, int bottomBorder,
                                 bool edging, int edgingWarmup, int minEdge, int maxEdge, int edgeChance,
                                 bool greenAfterEdge, Color edgeColor)
@@ -169,13 +173,14 @@ namespace RLGL_Player
             this.metronome = metronome;
             this.minBpm = minBpm;
             this.maxBpm = maxBpm;
-            this.metronomePossibility = metronomePossibility;
+            this.metronomeChance = metronomeChance;
             this.greenLightColor = greenLightColor;
             this.redLightColor = redLightColor;
             this.censoring = censoring;
             this.censorType = censorType;
             this.censorSize = censorSize;
-            this.censorProbability = censorProbability;
+            this.censorChance = censorChance;
+            this.censorOnlyGreen = censorOnlyGreen;
             this.censorColor = censorColor;
             this.censorPath = censorPath;
             this.leftBorder = leftBorder;
@@ -220,11 +225,11 @@ namespace RLGL_Player
             prefDlg.CB_Metronome.Checked = metronome;
             prefDlg.NUD_MinMetronome.Value = minBpm;
             prefDlg.NUD_MaxMetronome.Value = maxBpm;
-            prefDlg.TB_MetronomeChance.Value = metronomePossibility;
+            prefDlg.ETB_MetronomeChance.Value = metronomeChance;
 
             prefDlg.NUD_MaxMetronome.Enabled = metronome;
             prefDlg.NUD_MinMetronome.Enabled = metronome;
-            prefDlg.TB_MetronomeChance.Enabled = metronome;           
+            prefDlg.ETB_MetronomeChance.Enabled = metronome;           
 
             prefDlg.P_GreenLightColor.BackColor = greenLightColor;
             prefDlg.P_RedLightColor.BackColor = redLightColor;
@@ -235,11 +240,12 @@ namespace RLGL_Player
             prefDlg.CB_Censoring.Checked = censoring;
             prefDlg.COMB_CensorSize.SelectedIndex = (int)censorSize;
             prefDlg.COMB_CensorType.SelectedIndex = (int)censorType;
-            prefDlg.TB_CensorProbability.Value = censorProbability;
+            prefDlg.CB_CensorOnlyGreen.Checked = censorOnlyGreen;
+            prefDlg.ETB_CensorChance.Value = censorChance;
 
             prefDlg.COMB_CensorType.Enabled = censoring;
             prefDlg.COMB_CensorSize.Enabled = censoring;
-            prefDlg.TB_CensorProbability.Enabled = censoring;
+            prefDlg.ETB_CensorChance.Enabled = censoring;
 
             prefDlg.NUD_LeftBorder.Value = leftBorder;
             prefDlg.NUD_RightBorder.Value = rightBorder;
@@ -250,13 +256,13 @@ namespace RLGL_Player
             prefDlg.NUD_EdgeWarmup.Value = edgingWarmup;
             prefDlg.NUD_MinEdge.Value = minEdge;
             prefDlg.NUD_MaxEdge.Value = maxEdge;
-            prefDlg.TB_EdgeChance.Value = edgeChance;
+            prefDlg.ETB_EdgeChance.Value = edgeChance;
             prefDlg.CB_AllowGreenLight.Checked = greenAfterEdge;
 
             prefDlg.NUD_EdgeWarmup.Enabled = edging;
             prefDlg.NUD_MinEdge.Enabled = edging;
             prefDlg.NUD_MaxEdge.Enabled = edging;
-            prefDlg.TB_EdgeChance.Enabled = edging;
+            prefDlg.ETB_EdgeChance.Enabled = edging;
             prefDlg.CB_AllowGreenLight.Enabled = edging;
         }
 
@@ -286,7 +292,7 @@ namespace RLGL_Player
             metronome = prefDlg.CB_Metronome.Checked;
             minBpm = (int)prefDlg.NUD_MinMetronome.Value;
             maxBpm = (int)prefDlg.NUD_MaxMetronome.Value;
-            metronomePossibility = prefDlg.TB_MetronomeChance.Value;
+            metronomeChance = prefDlg.ETB_MetronomeChance.Value;
             
             greenLightColor = prefDlg.P_GreenLightColor.BackColor;
             redLightColor = prefDlg.P_RedLightColor.BackColor;
@@ -297,7 +303,8 @@ namespace RLGL_Player
             censoring = prefDlg.CB_Censoring.Checked;
             censorType = (RLGLCensorType)prefDlg.COMB_CensorType.SelectedIndex;
             censorSize = (RLGLCensorSize)prefDlg.COMB_CensorSize.SelectedIndex;
-            censorProbability = prefDlg.TB_CensorProbability.Value;
+            censorChance = prefDlg.ETB_CensorChance.Value;
+            censorOnlyGreen = prefDlg.CB_CensorOnlyGreen.Checked;
 
             leftBorder = (int)prefDlg.NUD_LeftBorder.Value;
             rightBorder = (int)prefDlg.NUD_RightBorder.Value;
@@ -308,7 +315,7 @@ namespace RLGL_Player
             edgingWarmup = (int)prefDlg.NUD_EdgeWarmup.Value;
             minEdge = (int)prefDlg.NUD_MinEdge.Value;
             maxEdge = (int)prefDlg.NUD_MaxEdge.Value;
-            edgeChance = prefDlg.TB_EdgeChance.Value;
+            edgeChance = prefDlg.ETB_EdgeChance.Value;
             greenAfterEdge = prefDlg.CB_AllowGreenLight.Checked;
         }
 
@@ -331,13 +338,14 @@ namespace RLGL_Player
                     metronome = bool.Parse(prefFile.ReadLine());
                     minBpm = int.Parse(prefFile.ReadLine());
                     maxBpm = int.Parse(prefFile.ReadLine());
-                    metronomePossibility = int.Parse(prefFile.ReadLine());
+                    metronomeChance = int.Parse(prefFile.ReadLine());
                     greenLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                     redLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                     censoring = bool.Parse(prefFile.ReadLine());
                     censorType = (RLGLCensorType)int.Parse(prefFile.ReadLine());
                     censorSize = (RLGLCensorSize)int.Parse(prefFile.ReadLine());
-                    censorProbability = int.Parse(prefFile.ReadLine());
+                    censorChance = int.Parse(prefFile.ReadLine());
+                    censorOnlyGreen = bool.Parse(prefFile.ReadLine());
                     censorColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                     censorPath = prefFile.ReadLine();
                     leftBorder = int.Parse(prefFile.ReadLine());
@@ -388,15 +396,28 @@ namespace RLGL_Player
                 metronome = bool.Parse(prefFile.ReadLine());
                 minBpm = int.Parse(prefFile.ReadLine());
                 maxBpm = int.Parse(prefFile.ReadLine());
-                metronomePossibility = int.Parse(prefFile.ReadLine());
+                metronomeChance = int.Parse(prefFile.ReadLine());
                 greenLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                 redLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                 censoring = bool.Parse(prefFile.ReadLine());
                 censorType = (RLGLCensorType)int.Parse(prefFile.ReadLine());
                 censorSize = (RLGLCensorSize)int.Parse(prefFile.ReadLine());
-                censorProbability = int.Parse(prefFile.ReadLine());
+                censorChance = int.Parse(prefFile.ReadLine());
                 censorColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                 censorPath = prefFile.ReadLine();
+
+                if (censorChance < 6)
+                {
+                    censorOnlyGreen = true;
+                    censorChance *= 20;
+                }
+                else
+                {
+                    censorOnlyGreen = false;
+                    censorChance = (censorChance - 6) * 20;
+                }
+
+                metronomeChance *= 10;
             }
             else if(version.Equals("v.2"))
             {
@@ -408,19 +429,76 @@ namespace RLGL_Player
                 metronome = bool.Parse(prefFile.ReadLine());
                 minBpm = int.Parse(prefFile.ReadLine());
                 maxBpm = int.Parse(prefFile.ReadLine());
-                metronomePossibility = int.Parse(prefFile.ReadLine());
+                metronomeChance = int.Parse(prefFile.ReadLine());
                 greenLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                 redLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                 censoring = bool.Parse(prefFile.ReadLine());
                 censorType = (RLGLCensorType)int.Parse(prefFile.ReadLine());
                 censorSize = (RLGLCensorSize)int.Parse(prefFile.ReadLine());
-                censorProbability = int.Parse(prefFile.ReadLine());
+                censorChance = int.Parse(prefFile.ReadLine());
                 censorColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                 censorPath = prefFile.ReadLine();
                 leftBorder = int.Parse(prefFile.ReadLine());
                 rightBorder = int.Parse(prefFile.ReadLine());
                 topBorder = int.Parse(prefFile.ReadLine());
                 bottomBorder = int.Parse(prefFile.ReadLine());
+
+                if (censorChance < 6)
+                {
+                    censorOnlyGreen = true;
+                    censorChance *= 20;
+                }
+                else
+                {
+                    censorOnlyGreen = false;
+                    censorChance = (censorChance - 6) * 20;
+                }
+
+                metronomeChance *= 10;
+            }
+            else if(version.Equals("v.3"))
+            {
+                maxGreen = int.Parse(prefFile.ReadLine());
+                maxRed = int.Parse(prefFile.ReadLine());
+                minGreen = int.Parse(prefFile.ReadLine());
+                minRed = int.Parse(prefFile.ReadLine());
+                ending = (RLGLEnding)int.Parse(prefFile.ReadLine());
+                metronome = bool.Parse(prefFile.ReadLine());
+                minBpm = int.Parse(prefFile.ReadLine());
+                maxBpm = int.Parse(prefFile.ReadLine());
+                metronomeChance = int.Parse(prefFile.ReadLine());
+                greenLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                redLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                censoring = bool.Parse(prefFile.ReadLine());
+                censorType = (RLGLCensorType)int.Parse(prefFile.ReadLine());
+                censorSize = (RLGLCensorSize)int.Parse(prefFile.ReadLine());
+                censorChance = int.Parse(prefFile.ReadLine());
+                censorColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                censorPath = prefFile.ReadLine();
+                leftBorder = int.Parse(prefFile.ReadLine());
+                rightBorder = int.Parse(prefFile.ReadLine());
+                topBorder = int.Parse(prefFile.ReadLine());
+                bottomBorder = int.Parse(prefFile.ReadLine());
+                edging = bool.Parse(prefFile.ReadLine());
+                edgingWarmup = int.Parse(prefFile.ReadLine());
+                minEdge = int.Parse(prefFile.ReadLine());
+                maxEdge = int.Parse(prefFile.ReadLine());
+                edgeChance = int.Parse(prefFile.ReadLine());
+                greenAfterEdge = bool.Parse(prefFile.ReadLine());
+                edgeColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+
+                if(censorChance < 6)
+                {
+                    censorOnlyGreen = true;
+                    censorChance *= 20;
+                }
+                else
+                {
+                    censorOnlyGreen = false;
+                    censorChance = (censorChance - 6) * 20;
+                }
+
+                metronomeChance *= 10;
             }
             else
             {
@@ -441,7 +519,7 @@ namespace RLGL_Player
             metronome = bool.Parse(prefFile.ReadLine());
             minBpm = int.Parse(prefFile.ReadLine());
             maxBpm = int.Parse(prefFile.ReadLine());
-            metronomePossibility = int.Parse(prefFile.ReadLine());
+            metronomeChance = int.Parse(prefFile.ReadLine());
             greenLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
             redLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
             censoring = false;
@@ -449,7 +527,7 @@ namespace RLGL_Player
             censorPath = "";
             censorSize = RLGLCensorSize.Medium;
             censorType = RLGLCensorType.Color;
-            censorProbability = 5;
+            censorChance = 50;
         }
 
         //Save the current locally stored preferences to a file fileName.
@@ -466,7 +544,7 @@ namespace RLGL_Player
             prefFile.WriteLine(metronome);
             prefFile.WriteLine(minBpm);
             prefFile.WriteLine(maxBpm);
-            prefFile.WriteLine(metronomePossibility);
+            prefFile.WriteLine(metronomeChance);
             prefFile.WriteLine(greenLightColor.A);
             prefFile.WriteLine(greenLightColor.R);
             prefFile.WriteLine(greenLightColor.G);
@@ -478,7 +556,8 @@ namespace RLGL_Player
             prefFile.WriteLine(censoring);
             prefFile.WriteLine((int)censorType);
             prefFile.WriteLine((int)censorSize);
-            prefFile.WriteLine(censorProbability);
+            prefFile.WriteLine(censorChance);
+            prefFile.WriteLine(censorOnlyGreen);
             prefFile.WriteLine(censorColor.A);
             prefFile.WriteLine(censorColor.R);
             prefFile.WriteLine(censorColor.G);

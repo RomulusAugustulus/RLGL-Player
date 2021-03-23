@@ -30,9 +30,8 @@
         {
             this.ColorPicker = new System.Windows.Forms.ColorDialog();
             this.GB_RLGLSettings = new System.Windows.Forms.GroupBox();
+            this.ETB_EdgeChance = new RLGL_Player.ExtendedTrackBar();
             this.CB_AllowGreenLight = new System.Windows.Forms.CheckBox();
-            this.L_EdgeChance = new System.Windows.Forms.Label();
-            this.TB_EdgeChance = new System.Windows.Forms.TrackBar();
             this.NUD_MaxEdge = new System.Windows.Forms.NumericUpDown();
             this.L_MaxEdge = new System.Windows.Forms.Label();
             this.NUD_MinEdge = new System.Windows.Forms.NumericUpDown();
@@ -40,22 +39,6 @@
             this.NUD_EdgeWarmup = new System.Windows.Forms.NumericUpDown();
             this.L_EdgeWarmup = new System.Windows.Forms.Label();
             this.CB_EdgePhase = new System.Windows.Forms.CheckBox();
-            this.L_BothLights = new System.Windows.Forms.Label();
-            this.L_OnlyGreenLight = new System.Windows.Forms.Label();
-            this.L_CensorPossibility = new System.Windows.Forms.Label();
-            this.TB_CensorProbability = new System.Windows.Forms.TrackBar();
-            this.L_CensorSize = new System.Windows.Forms.Label();
-            this.COMB_CensorSize = new System.Windows.Forms.ComboBox();
-            this.L_CensorType = new System.Windows.Forms.Label();
-            this.COMB_CensorType = new System.Windows.Forms.ComboBox();
-            this.CB_Censoring = new System.Windows.Forms.CheckBox();
-            this.L_MetronomeChance = new System.Windows.Forms.Label();
-            this.TB_MetronomeChance = new System.Windows.Forms.TrackBar();
-            this.NUD_MaxMetronome = new System.Windows.Forms.NumericUpDown();
-            this.L_MaxMetronome = new System.Windows.Forms.Label();
-            this.NUD_MinMetronome = new System.Windows.Forms.NumericUpDown();
-            this.L_MinMetronome = new System.Windows.Forms.Label();
-            this.CB_Metronome = new System.Windows.Forms.CheckBox();
             this.RB_EndingRandom = new System.Windows.Forms.RadioButton();
             this.RB_EndingRed = new System.Windows.Forms.RadioButton();
             this.RB_EndingGreen = new System.Windows.Forms.RadioButton();
@@ -93,17 +76,29 @@
             this.B_Cancel = new System.Windows.Forms.Button();
             this.FolderSelector = new System.Windows.Forms.FolderBrowserDialog();
             this.TAB_Preferences = new System.Windows.Forms.TabControl();
-            this.TAB_RLGLSettings = new System.Windows.Forms.TabPage();
             this.TAB_GeneralSettings = new System.Windows.Forms.TabPage();
+            this.TAB_RLGLSettings = new System.Windows.Forms.TabPage();
+            this.TAB_Metronome = new System.Windows.Forms.TabPage();
+            this.GB_MetronomeSettings = new System.Windows.Forms.GroupBox();
+            this.ETB_MetronomeChance = new RLGL_Player.ExtendedTrackBar();
+            this.NUD_MaxMetronome = new System.Windows.Forms.NumericUpDown();
+            this.L_MaxMetronome = new System.Windows.Forms.Label();
+            this.NUD_MinMetronome = new System.Windows.Forms.NumericUpDown();
+            this.L_MinMetronome = new System.Windows.Forms.Label();
+            this.CB_Metronome = new System.Windows.Forms.CheckBox();
+            this.TAB_Censor = new System.Windows.Forms.TabPage();
+            this.GB_CensorSettings = new System.Windows.Forms.GroupBox();
+            this.ETB_CensorChance = new RLGL_Player.ExtendedTrackBar();
+            this.CB_CensorOnlyGreen = new System.Windows.Forms.CheckBox();
+            this.CB_Censoring = new System.Windows.Forms.CheckBox();
+            this.L_CensorSize = new System.Windows.Forms.Label();
+            this.COMB_CensorType = new System.Windows.Forms.ComboBox();
+            this.COMB_CensorSize = new System.Windows.Forms.ComboBox();
+            this.L_CensorType = new System.Windows.Forms.Label();
             this.GB_RLGLSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TB_EdgeChance)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_EdgeWarmup)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TB_CensorProbability)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TB_MetronomeChance)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxMetronome)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUD_MinMetronome)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxRed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinRed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxGreen)).BeginInit();
@@ -114,15 +109,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.NUD_RightBorder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_LeftBorder)).BeginInit();
             this.TAB_Preferences.SuspendLayout();
-            this.TAB_RLGLSettings.SuspendLayout();
             this.TAB_GeneralSettings.SuspendLayout();
+            this.TAB_RLGLSettings.SuspendLayout();
+            this.TAB_Metronome.SuspendLayout();
+            this.GB_MetronomeSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxMetronome)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_MinMetronome)).BeginInit();
+            this.TAB_Censor.SuspendLayout();
+            this.GB_CensorSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // GB_RLGLSettings
             // 
+            this.GB_RLGLSettings.Controls.Add(this.ETB_EdgeChance);
             this.GB_RLGLSettings.Controls.Add(this.CB_AllowGreenLight);
-            this.GB_RLGLSettings.Controls.Add(this.L_EdgeChance);
-            this.GB_RLGLSettings.Controls.Add(this.TB_EdgeChance);
             this.GB_RLGLSettings.Controls.Add(this.NUD_MaxEdge);
             this.GB_RLGLSettings.Controls.Add(this.L_MaxEdge);
             this.GB_RLGLSettings.Controls.Add(this.NUD_MinEdge);
@@ -130,22 +130,6 @@
             this.GB_RLGLSettings.Controls.Add(this.NUD_EdgeWarmup);
             this.GB_RLGLSettings.Controls.Add(this.L_EdgeWarmup);
             this.GB_RLGLSettings.Controls.Add(this.CB_EdgePhase);
-            this.GB_RLGLSettings.Controls.Add(this.L_BothLights);
-            this.GB_RLGLSettings.Controls.Add(this.L_OnlyGreenLight);
-            this.GB_RLGLSettings.Controls.Add(this.L_CensorPossibility);
-            this.GB_RLGLSettings.Controls.Add(this.TB_CensorProbability);
-            this.GB_RLGLSettings.Controls.Add(this.L_CensorSize);
-            this.GB_RLGLSettings.Controls.Add(this.COMB_CensorSize);
-            this.GB_RLGLSettings.Controls.Add(this.L_CensorType);
-            this.GB_RLGLSettings.Controls.Add(this.COMB_CensorType);
-            this.GB_RLGLSettings.Controls.Add(this.CB_Censoring);
-            this.GB_RLGLSettings.Controls.Add(this.L_MetronomeChance);
-            this.GB_RLGLSettings.Controls.Add(this.TB_MetronomeChance);
-            this.GB_RLGLSettings.Controls.Add(this.NUD_MaxMetronome);
-            this.GB_RLGLSettings.Controls.Add(this.L_MaxMetronome);
-            this.GB_RLGLSettings.Controls.Add(this.NUD_MinMetronome);
-            this.GB_RLGLSettings.Controls.Add(this.L_MinMetronome);
-            this.GB_RLGLSettings.Controls.Add(this.CB_Metronome);
             this.GB_RLGLSettings.Controls.Add(this.RB_EndingRandom);
             this.GB_RLGLSettings.Controls.Add(this.RB_EndingRed);
             this.GB_RLGLSettings.Controls.Add(this.RB_EndingGreen);
@@ -160,10 +144,23 @@
             this.GB_RLGLSettings.Controls.Add(this.L_GreenMin);
             this.GB_RLGLSettings.Location = new System.Drawing.Point(3, 6);
             this.GB_RLGLSettings.Name = "GB_RLGLSettings";
-            this.GB_RLGLSettings.Size = new System.Drawing.Size(557, 577);
+            this.GB_RLGLSettings.Size = new System.Drawing.Size(574, 384);
             this.GB_RLGLSettings.TabIndex = 0;
             this.GB_RLGLSettings.TabStop = false;
             this.GB_RLGLSettings.Text = "Red Light Green Light Settings";
+            // 
+            // ETB_EdgeChance
+            // 
+            this.ETB_EdgeChance.Location = new System.Drawing.Point(16, 251);
+            this.ETB_EdgeChance.Maximum = 100;
+            this.ETB_EdgeChance.Minimum = 1;
+            this.ETB_EdgeChance.Name = "ETB_EdgeChance";
+            this.ETB_EdgeChance.Size = new System.Drawing.Size(535, 45);
+            this.ETB_EdgeChance.TabIndex = 38;
+            this.ETB_EdgeChance.Text = "Possibility:";
+            this.ETB_EdgeChance.TickFrequency = 10;
+            this.ETB_EdgeChance.ToolTip = "Define the chance of getting an edge light after a green light.";
+            this.ETB_EdgeChance.Value = 50;
             // 
             // CB_AllowGreenLight
             // 
@@ -175,28 +172,9 @@
             this.CB_AllowGreenLight.Text = "Allow green light after edge phase";
             this.CB_AllowGreenLight.UseVisualStyleBackColor = true;
             // 
-            // L_EdgeChance
-            // 
-            this.L_EdgeChance.AutoSize = true;
-            this.L_EdgeChance.Location = new System.Drawing.Point(28, 264);
-            this.L_EdgeChance.Name = "L_EdgeChance";
-            this.L_EdgeChance.Size = new System.Drawing.Size(55, 13);
-            this.L_EdgeChance.TabIndex = 36;
-            this.L_EdgeChance.Text = "Possibility:";
-            // 
-            // TB_EdgeChance
-            // 
-            this.TB_EdgeChance.Location = new System.Drawing.Point(102, 251);
-            this.TB_EdgeChance.Minimum = 1;
-            this.TB_EdgeChance.Name = "TB_EdgeChance";
-            this.TB_EdgeChance.Size = new System.Drawing.Size(449, 45);
-            this.TB_EdgeChance.TabIndex = 35;
-            this.TB_EdgeChance.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.TB_EdgeChance.Value = 5;
-            // 
             // NUD_MaxEdge
             // 
-            this.NUD_MaxEdge.Location = new System.Drawing.Point(184, 225);
+            this.NUD_MaxEdge.Location = new System.Drawing.Point(198, 228);
             this.NUD_MaxEdge.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -208,7 +186,7 @@
             0,
             0});
             this.NUD_MaxEdge.Name = "NUD_MaxEdge";
-            this.NUD_MaxEdge.Size = new System.Drawing.Size(367, 20);
+            this.NUD_MaxEdge.Size = new System.Drawing.Size(353, 20);
             this.NUD_MaxEdge.TabIndex = 34;
             this.NUD_MaxEdge.Value = new decimal(new int[] {
             10,
@@ -220,15 +198,15 @@
             // L_MaxEdge
             // 
             this.L_MaxEdge.AutoSize = true;
-            this.L_MaxEdge.Location = new System.Drawing.Point(28, 227);
+            this.L_MaxEdge.Location = new System.Drawing.Point(28, 230);
             this.L_MaxEdge.Name = "L_MaxEdge";
-            this.L_MaxEdge.Size = new System.Drawing.Size(150, 13);
+            this.L_MaxEdge.Size = new System.Drawing.Size(164, 13);
             this.L_MaxEdge.TabIndex = 33;
-            this.L_MaxEdge.Text = "Maximal duration of edge light:";
+            this.L_MaxEdge.Text = "Maximal duration of edge light (s):";
             // 
             // NUD_MinEdge
             // 
-            this.NUD_MinEdge.Location = new System.Drawing.Point(184, 197);
+            this.NUD_MinEdge.Location = new System.Drawing.Point(198, 200);
             this.NUD_MinEdge.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -240,7 +218,7 @@
             0,
             0});
             this.NUD_MinEdge.Name = "NUD_MinEdge";
-            this.NUD_MinEdge.Size = new System.Drawing.Size(367, 20);
+            this.NUD_MinEdge.Size = new System.Drawing.Size(353, 20);
             this.NUD_MinEdge.TabIndex = 32;
             this.NUD_MinEdge.Value = new decimal(new int[] {
             10,
@@ -252,22 +230,22 @@
             // L_MinEdge
             // 
             this.L_MinEdge.AutoSize = true;
-            this.L_MinEdge.Location = new System.Drawing.Point(28, 199);
+            this.L_MinEdge.Location = new System.Drawing.Point(28, 202);
             this.L_MinEdge.Name = "L_MinEdge";
-            this.L_MinEdge.Size = new System.Drawing.Size(147, 13);
+            this.L_MinEdge.Size = new System.Drawing.Size(161, 13);
             this.L_MinEdge.TabIndex = 31;
-            this.L_MinEdge.Text = "Minimal duration of edge light:";
+            this.L_MinEdge.Text = "Minimal duration of edge light: (s)";
             // 
             // NUD_EdgeWarmup
             // 
-            this.NUD_EdgeWarmup.Location = new System.Drawing.Point(184, 169);
+            this.NUD_EdgeWarmup.Location = new System.Drawing.Point(198, 172);
             this.NUD_EdgeWarmup.Maximum = new decimal(new int[] {
             3600,
             0,
             0,
             0});
             this.NUD_EdgeWarmup.Name = "NUD_EdgeWarmup";
-            this.NUD_EdgeWarmup.Size = new System.Drawing.Size(367, 20);
+            this.NUD_EdgeWarmup.Size = new System.Drawing.Size(353, 20);
             this.NUD_EdgeWarmup.TabIndex = 30;
             this.NUD_EdgeWarmup.Value = new decimal(new int[] {
             60,
@@ -278,209 +256,22 @@
             // L_EdgeWarmup
             // 
             this.L_EdgeWarmup.AutoSize = true;
-            this.L_EdgeWarmup.Location = new System.Drawing.Point(28, 171);
+            this.L_EdgeWarmup.Location = new System.Drawing.Point(28, 174);
             this.L_EdgeWarmup.Name = "L_EdgeWarmup";
-            this.L_EdgeWarmup.Size = new System.Drawing.Size(108, 13);
+            this.L_EdgeWarmup.Size = new System.Drawing.Size(122, 13);
             this.L_EdgeWarmup.TabIndex = 29;
-            this.L_EdgeWarmup.Text = "Initial no edge period:";
+            this.L_EdgeWarmup.Text = "Initial no edge period (s):";
             // 
             // CB_EdgePhase
             // 
             this.CB_EdgePhase.AutoSize = true;
-            this.CB_EdgePhase.Location = new System.Drawing.Point(6, 151);
+            this.CB_EdgePhase.Location = new System.Drawing.Point(6, 148);
             this.CB_EdgePhase.Name = "CB_EdgePhase";
             this.CB_EdgePhase.Size = new System.Drawing.Size(123, 17);
             this.CB_EdgePhase.TabIndex = 28;
             this.CB_EdgePhase.Text = "Enable edge phases";
             this.CB_EdgePhase.UseVisualStyleBackColor = true;
             this.CB_EdgePhase.CheckedChanged += new System.EventHandler(this.CB_EdgePhase_CheckedChanged);
-            // 
-            // L_BothLights
-            // 
-            this.L_BothLights.AutoSize = true;
-            this.L_BothLights.BackColor = System.Drawing.SystemColors.Control;
-            this.L_BothLights.Location = new System.Drawing.Point(322, 556);
-            this.L_BothLights.Name = "L_BothLights";
-            this.L_BothLights.Size = new System.Drawing.Size(229, 13);
-            this.L_BothLights.TabIndex = 27;
-            this.L_BothLights.Text = "|------------------- censor on both lights -------------------|";
-            // 
-            // L_OnlyGreenLight
-            // 
-            this.L_OnlyGreenLight.AutoSize = true;
-            this.L_OnlyGreenLight.Location = new System.Drawing.Point(99, 556);
-            this.L_OnlyGreenLight.Name = "L_OnlyGreenLight";
-            this.L_OnlyGreenLight.Size = new System.Drawing.Size(222, 13);
-            this.L_OnlyGreenLight.TabIndex = 26;
-            this.L_OnlyGreenLight.Text = "|-------------- censor only on green light --------------|";
-            // 
-            // L_CensorPossibility
-            // 
-            this.L_CensorPossibility.AutoSize = true;
-            this.L_CensorPossibility.Location = new System.Drawing.Point(28, 537);
-            this.L_CensorPossibility.Name = "L_CensorPossibility";
-            this.L_CensorPossibility.Size = new System.Drawing.Size(55, 13);
-            this.L_CensorPossibility.TabIndex = 25;
-            this.L_CensorPossibility.Text = "Possibility:";
-            // 
-            // TB_CensorProbability
-            // 
-            this.TB_CensorProbability.Location = new System.Drawing.Point(102, 524);
-            this.TB_CensorProbability.Minimum = 1;
-            this.TB_CensorProbability.Name = "TB_CensorProbability";
-            this.TB_CensorProbability.Size = new System.Drawing.Size(449, 45);
-            this.TB_CensorProbability.TabIndex = 24;
-            this.TB_CensorProbability.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.TB_CensorProbability.Value = 5;
-            // 
-            // L_CensorSize
-            // 
-            this.L_CensorSize.AutoSize = true;
-            this.L_CensorSize.Location = new System.Drawing.Point(294, 496);
-            this.L_CensorSize.Name = "L_CensorSize";
-            this.L_CensorSize.Size = new System.Drawing.Size(64, 13);
-            this.L_CensorSize.TabIndex = 23;
-            this.L_CensorSize.Text = "Censor size:";
-            // 
-            // COMB_CensorSize
-            // 
-            this.COMB_CensorSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.COMB_CensorSize.FormattingEnabled = true;
-            this.COMB_CensorSize.Items.AddRange(new object[] {
-            "Small",
-            "Medium",
-            "Big",
-            "Unfair"});
-            this.COMB_CensorSize.Location = new System.Drawing.Point(371, 493);
-            this.COMB_CensorSize.Name = "COMB_CensorSize";
-            this.COMB_CensorSize.Size = new System.Drawing.Size(180, 21);
-            this.COMB_CensorSize.TabIndex = 22;
-            // 
-            // L_CensorType
-            // 
-            this.L_CensorType.AutoSize = true;
-            this.L_CensorType.Location = new System.Drawing.Point(28, 496);
-            this.L_CensorType.Name = "L_CensorType";
-            this.L_CensorType.Size = new System.Drawing.Size(66, 13);
-            this.L_CensorType.TabIndex = 21;
-            this.L_CensorType.Text = "Censor type:";
-            // 
-            // COMB_CensorType
-            // 
-            this.COMB_CensorType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.COMB_CensorType.FormattingEnabled = true;
-            this.COMB_CensorType.Items.AddRange(new object[] {
-            "Color",
-            "Image"});
-            this.COMB_CensorType.Location = new System.Drawing.Point(102, 493);
-            this.COMB_CensorType.Name = "COMB_CensorType";
-            this.COMB_CensorType.Size = new System.Drawing.Size(180, 21);
-            this.COMB_CensorType.TabIndex = 20;
-            // 
-            // CB_Censoring
-            // 
-            this.CB_Censoring.AutoSize = true;
-            this.CB_Censoring.Location = new System.Drawing.Point(9, 470);
-            this.CB_Censoring.Name = "CB_Censoring";
-            this.CB_Censoring.Size = new System.Drawing.Size(108, 17);
-            this.CB_Censoring.TabIndex = 19;
-            this.CB_Censoring.Text = "Enable censoring";
-            this.CB_Censoring.UseVisualStyleBackColor = true;
-            this.CB_Censoring.CheckedChanged += new System.EventHandler(this.CB_Censoring_CheckedChanged);
-            // 
-            // L_MetronomeChance
-            // 
-            this.L_MetronomeChance.AutoSize = true;
-            this.L_MetronomeChance.Location = new System.Drawing.Point(28, 441);
-            this.L_MetronomeChance.Name = "L_MetronomeChance";
-            this.L_MetronomeChance.Size = new System.Drawing.Size(55, 13);
-            this.L_MetronomeChance.TabIndex = 18;
-            this.L_MetronomeChance.Text = "Possibility:";
-            // 
-            // TB_MetronomeChance
-            // 
-            this.TB_MetronomeChance.Location = new System.Drawing.Point(102, 428);
-            this.TB_MetronomeChance.Minimum = 1;
-            this.TB_MetronomeChance.Name = "TB_MetronomeChance";
-            this.TB_MetronomeChance.Size = new System.Drawing.Size(449, 45);
-            this.TB_MetronomeChance.TabIndex = 17;
-            this.TB_MetronomeChance.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.TB_MetronomeChance.Value = 5;
-            // 
-            // NUD_MaxMetronome
-            // 
-            this.NUD_MaxMetronome.Location = new System.Drawing.Point(371, 397);
-            this.NUD_MaxMetronome.Maximum = new decimal(new int[] {
-            250,
-            0,
-            0,
-            0});
-            this.NUD_MaxMetronome.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.NUD_MaxMetronome.Name = "NUD_MaxMetronome";
-            this.NUD_MaxMetronome.Size = new System.Drawing.Size(180, 20);
-            this.NUD_MaxMetronome.TabIndex = 16;
-            this.NUD_MaxMetronome.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.NUD_MaxMetronome.ValueChanged += new System.EventHandler(this.NUD_MaxMetronome_ValueChanged);
-            // 
-            // L_MaxMetronome
-            // 
-            this.L_MaxMetronome.AutoSize = true;
-            this.L_MaxMetronome.Location = new System.Drawing.Point(294, 399);
-            this.L_MaxMetronome.Name = "L_MaxMetronome";
-            this.L_MaxMetronome.Size = new System.Drawing.Size(71, 13);
-            this.L_MaxMetronome.TabIndex = 15;
-            this.L_MaxMetronome.Text = "Maximal bpm:";
-            // 
-            // NUD_MinMetronome
-            // 
-            this.NUD_MinMetronome.Location = new System.Drawing.Point(102, 397);
-            this.NUD_MinMetronome.Maximum = new decimal(new int[] {
-            250,
-            0,
-            0,
-            0});
-            this.NUD_MinMetronome.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.NUD_MinMetronome.Name = "NUD_MinMetronome";
-            this.NUD_MinMetronome.Size = new System.Drawing.Size(180, 20);
-            this.NUD_MinMetronome.TabIndex = 14;
-            this.NUD_MinMetronome.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.NUD_MinMetronome.ValueChanged += new System.EventHandler(this.NUD_MinMetronome_ValueChanged);
-            // 
-            // L_MinMetronome
-            // 
-            this.L_MinMetronome.AutoSize = true;
-            this.L_MinMetronome.Location = new System.Drawing.Point(28, 399);
-            this.L_MinMetronome.Name = "L_MinMetronome";
-            this.L_MinMetronome.Size = new System.Drawing.Size(68, 13);
-            this.L_MinMetronome.TabIndex = 13;
-            this.L_MinMetronome.Text = "Minimal bpm:";
-            // 
-            // CB_Metronome
-            // 
-            this.CB_Metronome.AutoSize = true;
-            this.CB_Metronome.Location = new System.Drawing.Point(9, 379);
-            this.CB_Metronome.Name = "CB_Metronome";
-            this.CB_Metronome.Size = new System.Drawing.Size(114, 17);
-            this.CB_Metronome.TabIndex = 12;
-            this.CB_Metronome.Text = "Enable metronome";
-            this.CB_Metronome.UseVisualStyleBackColor = true;
-            this.CB_Metronome.CheckedChanged += new System.EventHandler(this.CB_Metronome_CheckedChanged);
             // 
             // RB_EndingRandom
             // 
@@ -526,7 +317,7 @@
             // 
             // NUD_MaxRed
             // 
-            this.NUD_MaxRed.Location = new System.Drawing.Point(162, 115);
+            this.NUD_MaxRed.Location = new System.Drawing.Point(176, 115);
             this.NUD_MaxRed.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -538,7 +329,7 @@
             0,
             0});
             this.NUD_MaxRed.Name = "NUD_MaxRed";
-            this.NUD_MaxRed.Size = new System.Drawing.Size(389, 20);
+            this.NUD_MaxRed.Size = new System.Drawing.Size(375, 20);
             this.NUD_MaxRed.TabIndex = 7;
             this.NUD_MaxRed.Value = new decimal(new int[] {
             10,
@@ -552,13 +343,13 @@
             this.L_MaxRed.AutoSize = true;
             this.L_MaxRed.Location = new System.Drawing.Point(6, 117);
             this.L_MaxRed.Name = "L_MaxRed";
-            this.L_MaxRed.Size = new System.Drawing.Size(141, 13);
+            this.L_MaxRed.Size = new System.Drawing.Size(155, 13);
             this.L_MaxRed.TabIndex = 6;
-            this.L_MaxRed.Text = "Maximal duration of red light:";
+            this.L_MaxRed.Text = "Maximal duration of red light (s):";
             // 
             // NUD_MinRed
             // 
-            this.NUD_MinRed.Location = new System.Drawing.Point(162, 87);
+            this.NUD_MinRed.Location = new System.Drawing.Point(176, 87);
             this.NUD_MinRed.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -570,7 +361,7 @@
             0,
             0});
             this.NUD_MinRed.Name = "NUD_MinRed";
-            this.NUD_MinRed.Size = new System.Drawing.Size(389, 20);
+            this.NUD_MinRed.Size = new System.Drawing.Size(375, 20);
             this.NUD_MinRed.TabIndex = 5;
             this.NUD_MinRed.Value = new decimal(new int[] {
             10,
@@ -584,13 +375,13 @@
             this.L_MinRed.AutoSize = true;
             this.L_MinRed.Location = new System.Drawing.Point(6, 89);
             this.L_MinRed.Name = "L_MinRed";
-            this.L_MinRed.Size = new System.Drawing.Size(138, 13);
+            this.L_MinRed.Size = new System.Drawing.Size(152, 13);
             this.L_MinRed.TabIndex = 4;
-            this.L_MinRed.Text = "Minimal duration of red light:";
+            this.L_MinRed.Text = "Minimal duration of red light (s):";
             // 
             // NUD_MaxGreen
             // 
-            this.NUD_MaxGreen.Location = new System.Drawing.Point(162, 56);
+            this.NUD_MaxGreen.Location = new System.Drawing.Point(176, 56);
             this.NUD_MaxGreen.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -602,7 +393,7 @@
             0,
             0});
             this.NUD_MaxGreen.Name = "NUD_MaxGreen";
-            this.NUD_MaxGreen.Size = new System.Drawing.Size(389, 20);
+            this.NUD_MaxGreen.Size = new System.Drawing.Size(375, 20);
             this.NUD_MaxGreen.TabIndex = 3;
             this.NUD_MaxGreen.Value = new decimal(new int[] {
             10,
@@ -616,13 +407,13 @@
             this.L_MaxGreen.AutoSize = true;
             this.L_MaxGreen.Location = new System.Drawing.Point(6, 58);
             this.L_MaxGreen.Name = "L_MaxGreen";
-            this.L_MaxGreen.Size = new System.Drawing.Size(153, 13);
+            this.L_MaxGreen.Size = new System.Drawing.Size(167, 13);
             this.L_MaxGreen.TabIndex = 2;
-            this.L_MaxGreen.Text = "Maximal duration of green light:";
+            this.L_MaxGreen.Text = "Maximal duration of green light (s):";
             // 
             // NUD_MinGreen
             // 
-            this.NUD_MinGreen.Location = new System.Drawing.Point(162, 28);
+            this.NUD_MinGreen.Location = new System.Drawing.Point(176, 28);
             this.NUD_MinGreen.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -634,7 +425,7 @@
             0,
             0});
             this.NUD_MinGreen.Name = "NUD_MinGreen";
-            this.NUD_MinGreen.Size = new System.Drawing.Size(389, 20);
+            this.NUD_MinGreen.Size = new System.Drawing.Size(375, 20);
             this.NUD_MinGreen.TabIndex = 1;
             this.NUD_MinGreen.Value = new decimal(new int[] {
             10,
@@ -648,9 +439,9 @@
             this.L_GreenMin.AutoSize = true;
             this.L_GreenMin.Location = new System.Drawing.Point(6, 30);
             this.L_GreenMin.Name = "L_GreenMin";
-            this.L_GreenMin.Size = new System.Drawing.Size(150, 13);
+            this.L_GreenMin.Size = new System.Drawing.Size(164, 13);
             this.L_GreenMin.TabIndex = 0;
-            this.L_GreenMin.Text = "Minimal duration of green light:";
+            this.L_GreenMin.Text = "Minimal duration of green light (s):";
             // 
             // GB_ProgramSettings
             // 
@@ -676,7 +467,7 @@
             this.GB_ProgramSettings.Controls.Add(this.L_GreenLightColor);
             this.GB_ProgramSettings.Location = new System.Drawing.Point(3, 6);
             this.GB_ProgramSettings.Name = "GB_ProgramSettings";
-            this.GB_ProgramSettings.Size = new System.Drawing.Size(574, 462);
+            this.GB_ProgramSettings.Size = new System.Drawing.Size(574, 381);
             this.GB_ProgramSettings.TabIndex = 1;
             this.GB_ProgramSettings.TabStop = false;
             this.GB_ProgramSettings.Text = "General Settings";
@@ -686,7 +477,7 @@
             this.P_CensorColor.BackColor = System.Drawing.Color.Black;
             this.P_CensorColor.Location = new System.Drawing.Point(99, 121);
             this.P_CensorColor.Name = "P_CensorColor";
-            this.P_CensorColor.Size = new System.Drawing.Size(466, 26);
+            this.P_CensorColor.Size = new System.Drawing.Size(450, 26);
             this.P_CensorColor.TabIndex = 18;
             this.P_CensorColor.Click += new System.EventHandler(this.P_CensorColor_Click);
             // 
@@ -717,7 +508,7 @@
             0,
             0});
             this.NUD_BottomBorder.Name = "NUD_BottomBorder";
-            this.NUD_BottomBorder.Size = new System.Drawing.Size(466, 20);
+            this.NUD_BottomBorder.Size = new System.Drawing.Size(450, 20);
             this.NUD_BottomBorder.TabIndex = 15;
             this.NUD_BottomBorder.Value = new decimal(new int[] {
             100,
@@ -738,7 +529,7 @@
             // 
             this.NUD_TopBorder.Location = new System.Drawing.Point(99, 292);
             this.NUD_TopBorder.Name = "NUD_TopBorder";
-            this.NUD_TopBorder.Size = new System.Drawing.Size(466, 20);
+            this.NUD_TopBorder.Size = new System.Drawing.Size(450, 20);
             this.NUD_TopBorder.TabIndex = 13;
             this.NUD_TopBorder.Value = new decimal(new int[] {
             100,
@@ -759,7 +550,7 @@
             // 
             this.NUD_RightBorder.Location = new System.Drawing.Point(99, 266);
             this.NUD_RightBorder.Name = "NUD_RightBorder";
-            this.NUD_RightBorder.Size = new System.Drawing.Size(466, 20);
+            this.NUD_RightBorder.Size = new System.Drawing.Size(450, 20);
             this.NUD_RightBorder.TabIndex = 11;
             this.NUD_RightBorder.Value = new decimal(new int[] {
             100,
@@ -780,7 +571,7 @@
             // 
             this.NUD_LeftBorder.Location = new System.Drawing.Point(99, 240);
             this.NUD_LeftBorder.Name = "NUD_LeftBorder";
-            this.NUD_LeftBorder.Size = new System.Drawing.Size(466, 20);
+            this.NUD_LeftBorder.Size = new System.Drawing.Size(450, 20);
             this.NUD_LeftBorder.TabIndex = 9;
             this.NUD_LeftBorder.Value = new decimal(new int[] {
             100,
@@ -799,7 +590,7 @@
             // 
             // B_CensorPath
             // 
-            this.B_CensorPath.Location = new System.Drawing.Point(534, 173);
+            this.B_CensorPath.Location = new System.Drawing.Point(518, 173);
             this.B_CensorPath.Name = "B_CensorPath";
             this.B_CensorPath.Size = new System.Drawing.Size(31, 23);
             this.B_CensorPath.TabIndex = 4;
@@ -811,7 +602,7 @@
             // 
             this.TBox_CensorPath.Location = new System.Drawing.Point(115, 175);
             this.TBox_CensorPath.Name = "TBox_CensorPath";
-            this.TBox_CensorPath.Size = new System.Drawing.Size(413, 20);
+            this.TBox_CensorPath.Size = new System.Drawing.Size(397, 20);
             this.TBox_CensorPath.TabIndex = 7;
             // 
             // L_CensorPath
@@ -828,7 +619,7 @@
             this.P_EdgeLightColor.BackColor = System.Drawing.Color.Blue;
             this.P_EdgeLightColor.Location = new System.Drawing.Point(99, 89);
             this.P_EdgeLightColor.Name = "P_EdgeLightColor";
-            this.P_EdgeLightColor.Size = new System.Drawing.Size(466, 26);
+            this.P_EdgeLightColor.Size = new System.Drawing.Size(450, 26);
             this.P_EdgeLightColor.TabIndex = 5;
             this.P_EdgeLightColor.Click += new System.EventHandler(this.P_EdgeLightColor_Click);
             // 
@@ -846,7 +637,7 @@
             this.P_RedLightColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.P_RedLightColor.Location = new System.Drawing.Point(99, 57);
             this.P_RedLightColor.Name = "P_RedLightColor";
-            this.P_RedLightColor.Size = new System.Drawing.Size(466, 26);
+            this.P_RedLightColor.Size = new System.Drawing.Size(450, 26);
             this.P_RedLightColor.TabIndex = 3;
             this.P_RedLightColor.Click += new System.EventHandler(this.P_RedLightColor_Click);
             // 
@@ -864,7 +655,7 @@
             this.P_GreenLightColor.BackColor = System.Drawing.Color.Green;
             this.P_GreenLightColor.Location = new System.Drawing.Point(99, 25);
             this.P_GreenLightColor.Name = "P_GreenLightColor";
-            this.P_GreenLightColor.Size = new System.Drawing.Size(466, 26);
+            this.P_GreenLightColor.Size = new System.Drawing.Size(450, 26);
             this.P_GreenLightColor.TabIndex = 1;
             this.P_GreenLightColor.Click += new System.EventHandler(this.P_GreenLightColor_Click);
             // 
@@ -880,7 +671,7 @@
             // B_SaveExit
             // 
             this.B_SaveExit.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.B_SaveExit.Location = new System.Drawing.Point(507, 518);
+            this.B_SaveExit.Location = new System.Drawing.Point(511, 438);
             this.B_SaveExit.Name = "B_SaveExit";
             this.B_SaveExit.Size = new System.Drawing.Size(92, 23);
             this.B_SaveExit.TabIndex = 2;
@@ -890,7 +681,7 @@
             // B_Cancel
             // 
             this.B_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.B_Cancel.Location = new System.Drawing.Point(12, 518);
+            this.B_Cancel.Location = new System.Drawing.Point(16, 438);
             this.B_Cancel.Name = "B_Cancel";
             this.B_Cancel.Size = new System.Drawing.Size(92, 23);
             this.B_Cancel.TabIndex = 3;
@@ -903,13 +694,26 @@
             // 
             // TAB_Preferences
             // 
-            this.TAB_Preferences.Controls.Add(this.TAB_RLGLSettings);
             this.TAB_Preferences.Controls.Add(this.TAB_GeneralSettings);
+            this.TAB_Preferences.Controls.Add(this.TAB_RLGLSettings);
+            this.TAB_Preferences.Controls.Add(this.TAB_Metronome);
+            this.TAB_Preferences.Controls.Add(this.TAB_Censor);
             this.TAB_Preferences.Location = new System.Drawing.Point(12, 12);
             this.TAB_Preferences.Name = "TAB_Preferences";
             this.TAB_Preferences.SelectedIndex = 0;
-            this.TAB_Preferences.Size = new System.Drawing.Size(591, 500);
+            this.TAB_Preferences.Size = new System.Drawing.Size(591, 419);
             this.TAB_Preferences.TabIndex = 4;
+            // 
+            // TAB_GeneralSettings
+            // 
+            this.TAB_GeneralSettings.BackColor = System.Drawing.SystemColors.Control;
+            this.TAB_GeneralSettings.Controls.Add(this.GB_ProgramSettings);
+            this.TAB_GeneralSettings.Location = new System.Drawing.Point(4, 22);
+            this.TAB_GeneralSettings.Name = "TAB_GeneralSettings";
+            this.TAB_GeneralSettings.Padding = new System.Windows.Forms.Padding(3);
+            this.TAB_GeneralSettings.Size = new System.Drawing.Size(583, 393);
+            this.TAB_GeneralSettings.TabIndex = 1;
+            this.TAB_GeneralSettings.Text = "General Settings";
             // 
             // TAB_RLGLSettings
             // 
@@ -919,26 +723,233 @@
             this.TAB_RLGLSettings.Location = new System.Drawing.Point(4, 22);
             this.TAB_RLGLSettings.Name = "TAB_RLGLSettings";
             this.TAB_RLGLSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.TAB_RLGLSettings.Size = new System.Drawing.Size(583, 474);
+            this.TAB_RLGLSettings.Size = new System.Drawing.Size(583, 393);
             this.TAB_RLGLSettings.TabIndex = 0;
             this.TAB_RLGLSettings.Text = "Red Light Green Light Settings";
             // 
-            // TAB_GeneralSettings
+            // TAB_Metronome
             // 
-            this.TAB_GeneralSettings.BackColor = System.Drawing.SystemColors.Control;
-            this.TAB_GeneralSettings.Controls.Add(this.GB_ProgramSettings);
-            this.TAB_GeneralSettings.Location = new System.Drawing.Point(4, 22);
-            this.TAB_GeneralSettings.Name = "TAB_GeneralSettings";
-            this.TAB_GeneralSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.TAB_GeneralSettings.Size = new System.Drawing.Size(583, 474);
-            this.TAB_GeneralSettings.TabIndex = 1;
-            this.TAB_GeneralSettings.Text = "General Settings";
+            this.TAB_Metronome.BackColor = System.Drawing.SystemColors.Control;
+            this.TAB_Metronome.Controls.Add(this.GB_MetronomeSettings);
+            this.TAB_Metronome.Location = new System.Drawing.Point(4, 22);
+            this.TAB_Metronome.Name = "TAB_Metronome";
+            this.TAB_Metronome.Padding = new System.Windows.Forms.Padding(3);
+            this.TAB_Metronome.Size = new System.Drawing.Size(583, 393);
+            this.TAB_Metronome.TabIndex = 2;
+            this.TAB_Metronome.Text = "Metronome Settings";
+            // 
+            // GB_MetronomeSettings
+            // 
+            this.GB_MetronomeSettings.Controls.Add(this.ETB_MetronomeChance);
+            this.GB_MetronomeSettings.Controls.Add(this.NUD_MaxMetronome);
+            this.GB_MetronomeSettings.Controls.Add(this.L_MaxMetronome);
+            this.GB_MetronomeSettings.Controls.Add(this.NUD_MinMetronome);
+            this.GB_MetronomeSettings.Controls.Add(this.L_MinMetronome);
+            this.GB_MetronomeSettings.Controls.Add(this.CB_Metronome);
+            this.GB_MetronomeSettings.Location = new System.Drawing.Point(3, 6);
+            this.GB_MetronomeSettings.Name = "GB_MetronomeSettings";
+            this.GB_MetronomeSettings.Size = new System.Drawing.Size(574, 381);
+            this.GB_MetronomeSettings.TabIndex = 1;
+            this.GB_MetronomeSettings.TabStop = false;
+            this.GB_MetronomeSettings.Text = "Metronome Settings";
+            // 
+            // ETB_MetronomeChance
+            // 
+            this.ETB_MetronomeChance.Location = new System.Drawing.Point(12, 74);
+            this.ETB_MetronomeChance.Maximum = 100;
+            this.ETB_MetronomeChance.Minimum = 1;
+            this.ETB_MetronomeChance.Name = "ETB_MetronomeChance";
+            this.ETB_MetronomeChance.Size = new System.Drawing.Size(535, 48);
+            this.ETB_MetronomeChance.TabIndex = 39;
+            this.ETB_MetronomeChance.Text = "Possibility:";
+            this.ETB_MetronomeChance.TickFrequency = 10;
+            this.ETB_MetronomeChance.ToolTip = "Define the chance of stroking to a metronome on a green light.";
+            this.ETB_MetronomeChance.Value = 50;
+            // 
+            // NUD_MaxMetronome
+            // 
+            this.NUD_MaxMetronome.Location = new System.Drawing.Point(367, 48);
+            this.NUD_MaxMetronome.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.NUD_MaxMetronome.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_MaxMetronome.Name = "NUD_MaxMetronome";
+            this.NUD_MaxMetronome.Size = new System.Drawing.Size(180, 20);
+            this.NUD_MaxMetronome.TabIndex = 16;
+            this.NUD_MaxMetronome.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // L_MaxMetronome
+            // 
+            this.L_MaxMetronome.AutoSize = true;
+            this.L_MaxMetronome.Location = new System.Drawing.Point(290, 50);
+            this.L_MaxMetronome.Name = "L_MaxMetronome";
+            this.L_MaxMetronome.Size = new System.Drawing.Size(71, 13);
+            this.L_MaxMetronome.TabIndex = 15;
+            this.L_MaxMetronome.Text = "Maximal bpm:";
+            // 
+            // NUD_MinMetronome
+            // 
+            this.NUD_MinMetronome.Location = new System.Drawing.Point(98, 48);
+            this.NUD_MinMetronome.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.NUD_MinMetronome.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_MinMetronome.Name = "NUD_MinMetronome";
+            this.NUD_MinMetronome.Size = new System.Drawing.Size(180, 20);
+            this.NUD_MinMetronome.TabIndex = 14;
+            this.NUD_MinMetronome.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // L_MinMetronome
+            // 
+            this.L_MinMetronome.AutoSize = true;
+            this.L_MinMetronome.Location = new System.Drawing.Point(24, 50);
+            this.L_MinMetronome.Name = "L_MinMetronome";
+            this.L_MinMetronome.Size = new System.Drawing.Size(68, 13);
+            this.L_MinMetronome.TabIndex = 13;
+            this.L_MinMetronome.Text = "Minimal bpm:";
+            // 
+            // CB_Metronome
+            // 
+            this.CB_Metronome.AutoSize = true;
+            this.CB_Metronome.Location = new System.Drawing.Point(6, 24);
+            this.CB_Metronome.Name = "CB_Metronome";
+            this.CB_Metronome.Size = new System.Drawing.Size(114, 17);
+            this.CB_Metronome.TabIndex = 12;
+            this.CB_Metronome.Text = "Enable metronome";
+            this.CB_Metronome.UseVisualStyleBackColor = true;
+            this.CB_Metronome.CheckedChanged += new System.EventHandler(this.CB_Metronome_CheckedChanged);
+            // 
+            // TAB_Censor
+            // 
+            this.TAB_Censor.BackColor = System.Drawing.SystemColors.Control;
+            this.TAB_Censor.Controls.Add(this.GB_CensorSettings);
+            this.TAB_Censor.Location = new System.Drawing.Point(4, 22);
+            this.TAB_Censor.Name = "TAB_Censor";
+            this.TAB_Censor.Padding = new System.Windows.Forms.Padding(3);
+            this.TAB_Censor.Size = new System.Drawing.Size(583, 393);
+            this.TAB_Censor.TabIndex = 3;
+            this.TAB_Censor.Text = "Censor Settings";
+            // 
+            // GB_CensorSettings
+            // 
+            this.GB_CensorSettings.Controls.Add(this.ETB_CensorChance);
+            this.GB_CensorSettings.Controls.Add(this.CB_CensorOnlyGreen);
+            this.GB_CensorSettings.Controls.Add(this.CB_Censoring);
+            this.GB_CensorSettings.Controls.Add(this.L_CensorSize);
+            this.GB_CensorSettings.Controls.Add(this.COMB_CensorType);
+            this.GB_CensorSettings.Controls.Add(this.COMB_CensorSize);
+            this.GB_CensorSettings.Controls.Add(this.L_CensorType);
+            this.GB_CensorSettings.Location = new System.Drawing.Point(3, 6);
+            this.GB_CensorSettings.Name = "GB_CensorSettings";
+            this.GB_CensorSettings.Size = new System.Drawing.Size(577, 381);
+            this.GB_CensorSettings.TabIndex = 29;
+            this.GB_CensorSettings.TabStop = false;
+            this.GB_CensorSettings.Text = "Censor Settings";
+            // 
+            // ETB_CensorChance
+            // 
+            this.ETB_CensorChance.Location = new System.Drawing.Point(14, 106);
+            this.ETB_CensorChance.Maximum = 100;
+            this.ETB_CensorChance.Minimum = 1;
+            this.ETB_CensorChance.Name = "ETB_CensorChance";
+            this.ETB_CensorChance.Size = new System.Drawing.Size(534, 49);
+            this.ETB_CensorChance.TabIndex = 30;
+            this.ETB_CensorChance.Text = "Possibility:";
+            this.ETB_CensorChance.TickFrequency = 10;
+            this.ETB_CensorChance.ToolTip = "Define the chance of censorbars showing on the next phase.";
+            this.ETB_CensorChance.Value = 50;
+            // 
+            // CB_CensorOnlyGreen
+            // 
+            this.CB_CensorOnlyGreen.AutoSize = true;
+            this.CB_CensorOnlyGreen.Enabled = false;
+            this.CB_CensorOnlyGreen.Location = new System.Drawing.Point(28, 83);
+            this.CB_CensorOnlyGreen.Name = "CB_CensorOnlyGreen";
+            this.CB_CensorOnlyGreen.Size = new System.Drawing.Size(177, 17);
+            this.CB_CensorOnlyGreen.TabIndex = 29;
+            this.CB_CensorOnlyGreen.Text = "Censor only on green/edge light";
+            this.CB_CensorOnlyGreen.UseVisualStyleBackColor = true;
+            // 
+            // CB_Censoring
+            // 
+            this.CB_Censoring.AutoSize = true;
+            this.CB_Censoring.Location = new System.Drawing.Point(6, 24);
+            this.CB_Censoring.Name = "CB_Censoring";
+            this.CB_Censoring.Size = new System.Drawing.Size(108, 17);
+            this.CB_Censoring.TabIndex = 24;
+            this.CB_Censoring.Text = "Enable censoring";
+            this.CB_Censoring.UseVisualStyleBackColor = true;
+            this.CB_Censoring.CheckedChanged += new System.EventHandler(this.CB_Censoring_CheckedChanged);
+            // 
+            // L_CensorSize
+            // 
+            this.L_CensorSize.AutoSize = true;
+            this.L_CensorSize.Location = new System.Drawing.Point(291, 50);
+            this.L_CensorSize.Name = "L_CensorSize";
+            this.L_CensorSize.Size = new System.Drawing.Size(64, 13);
+            this.L_CensorSize.TabIndex = 28;
+            this.L_CensorSize.Text = "Censor size:";
+            // 
+            // COMB_CensorType
+            // 
+            this.COMB_CensorType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.COMB_CensorType.FormattingEnabled = true;
+            this.COMB_CensorType.Items.AddRange(new object[] {
+            "Color",
+            "Image"});
+            this.COMB_CensorType.Location = new System.Drawing.Point(99, 47);
+            this.COMB_CensorType.Name = "COMB_CensorType";
+            this.COMB_CensorType.Size = new System.Drawing.Size(180, 21);
+            this.COMB_CensorType.TabIndex = 25;
+            // 
+            // COMB_CensorSize
+            // 
+            this.COMB_CensorSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.COMB_CensorSize.FormattingEnabled = true;
+            this.COMB_CensorSize.Items.AddRange(new object[] {
+            "Small",
+            "Medium",
+            "Big",
+            "Unfair"});
+            this.COMB_CensorSize.Location = new System.Drawing.Point(368, 47);
+            this.COMB_CensorSize.Name = "COMB_CensorSize";
+            this.COMB_CensorSize.Size = new System.Drawing.Size(180, 21);
+            this.COMB_CensorSize.TabIndex = 27;
+            // 
+            // L_CensorType
+            // 
+            this.L_CensorType.AutoSize = true;
+            this.L_CensorType.Location = new System.Drawing.Point(25, 50);
+            this.L_CensorType.Name = "L_CensorType";
+            this.L_CensorType.Size = new System.Drawing.Size(66, 13);
+            this.L_CensorType.TabIndex = 26;
+            this.L_CensorType.Text = "Censor type:";
             // 
             // PreferencesDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(615, 553);
+            this.ClientSize = new System.Drawing.Size(615, 473);
             this.Controls.Add(this.TAB_Preferences);
             this.Controls.Add(this.B_Cancel);
             this.Controls.Add(this.B_SaveExit);
@@ -952,14 +963,9 @@
             this.Text = "Preferences...";
             this.GB_RLGLSettings.ResumeLayout(false);
             this.GB_RLGLSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TB_EdgeChance)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxEdge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinEdge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_EdgeWarmup)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TB_CensorProbability)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TB_MetronomeChance)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxMetronome)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUD_MinMetronome)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxRed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinRed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxGreen)).EndInit();
@@ -971,8 +977,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.NUD_RightBorder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_LeftBorder)).EndInit();
             this.TAB_Preferences.ResumeLayout(false);
-            this.TAB_RLGLSettings.ResumeLayout(false);
             this.TAB_GeneralSettings.ResumeLayout(false);
+            this.TAB_RLGLSettings.ResumeLayout(false);
+            this.TAB_Metronome.ResumeLayout(false);
+            this.GB_MetronomeSettings.ResumeLayout(false);
+            this.GB_MetronomeSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxMetronome)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_MinMetronome)).EndInit();
+            this.TAB_Censor.ResumeLayout(false);
+            this.GB_CensorSettings.ResumeLayout(false);
+            this.GB_CensorSettings.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1000,28 +1014,12 @@
         public System.Windows.Forms.NumericUpDown NUD_MinGreen;
         public System.Windows.Forms.Panel P_RedLightColor;
         public System.Windows.Forms.Panel P_GreenLightColor;
-        private System.Windows.Forms.Label L_MetronomeChance;
-        public System.Windows.Forms.TrackBar TB_MetronomeChance;
-        public System.Windows.Forms.NumericUpDown NUD_MaxMetronome;
-        private System.Windows.Forms.Label L_MaxMetronome;
-        public System.Windows.Forms.NumericUpDown NUD_MinMetronome;
-        private System.Windows.Forms.Label L_MinMetronome;
-        public System.Windows.Forms.CheckBox CB_Metronome;
         public System.Windows.Forms.Panel P_EdgeLightColor;
         private System.Windows.Forms.Label L_EdgeLightColor;
-        public System.Windows.Forms.CheckBox CB_Censoring;
-        private System.Windows.Forms.Label L_CensorSize;
-        private System.Windows.Forms.Label L_CensorType;
-        private System.Windows.Forms.Label L_CensorPossibility;
-        public System.Windows.Forms.TrackBar TB_CensorProbability;
         private System.Windows.Forms.Button B_CensorPath;
         public System.Windows.Forms.TextBox TBox_CensorPath;
         private System.Windows.Forms.Label L_CensorPath;
         private System.Windows.Forms.FolderBrowserDialog FolderSelector;
-        public System.Windows.Forms.ComboBox COMB_CensorSize;
-        public System.Windows.Forms.ComboBox COMB_CensorType;
-        private System.Windows.Forms.Label L_BothLights;
-        private System.Windows.Forms.Label L_OnlyGreenLight;
         private System.Windows.Forms.Label L_Appearing;
         private System.Windows.Forms.Label L_BottomBorder;
         private System.Windows.Forms.Label L_TopBorder;
@@ -1033,8 +1031,6 @@
         public System.Windows.Forms.NumericUpDown NUD_LeftBorder;
         public System.Windows.Forms.Panel P_CensorColor;
         private System.Windows.Forms.Label L_CensorColor;
-        private System.Windows.Forms.Label L_EdgeChance;
-        public System.Windows.Forms.TrackBar TB_EdgeChance;
         public System.Windows.Forms.NumericUpDown NUD_MaxEdge;
         private System.Windows.Forms.Label L_MaxEdge;
         public System.Windows.Forms.NumericUpDown NUD_MinEdge;
@@ -1046,5 +1042,23 @@
         private System.Windows.Forms.TabPage TAB_GeneralSettings;
         public System.Windows.Forms.CheckBox CB_AllowGreenLight;
         public System.Windows.Forms.CheckBox CB_EdgePhase;
+        public ExtendedTrackBar ETB_EdgeChance;
+        private System.Windows.Forms.TabPage TAB_Metronome;
+        private System.Windows.Forms.GroupBox GB_MetronomeSettings;
+        public System.Windows.Forms.NumericUpDown NUD_MaxMetronome;
+        private System.Windows.Forms.Label L_MaxMetronome;
+        public System.Windows.Forms.NumericUpDown NUD_MinMetronome;
+        private System.Windows.Forms.Label L_MinMetronome;
+        public System.Windows.Forms.CheckBox CB_Metronome;
+        private System.Windows.Forms.TabPage TAB_Censor;
+        private System.Windows.Forms.GroupBox GB_CensorSettings;
+        public System.Windows.Forms.CheckBox CB_Censoring;
+        private System.Windows.Forms.Label L_CensorSize;
+        public System.Windows.Forms.ComboBox COMB_CensorType;
+        public System.Windows.Forms.ComboBox COMB_CensorSize;
+        private System.Windows.Forms.Label L_CensorType;
+        public ExtendedTrackBar ETB_MetronomeChance;
+        public ExtendedTrackBar ETB_CensorChance;
+        public System.Windows.Forms.CheckBox CB_CensorOnlyGreen;
     }
 }
