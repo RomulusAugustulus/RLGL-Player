@@ -27,11 +27,20 @@ namespace RLGL_Player
     {
         private List<string> videos;
         private int currentVideo;
+        private int loop;
 
         public RLGLVideoQueue()
         {
             videos = new List<string>();
             currentVideo = 0;
+            loop = 0;
+        }
+
+        public RLGLVideoQueue(int loop)
+        {
+            videos = new List<string>();
+            currentVideo = 0;
+            this.loop = loop;
         }
 
         //Adds a video at the end of the queue.
@@ -40,13 +49,22 @@ namespace RLGL_Player
             videos.Add(vid);
         }
 
-        //Gets the next link or an empty string if the queue has no links left.
+        /*
+         * Gets the next link or an empty string if the queue has no links left.
+         * Has ability to loop the playlist.
+         */ 
         public string GetNextVideo()
         {
             if(currentVideo < videos.Count)
             {
                 string vid = videos[currentVideo];
                 currentVideo++;
+
+                if(currentVideo == videos.Count && loop > 0)
+                {
+                    currentVideo = 0;
+                    loop--;
+                }
 
                 return vid;
             }

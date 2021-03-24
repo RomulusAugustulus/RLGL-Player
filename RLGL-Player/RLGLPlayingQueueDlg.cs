@@ -71,6 +71,12 @@ namespace RLGL_Player
         private void B_OK_Click(object sender, EventArgs e)
         {
             Random rand = new Random();
+
+            if(NUD_Loop.Value != 0)
+            {
+                videoQueue = new RLGLVideoQueue((int)NUD_Loop.Value);
+            }
+
             if (CB_Shuffle.Checked)
             {
                 while (videos.Count != 0)

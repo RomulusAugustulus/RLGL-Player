@@ -29,6 +29,7 @@ namespace RLGL_Player
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.LB_Queue = new System.Windows.Forms.ListBox();
             this.L_Queue = new System.Windows.Forms.Label();
             this.L_Load = new System.Windows.Forms.Button();
@@ -40,6 +41,10 @@ namespace RLGL_Player
             this.B_Delete = new System.Windows.Forms.Button();
             this.L_FullPath = new System.Windows.Forms.Label();
             this.CB_Shuffle = new System.Windows.Forms.CheckBox();
+            this.NUD_Loop = new System.Windows.Forms.NumericUpDown();
+            this.L_Loop = new System.Windows.Forms.Label();
+            this.PlayingQueueTooltip = new System.Windows.Forms.ToolTip(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_Loop)).BeginInit();
             this.SuspendLayout();
             // 
             // LB_Queue
@@ -48,7 +53,7 @@ namespace RLGL_Player
             this.LB_Queue.HorizontalScrollbar = true;
             this.LB_Queue.Location = new System.Drawing.Point(15, 25);
             this.LB_Queue.Name = "LB_Queue";
-            this.LB_Queue.Size = new System.Drawing.Size(351, 316);
+            this.LB_Queue.Size = new System.Drawing.Size(351, 264);
             this.LB_Queue.TabIndex = 0;
             this.LB_Queue.SelectedIndexChanged += new System.EventHandler(this.LB_Queue_SelectedIndexChanged);
             // 
@@ -63,7 +68,7 @@ namespace RLGL_Player
             // 
             // L_Load
             // 
-            this.L_Load.Location = new System.Drawing.Point(133, 373);
+            this.L_Load.Location = new System.Drawing.Point(133, 316);
             this.L_Load.Name = "L_Load";
             this.L_Load.Size = new System.Drawing.Size(207, 32);
             this.L_Load.TabIndex = 2;
@@ -94,7 +99,7 @@ namespace RLGL_Player
             // 
             // B_Down
             // 
-            this.B_Down.Location = new System.Drawing.Point(386, 287);
+            this.B_Down.Location = new System.Drawing.Point(386, 237);
             this.B_Down.Name = "B_Down";
             this.B_Down.Size = new System.Drawing.Size(75, 23);
             this.B_Down.TabIndex = 5;
@@ -104,7 +109,7 @@ namespace RLGL_Player
             // 
             // B_Up
             // 
-            this.B_Up.Location = new System.Drawing.Point(386, 258);
+            this.B_Up.Location = new System.Drawing.Point(386, 208);
             this.B_Up.Name = "B_Up";
             this.B_Up.Size = new System.Drawing.Size(75, 23);
             this.B_Up.TabIndex = 6;
@@ -121,7 +126,7 @@ namespace RLGL_Player
             // 
             // B_Delete
             // 
-            this.B_Delete.Location = new System.Drawing.Point(386, 316);
+            this.B_Delete.Location = new System.Drawing.Point(386, 266);
             this.B_Delete.Name = "B_Delete";
             this.B_Delete.Size = new System.Drawing.Size(75, 23);
             this.B_Delete.TabIndex = 7;
@@ -132,7 +137,7 @@ namespace RLGL_Player
             // L_FullPath
             // 
             this.L_FullPath.AutoEllipsis = true;
-            this.L_FullPath.Location = new System.Drawing.Point(12, 349);
+            this.L_FullPath.Location = new System.Drawing.Point(12, 292);
             this.L_FullPath.Name = "L_FullPath";
             this.L_FullPath.Size = new System.Drawing.Size(449, 21);
             this.L_FullPath.TabIndex = 8;
@@ -143,12 +148,38 @@ namespace RLGL_Player
             // CB_Shuffle
             // 
             this.CB_Shuffle.AutoSize = true;
-            this.CB_Shuffle.Location = new System.Drawing.Point(287, 419);
+            this.CB_Shuffle.Location = new System.Drawing.Point(343, 389);
             this.CB_Shuffle.Name = "CB_Shuffle";
             this.CB_Shuffle.Size = new System.Drawing.Size(93, 17);
             this.CB_Shuffle.TabIndex = 9;
             this.CB_Shuffle.Text = "Shuffle videos";
             this.CB_Shuffle.UseVisualStyleBackColor = true;
+            // 
+            // NUD_Loop
+            // 
+            this.NUD_Loop.Location = new System.Drawing.Point(414, 363);
+            this.NUD_Loop.Name = "NUD_Loop";
+            this.NUD_Loop.Size = new System.Drawing.Size(47, 20);
+            this.NUD_Loop.TabIndex = 10;
+            this.NUD_Loop.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.PlayingQueueTooltip.SetToolTip(this.NUD_Loop, "Set a number other than 0 to loop the whole playlist that many times. In combinat" +
+        "ion with shuffle the playlist will only be shuffled 1 time!");
+            // 
+            // L_Loop
+            // 
+            this.L_Loop.AutoSize = true;
+            this.L_Loop.Location = new System.Drawing.Point(340, 365);
+            this.L_Loop.Name = "L_Loop";
+            this.L_Loop.Size = new System.Drawing.Size(68, 13);
+            this.L_Loop.TabIndex = 11;
+            this.L_Loop.Text = "Loop playlist:";
+            // 
+            // PlayingQueueTooltip
+            // 
+            this.PlayingQueueTooltip.AutoPopDelay = 10000;
+            this.PlayingQueueTooltip.InitialDelay = 500;
+            this.PlayingQueueTooltip.ReshowDelay = 100;
+            this.PlayingQueueTooltip.ToolTipTitle = "Help";
             // 
             // RLGLPlayingQueueDlg
             // 
@@ -157,6 +188,8 @@ namespace RLGL_Player
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.B_Cancel;
             this.ClientSize = new System.Drawing.Size(473, 450);
+            this.Controls.Add(this.L_Loop);
+            this.Controls.Add(this.NUD_Loop);
             this.Controls.Add(this.CB_Shuffle);
             this.Controls.Add(this.L_FullPath);
             this.Controls.Add(this.B_Delete);
@@ -175,6 +208,7 @@ namespace RLGL_Player
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Load...";
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_Loop)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -193,5 +227,8 @@ namespace RLGL_Player
         private System.Windows.Forms.Button B_Delete;
         private System.Windows.Forms.Label L_FullPath;
         private System.Windows.Forms.CheckBox CB_Shuffle;
+        private System.Windows.Forms.NumericUpDown NUD_Loop;
+        private System.Windows.Forms.ToolTip PlayingQueueTooltip;
+        private System.Windows.Forms.Label L_Loop;
     }
 }
