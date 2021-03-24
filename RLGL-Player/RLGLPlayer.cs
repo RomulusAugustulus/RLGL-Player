@@ -78,7 +78,7 @@ public partial class RLGLPlayer : Form
                         SetEdging();
                     }
 
-                    PlayNextVideo();
+                    PlayNextVideo(true);
                     //RLGL_Timer.Start();
                 }
             }
@@ -328,7 +328,7 @@ public partial class RLGLPlayer : Form
         }
 
         // Play the next video in the currently selected queue
-        private void PlayNextVideo()
+        private void PlayNextVideo(bool sessionStart)
         {
             string fileName = rlglVideoQueue.GetNextVideo();
             FileStream fs = File.OpenRead(fileName);
@@ -368,10 +368,18 @@ public partial class RLGLPlayer : Form
                 lastDuration = TimeSpan.FromSeconds(randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed));
             }
 
-            rlglCurrentMedia = new RLGLCurrentMedia(fileName,
-                DateTime.Now, lastDuration,
-                (RLGLPhase)randomNumberGenerator.Next(0, 2),
-                ending);
+            if (sessionStart)
+            {
+                rlglCurrentMedia = new RLGLCurrentMedia(fileName,
+                    DateTime.Now, lastDuration, RLGLPhase.Green, ending);
+            }
+            else
+            {
+                rlglCurrentMedia = new RLGLCurrentMedia(fileName,
+                    DateTime.Now, lastDuration,
+                    (RLGLPhase)randomNumberGenerator.Next(0, 2),
+                    ending);
+            }
 
             for (int i = 0; i < censorbars.Count; i++)
             {
@@ -427,7 +435,7 @@ public partial class RLGLPlayer : Form
 
             if(rlglVideoQueue.VideosRemaining() > 0)
             {
-                PlayNextVideo();
+                PlayNextVideo(false);
             }
             else
             {
