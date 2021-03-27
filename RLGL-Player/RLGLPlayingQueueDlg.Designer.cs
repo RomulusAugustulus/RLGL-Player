@@ -44,6 +44,7 @@ namespace RLGL_Player
             this.NUD_Loop = new System.Windows.Forms.NumericUpDown();
             this.L_Loop = new System.Windows.Forms.Label();
             this.PlayingQueueTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.CB_IgnorePlaylistPreferences = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Loop)).BeginInit();
             this.SuspendLayout();
             // 
@@ -181,6 +182,17 @@ namespace RLGL_Player
             this.PlayingQueueTooltip.ReshowDelay = 100;
             this.PlayingQueueTooltip.ToolTipTitle = "Help";
             // 
+            // CB_IgnorePlaylistPreferences
+            // 
+            this.CB_IgnorePlaylistPreferences.AutoSize = true;
+            this.CB_IgnorePlaylistPreferences.Location = new System.Drawing.Point(15, 366);
+            this.CB_IgnorePlaylistPreferences.Name = "CB_IgnorePlaylistPreferences";
+            this.CB_IgnorePlaylistPreferences.Size = new System.Drawing.Size(237, 17);
+            this.CB_IgnorePlaylistPreferences.TabIndex = 12;
+            this.CB_IgnorePlaylistPreferences.Text = "Ignore user preferences saved in this playlist.";
+            this.CB_IgnorePlaylistPreferences.UseVisualStyleBackColor = true;
+            this.CB_IgnorePlaylistPreferences.Visible = false;
+            // 
             // RLGLPlayingQueueDlg
             // 
             this.AcceptButton = this.B_OK;
@@ -188,6 +200,7 @@ namespace RLGL_Player
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.B_Cancel;
             this.ClientSize = new System.Drawing.Size(473, 450);
+            this.Controls.Add(this.CB_IgnorePlaylistPreferences);
             this.Controls.Add(this.L_Loop);
             this.Controls.Add(this.NUD_Loop);
             this.Controls.Add(this.CB_Shuffle);
@@ -230,5 +243,6 @@ namespace RLGL_Player
         private System.Windows.Forms.NumericUpDown NUD_Loop;
         private System.Windows.Forms.ToolTip PlayingQueueTooltip;
         private System.Windows.Forms.Label L_Loop;
+        private System.Windows.Forms.CheckBox CB_IgnorePlaylistPreferences;
     }
 }

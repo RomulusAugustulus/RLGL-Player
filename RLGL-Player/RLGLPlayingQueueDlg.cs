@@ -26,8 +26,9 @@ namespace RLGL_Player
     {
         private List<(string, string)> videos;
         private RLGLVideoQueue videoQueue;
-
+        private bool ignoreQueuePreferences;
         public RLGLVideoQueue VideoQueue { get => videoQueue; }
+        public bool IgnoreQueuePreferences { get => ignoreQueuePreferences; }
 
         public RLGLPlayingQueueDlg()
         {
@@ -36,6 +37,24 @@ namespace RLGL_Player
             videoQueue = new RLGLVideoQueue();
             videos = new List<(string, string)>();
             L_FullPath.Text = "";
+            ignoreQueuePreferences = true;
+        }
+
+        //Changes the appearance of the dialog to alter an existing queue.
+        public void InitCustomizationDlg(RLGLVideoQueue queue)
+        {
+            CB_IgnorePlaylistPreferences.Visible = true;
+            LB_Queue.Items.Clear();
+
+            (int, List<string>) loadedQueue = queue.GetRLGLVideoQueue();
+            NUD_Loop.Value = loadedQueue.Item1;
+
+            for(int i=0;i<loadedQueue.Item2.Count;i++)
+            {
+                string filename = Path.GetFileName(loadedQueue.Item2[i]);
+                videos.Add((filename, loadedQueue.Item2[i]));
+                LB_Queue.Items.Add(filename);
+            }
         }
 
         private void L_Load_Click(object sender, EventArgs e)
@@ -92,6 +111,11 @@ namespace RLGL_Player
                 {
                     videoQueue.AddVideo(videos[i].Item2);
                 }
+            }
+
+            if(!CB_IgnorePlaylistPreferences.Checked)
+            {
+                ignoreQueuePreferences = false;
             }
         }
 

@@ -30,7 +30,7 @@ namespace RLGL_Player
      * RLGLPreferences handles all actions that are related to the user-settings,
      * like save and load them to/from disc or distribute them to the different forms.  
      */ 
-    class RLGLPreferences
+    public class RLGLPreferences
     {
         //The current version of the file. Used to preserve backwards-compatibility.
         private string preferencesFileVersion = "v.4";

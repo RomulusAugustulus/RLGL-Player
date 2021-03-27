@@ -37,6 +37,7 @@ namespace RLGL_Player
 public partial class RLGLPlayer : Form
     {
         private RLGLPreferences rlglPreferences;
+        private RLGLPreferences tmpRlglPreferences;
         private RLGLCurrentMedia rlglCurrentMedia;
         private RLGLCensorData rlglCensorData;
         private Random randomNumberGenerator;
@@ -52,6 +53,7 @@ public partial class RLGLPlayer : Form
         {
             randomNumberGenerator = new Random();
             rlglPreferences = new RLGLPreferences();
+            tmpRlglPreferences = rlglPreferences;
             metronome = new SoundPlayer();
             censorbars = new List<Blackbar>();
             censoring = false;
@@ -70,17 +72,7 @@ public partial class RLGLPlayer : Form
             {
                 rlglVideoQueue = rlglPlayingQueueDlg.VideoQueue;
 
-                if (rlglVideoQueue.VideosRemaining() > 0)
-                {
-                    edging = false;
-                    if (rlglPreferences.Edging)
-                    {
-                        SetEdging();
-                    }
-
-                    PlayNextVideo(true);
-                    //RLGL_Timer.Start();
-                }
+                StartQueue(rlglPreferences);
             }
         }
 
@@ -439,6 +431,7 @@ public partial class RLGLPlayer : Form
             }
             else
             {
+                rlglPreferences = tmpRlglPreferences;
                 edging = false;
                 StopEdging();
                 //RLGL_Timer.Stop();
@@ -764,9 +757,93 @@ public partial class RLGLPlayer : Form
             RLGL_EdgingTimer.Stop();
         }
 
-       private void RLGL_Timer_Tick(object sender, EventArgs e)
-       {
+        private void RLGL_Timer_Tick(object sender, EventArgs e)
+        {
             //L_TimePassed.Text = (DateTime.Now - rlglCurrentMedia.Start).ToString(@"hh\:mm\:ss");
-       }
+        }
+
+        /*
+         * Saves the currently loaded queue to a file.
+         */ 
+        private void savePlaylistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(SaveQueueDlg.ShowDialog() == DialogResult.OK)
+            {
+                rlglVideoQueue.SaveVideoQueue(SaveQueueDlg.FileName, rlglPreferences);
+                MessageBox.Show("Saved playlist.", "Save");
+            }
+        }
+
+        /*
+         * Load a queue from a file and starts playing it. Has also the option to customize the loaded playlist before starting it.
+         */ 
+        private void loadPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(OpenQueueDlg.ShowDialog() == DialogResult.OK)
+            {
+                rlglVideoQueue = new RLGLVideoQueue();
+                (bool, RLGLPreferences) loadedQueue = rlglVideoQueue.LoadVideoQueue(OpenQueueDlg.FileName, rlglPreferences);
+
+                if(loadedQueue.Item1)
+                {
+                    if (MessageBox.Show("Do you want to customize the loaded playlist?", "Customize", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        RLGLPlayingQueueDlg queueDlg = new RLGLPlayingQueueDlg();
+                        queueDlg.InitCustomizationDlg(rlglVideoQueue);
+
+                        if(queueDlg.ShowDialog() == DialogResult.OK)
+                        {
+                            rlglVideoQueue = queueDlg.VideoQueue;
+
+                            if(queueDlg.IgnoreQueuePreferences)
+                            {
+                                StartQueue(rlglPreferences);
+                            }
+                            else
+                            {
+                                StartQueue(loadedQueue.Item2);
+                            }
+                        }
+                        else
+                        {
+
+                            StartQueue(loadedQueue.Item2);
+                        }
+                    }
+                    else
+                    {
+                        StartQueue(loadedQueue.Item2);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Failed to load playlist! File was either not a RLGL-Playlist or file is corrupted!", "Error");
+                }
+            }
+        }
+
+        /*
+         * Starts the current loaded queue and overrides the selected preferences with the specified ones.
+         * If the queue has no videos left or no videos at all, nothing happens.
+         */ 
+        private void StartQueue(RLGLPreferences overridePrefs)
+        {
+            if (rlglVideoQueue.VideosRemaining() > 0)
+            {
+                tmpRlglPreferences = rlglPreferences;
+                rlglPreferences = overridePrefs;
+
+                savePlaylistToolStripMenuItem.Enabled = true;
+
+                edging = false;
+                if (rlglPreferences.Edging)
+                {
+                    SetEdging();
+                }
+
+                PlayNextVideo(true);
+                //RLGL_Timer.Start();
+            }
+        }
     }
 }

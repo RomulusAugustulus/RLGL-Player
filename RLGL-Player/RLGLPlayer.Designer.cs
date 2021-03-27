@@ -33,6 +33,9 @@
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadPlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.savePlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,13 +49,14 @@
             this.L_Text = new System.Windows.Forms.Label();
             this.TB_Volume = new System.Windows.Forms.TrackBar();
             this.L_TimePassed = new System.Windows.Forms.Label();
-            this.OpenVideoDlg = new System.Windows.Forms.OpenFileDialog();
+            this.OpenQueueDlg = new System.Windows.Forms.OpenFileDialog();
             this.RLGL_SwitchTimer = new System.Windows.Forms.Timer(this.components);
             this.RLGL_VideoEndTimer = new System.Windows.Forms.Timer(this.components);
             this.RLGL_Metronome = new System.Windows.Forms.Timer(this.components);
             this.RLGL_Censor = new System.Windows.Forms.Timer(this.components);
             this.RLGL_EdgingTimer = new System.Windows.Forms.Timer(this.components);
             this.RLGL_Timer = new System.Windows.Forms.Timer(this.components);
+            this.SaveQueueDlg = new System.Windows.Forms.SaveFileDialog();
             this.MainMenu.SuspendLayout();
             this.VLC_Panel.SuspendLayout();
             this.RLGL_Layout.SuspendLayout();
@@ -76,6 +80,9 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadToolStripMenuItem,
+            this.loadPlaylistToolStripMenuItem,
+            this.savePlaylistToolStripMenuItem,
+            this.toolStripMenuItem3,
             this.preferencesToolStripMenuItem,
             this.toolStripMenuItem1,
             this.closeToolStripMenuItem});
@@ -87,28 +94,52 @@
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             this.loadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
             this.loadToolStripMenuItem.Text = "&Load...";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+            // 
+            // loadPlaylistToolStripMenuItem
+            // 
+            this.loadPlaylistToolStripMenuItem.Name = "loadPlaylistToolStripMenuItem";
+            this.loadPlaylistToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.O)));
+            this.loadPlaylistToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+            this.loadPlaylistToolStripMenuItem.Text = "Load playlist...";
+            this.loadPlaylistToolStripMenuItem.Click += new System.EventHandler(this.loadPlaylistToolStripMenuItem_Click);
+            // 
+            // savePlaylistToolStripMenuItem
+            // 
+            this.savePlaylistToolStripMenuItem.Enabled = false;
+            this.savePlaylistToolStripMenuItem.Name = "savePlaylistToolStripMenuItem";
+            this.savePlaylistToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.savePlaylistToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+            this.savePlaylistToolStripMenuItem.Text = "Save playlist...";
+            this.savePlaylistToolStripMenuItem.Click += new System.EventHandler(this.savePlaylistToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(274, 6);
             // 
             // preferencesToolStripMenuItem
             // 
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
             this.preferencesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
             this.preferencesToolStripMenuItem.Text = "&Preferences...";
             this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(184, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(274, 6);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
             this.closeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
             this.closeToolStripMenuItem.Text = "&Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
@@ -227,11 +258,10 @@
             this.L_TimePassed.Text = "Time";
             this.L_TimePassed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // OpenVideoDlg
+            // OpenQueueDlg
             // 
-            this.OpenVideoDlg.Filter = "Video files (*.avi , *.flv , *.mkv , *.mov , *.mp4 , *.wmv)|*.avi;*.flv;*.mkv;*.m" +
-    "ov;*.mp4;*.wmv";
-            this.OpenVideoDlg.Title = "Load...";
+            this.OpenQueueDlg.Filter = "RLGL-Playlist (*.rgp)|*.rgp";
+            this.OpenQueueDlg.Title = "Load Playlist...";
             // 
             // RLGL_SwitchTimer
             // 
@@ -258,6 +288,12 @@
             // 
             this.RLGL_Timer.Interval = 1000;
             this.RLGL_Timer.Tick += new System.EventHandler(this.RLGL_Timer_Tick);
+            // 
+            // SaveQueueDlg
+            // 
+            this.SaveQueueDlg.DefaultExt = "rgp";
+            this.SaveQueueDlg.Filter = "RLGL-Playlist (*.rgp)|*.rgp";
+            this.SaveQueueDlg.Title = "Save Playlist...";
             // 
             // RLGLPlayer
             // 
@@ -296,7 +332,7 @@
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.Panel VLC_Panel;
         private Vlc.DotNet.Forms.VlcControl VLC_Control;
-        private System.Windows.Forms.OpenFileDialog OpenVideoDlg;
+        private System.Windows.Forms.OpenFileDialog OpenQueueDlg;
         private System.Windows.Forms.TableLayoutPanel RLGL_Layout;
         private System.Windows.Forms.Label L_Text;
         private System.Windows.Forms.Timer RLGL_SwitchTimer;
@@ -311,6 +347,10 @@
         private System.Windows.Forms.Timer RLGL_EdgingTimer;
         private System.Windows.Forms.Label L_TimePassed;
         private System.Windows.Forms.Timer RLGL_Timer;
+        private System.Windows.Forms.ToolStripMenuItem loadPlaylistToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem savePlaylistToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.SaveFileDialog SaveQueueDlg;
     }
 }
 
