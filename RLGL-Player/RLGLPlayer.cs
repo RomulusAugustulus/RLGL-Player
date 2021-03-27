@@ -176,6 +176,7 @@ public partial class RLGLPlayer : Form
         //Save the preferences to the disc.
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            rlglPreferences = tmpRlglPreferences;
             rlglPreferences.SavePreferencesToFile("Preferences.config");
         }
 
