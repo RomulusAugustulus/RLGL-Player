@@ -31,15 +31,15 @@ namespace RLGL_Player
         {
             this.components = new System.ComponentModel.Container();
             this.ExtendedTrackBarLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.TB_ExtendedTrackBar = new System.Windows.Forms.TrackBar();
             this.DecimalTextBoxLayout = new System.Windows.Forms.TableLayoutPanel();
             this.NUD_ShowValue = new System.Windows.Forms.NumericUpDown();
+            this.TB_ExtendedTrackBar = new System.Windows.Forms.TrackBar();
             this.L_Label = new System.Windows.Forms.Label();
             this.ExtendedTrackBarTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.ExtendedTrackBarLayout.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TB_ExtendedTrackBar)).BeginInit();
             this.DecimalTextBoxLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_ShowValue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TB_ExtendedTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // ExtendedTrackBarLayout
@@ -58,16 +58,6 @@ namespace RLGL_Player
             this.ExtendedTrackBarLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ExtendedTrackBarLayout.Size = new System.Drawing.Size(345, 54);
             this.ExtendedTrackBarLayout.TabIndex = 100;
-            // 
-            // TB_ExtendedTrackBar
-            // 
-            this.TB_ExtendedTrackBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TB_ExtendedTrackBar.Location = new System.Drawing.Point(83, 3);
-            this.TB_ExtendedTrackBar.Name = "TB_ExtendedTrackBar";
-            this.TB_ExtendedTrackBar.Size = new System.Drawing.Size(199, 48);
-            this.TB_ExtendedTrackBar.TabIndex = 0;
-            this.TB_ExtendedTrackBar.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.TB_ExtendedTrackBar.ValueChanged += new System.EventHandler(this.TB_ExtendedTrackBar_ValueChanged);
             // 
             // DecimalTextBoxLayout
             // 
@@ -98,6 +88,16 @@ namespace RLGL_Player
             this.NUD_ShowValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.NUD_ShowValue.ValueChanged += new System.EventHandler(this.NUD_ShowValue_ValueChanged);
             // 
+            // TB_ExtendedTrackBar
+            // 
+            this.TB_ExtendedTrackBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TB_ExtendedTrackBar.Location = new System.Drawing.Point(83, 3);
+            this.TB_ExtendedTrackBar.Name = "TB_ExtendedTrackBar";
+            this.TB_ExtendedTrackBar.Size = new System.Drawing.Size(199, 48);
+            this.TB_ExtendedTrackBar.TabIndex = 0;
+            this.TB_ExtendedTrackBar.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.TB_ExtendedTrackBar.ValueChanged += new System.EventHandler(this.TB_ExtendedTrackBar_ValueChanged);
+            // 
             // L_Label
             // 
             this.L_Label.AutoSize = true;
@@ -125,9 +125,9 @@ namespace RLGL_Player
             this.Size = new System.Drawing.Size(345, 54);
             this.ExtendedTrackBarLayout.ResumeLayout(false);
             this.ExtendedTrackBarLayout.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TB_ExtendedTrackBar)).EndInit();
             this.DecimalTextBoxLayout.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.NUD_ShowValue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TB_ExtendedTrackBar)).EndInit();
             this.ResumeLayout(false);
 
         }

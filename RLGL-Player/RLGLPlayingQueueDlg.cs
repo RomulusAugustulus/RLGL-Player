@@ -57,7 +57,7 @@ namespace RLGL_Player
             }
         }
 
-        private void L_Load_Click(object sender, EventArgs e)
+        private void B_Load_Click(object sender, EventArgs e)
         {
             if(OpenVideoDlg.ShowDialog() == DialogResult.OK)
             {

@@ -32,7 +32,7 @@ namespace RLGL_Player
             this.components = new System.ComponentModel.Container();
             this.LB_Queue = new System.Windows.Forms.ListBox();
             this.L_Queue = new System.Windows.Forms.Label();
-            this.L_Load = new System.Windows.Forms.Button();
+            this.B_Load = new System.Windows.Forms.Button();
             this.B_OK = new System.Windows.Forms.Button();
             this.B_Cancel = new System.Windows.Forms.Button();
             this.B_Down = new System.Windows.Forms.Button();
@@ -67,15 +67,15 @@ namespace RLGL_Player
             this.L_Queue.TabIndex = 1;
             this.L_Queue.Text = "Queued videos:";
             // 
-            // L_Load
+            // B_Load
             // 
-            this.L_Load.Location = new System.Drawing.Point(133, 316);
-            this.L_Load.Name = "L_Load";
-            this.L_Load.Size = new System.Drawing.Size(207, 32);
-            this.L_Load.TabIndex = 2;
-            this.L_Load.Text = "Load...";
-            this.L_Load.UseVisualStyleBackColor = true;
-            this.L_Load.Click += new System.EventHandler(this.L_Load_Click);
+            this.B_Load.Location = new System.Drawing.Point(133, 316);
+            this.B_Load.Name = "B_Load";
+            this.B_Load.Size = new System.Drawing.Size(207, 32);
+            this.B_Load.TabIndex = 2;
+            this.B_Load.Text = "Load...";
+            this.B_Load.UseVisualStyleBackColor = true;
+            this.B_Load.Click += new System.EventHandler(this.B_Load_Click);
             // 
             // B_OK
             // 
@@ -210,7 +210,7 @@ namespace RLGL_Player
             this.Controls.Add(this.B_Down);
             this.Controls.Add(this.B_Cancel);
             this.Controls.Add(this.B_OK);
-            this.Controls.Add(this.L_Load);
+            this.Controls.Add(this.B_Load);
             this.Controls.Add(this.L_Queue);
             this.Controls.Add(this.LB_Queue);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -231,7 +231,7 @@ namespace RLGL_Player
 
         private System.Windows.Forms.ListBox LB_Queue;
         private System.Windows.Forms.Label L_Queue;
-        private System.Windows.Forms.Button L_Load;
+        private System.Windows.Forms.Button B_Load;
         private System.Windows.Forms.Button B_OK;
         private System.Windows.Forms.Button B_Cancel;
         private System.Windows.Forms.Button B_Down;
