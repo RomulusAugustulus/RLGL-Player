@@ -435,6 +435,7 @@ public partial class RLGLPlayer : Form
                 rlglPreferences = tmpRlglPreferences;
                 edging = false;
                 StopEdging();
+                sessionToolStripMenuItem.Visible = false;
                 //RLGL_Timer.Stop();
             }
         }
@@ -835,6 +836,7 @@ public partial class RLGLPlayer : Form
                 rlglPreferences = overridePrefs;
 
                 savePlaylistToolStripMenuItem.Enabled = true;
+                sessionToolStripMenuItem.Visible = true;
 
                 edging = false;
                 if (rlglPreferences.Edging)
@@ -844,6 +846,18 @@ public partial class RLGLPlayer : Form
 
                 PlayNextVideo(true);
                 //RLGL_Timer.Start();
+            }
+        }
+
+        //Cancel active session and return to default screen.
+        private void endSessionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Do this only if we are in a session and the option is visible to the player
+            if(sessionToolStripMenuItem.Visible)
+            {
+                VLC_Control.Stop();
+                rlglVideoQueue.CancelQueue();
+                ResetRLGLInfo();
             }
         }
     }

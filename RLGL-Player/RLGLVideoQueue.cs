@@ -82,6 +82,13 @@ namespace RLGL_Player
             return videos.Count - currentVideo;
         }
 
+        //Set the queue to the end.
+        public void CancelQueue()
+        {
+            loop = 0;
+            currentVideo = videos.Count;
+        }
+
         //Save a video queue as a file. Stores also the user preferences used with this queue.
         public void SaveVideoQueue(string filename, RLGLPreferences prefs)
         {
