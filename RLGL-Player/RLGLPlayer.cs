@@ -49,6 +49,8 @@ public partial class RLGLPlayer : Form
         private bool edging;
         private static string[] imageFileExtensions = new string[] { ".jpg", ".png", ".bmp" };
 
+        private bool fullscreen;
+
         public RLGLPlayer()
         {
             randomNumberGenerator = new Random();
@@ -60,6 +62,7 @@ public partial class RLGLPlayer : Form
             edging = false;
             rlglCensorData = null;
             rlglVideoQueue = null;
+            fullscreen = false;
             InitializeComponent();
         }
 
@@ -852,12 +855,24 @@ public partial class RLGLPlayer : Form
         //Cancel active session and return to default screen.
         private void endSessionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Do this only if we are in a session and the option is visible to the player
-            if(sessionToolStripMenuItem.Visible)
+            if (rlglVideoQueue != null)
             {
                 VLC_Control.Stop();
                 rlglVideoQueue.CancelQueue();
                 ResetRLGLInfo();
+            }
+        }
+
+        //Toggle full screen on pressing F
+        private void VLC_Control_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F)
+            {
+                MainMenu.Visible = fullscreen;
+                this.WindowState = fullscreen ? FormWindowState.Normal : FormWindowState.Maximized;
+                this.FormBorderStyle = fullscreen ? FormBorderStyle.Sizable : FormBorderStyle.None;
+
+                fullscreen = !fullscreen;
             }
         }
     }

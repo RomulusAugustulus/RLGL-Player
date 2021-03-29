@@ -39,6 +39,8 @@
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.endSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.censorEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,8 +59,6 @@
             this.RLGL_EdgingTimer = new System.Windows.Forms.Timer(this.components);
             this.RLGL_Timer = new System.Windows.Forms.Timer(this.components);
             this.SaveQueueDlg = new System.Windows.Forms.SaveFileDialog();
-            this.sessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.endSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.VLC_Panel.SuspendLayout();
             this.RLGL_Layout.SuspendLayout();
@@ -146,6 +146,23 @@
             this.closeToolStripMenuItem.Text = "&Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
+            // sessionToolStripMenuItem
+            // 
+            this.sessionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.endSessionToolStripMenuItem});
+            this.sessionToolStripMenuItem.Name = "sessionToolStripMenuItem";
+            this.sessionToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+            this.sessionToolStripMenuItem.Text = "&Session";
+            this.sessionToolStripMenuItem.Visible = false;
+            // 
+            // endSessionToolStripMenuItem
+            // 
+            this.endSessionToolStripMenuItem.Name = "endSessionToolStripMenuItem";
+            this.endSessionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+            this.endSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.endSessionToolStripMenuItem.Text = "&End session";
+            this.endSessionToolStripMenuItem.Click += new System.EventHandler(this.endSessionToolStripMenuItem_Click);
+            // 
             // editorToolStripMenuItem
             // 
             this.editorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -224,6 +241,7 @@
             this.VLC_Control.VlcLibDirectoryNeeded += new System.EventHandler<Vlc.DotNet.Forms.VlcLibDirectoryNeededEventArgs>(this.VLC_Control_VlcLibDirectoryNeeded);
             this.VLC_Control.EndReached += new System.EventHandler<Vlc.DotNet.Core.VlcMediaPlayerEndReachedEventArgs>(this.VLC_Control_EndReached);
             this.VLC_Control.Playing += new System.EventHandler<Vlc.DotNet.Core.VlcMediaPlayerPlayingEventArgs>(this.VLC_Control_Playing);
+            this.VLC_Control.KeyDown += new System.Windows.Forms.KeyEventHandler(this.VLC_Control_KeyDown);
             // 
             // L_Text
             // 
@@ -297,23 +315,6 @@
             this.SaveQueueDlg.DefaultExt = "rgp";
             this.SaveQueueDlg.Filter = "RLGL-Playlist (*.rgp)|*.rgp";
             this.SaveQueueDlg.Title = "Save Playlist...";
-            // 
-            // sessionToolStripMenuItem
-            // 
-            this.sessionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.endSessionToolStripMenuItem});
-            this.sessionToolStripMenuItem.Name = "sessionToolStripMenuItem";
-            this.sessionToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
-            this.sessionToolStripMenuItem.Text = "&Session";
-            this.sessionToolStripMenuItem.Visible = false;
-            // 
-            // endSessionToolStripMenuItem
-            // 
-            this.endSessionToolStripMenuItem.Name = "endSessionToolStripMenuItem";
-            this.endSessionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.endSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.endSessionToolStripMenuItem.Text = "&End session";
-            this.endSessionToolStripMenuItem.Click += new System.EventHandler(this.endSessionToolStripMenuItem_Click);
             // 
             // RLGLPlayer
             // 
