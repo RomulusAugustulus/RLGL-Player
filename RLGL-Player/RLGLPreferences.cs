@@ -152,7 +152,7 @@ namespace RLGL_Player
             maxEdge = 10;
             edgeChance = 50;
             greenAfterEdge = false;
-            edgeColor = Color.FromArgb(255, 0, 0, 255);
+            edgeColor = Color.FromArgb(255, 83, 143, 255);
             censorOnlyGreen = false;
         }
 

@@ -95,6 +95,7 @@
             this.COMB_CensorType = new System.Windows.Forms.ComboBox();
             this.COMB_CensorSize = new System.Windows.Forms.ComboBox();
             this.L_CensorType = new System.Windows.Forms.Label();
+            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.GB_RLGLSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinEdge)).BeginInit();
@@ -117,6 +118,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinMetronome)).BeginInit();
             this.TAB_Censor.SuspendLayout();
             this.GB_CensorSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
             // 
             // GB_RLGLSettings
@@ -616,7 +618,7 @@
             // 
             // P_EdgeLightColor
             // 
-            this.P_EdgeLightColor.BackColor = System.Drawing.Color.Blue;
+            this.P_EdgeLightColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(143)))), ((int)(((byte)(255)))));
             this.P_EdgeLightColor.Location = new System.Drawing.Point(99, 89);
             this.P_EdgeLightColor.Name = "P_EdgeLightColor";
             this.P_EdgeLightColor.Size = new System.Drawing.Size(450, 26);
@@ -945,6 +947,11 @@
             this.L_CensorType.TabIndex = 26;
             this.L_CensorType.Text = "Censor type:";
             // 
+            // fileSystemWatcher1
+            // 
+            this.fileSystemWatcher1.EnableRaisingEvents = true;
+            this.fileSystemWatcher1.SynchronizingObject = this;
+            // 
             // PreferencesDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -987,6 +994,7 @@
             this.TAB_Censor.ResumeLayout(false);
             this.GB_CensorSettings.ResumeLayout(false);
             this.GB_CensorSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1060,5 +1068,6 @@
         public ExtendedTrackBar ETB_MetronomeChance;
         public ExtendedTrackBar ETB_CensorChance;
         public System.Windows.Forms.CheckBox CB_CensorOnlyGreen;
+        private System.IO.FileSystemWatcher fileSystemWatcher1;
     }
 }
