@@ -28,6 +28,7 @@ namespace RLGL_Player
     public partial class ExtendedTrackBar : UserControl
     {
         private string customTooltip;
+        private int value;
 
         //The minimal value the trackbar can have.
         public int Minimum
@@ -61,11 +62,12 @@ namespace RLGL_Player
         //The current value of the trackbar. 
         public int Value 
         { 
-            get => TB_ExtendedTrackBar.Value; 
+            get => this.value; 
             set 
             {
-                TB_ExtendedTrackBar.Value = value;
-                NUD_ShowValue.Value = value;
+                this.value = Math.Max(TB_ExtendedTrackBar.Minimum, Math.Min(TB_ExtendedTrackBar.Maximum, value));
+                TB_ExtendedTrackBar.Value = TB_ExtendedTrackBar.Maximum + TB_ExtendedTrackBar.Minimum - this.value;
+                NUD_ShowValue.Value = this.value;
             } 
         }
 
@@ -99,12 +101,14 @@ namespace RLGL_Player
 
         private void TB_ExtendedTrackBar_ValueChanged(object sender, EventArgs e)
         {
-            Value = TB_ExtendedTrackBar.Value;
+            value = TB_ExtendedTrackBar.Maximum + TB_ExtendedTrackBar.Minimum - TB_ExtendedTrackBar.Value;
+            NUD_ShowValue.Value = value;
         }
 
         private void NUD_ShowValue_ValueChanged(object sender, EventArgs e)
         {
-            Value = (int)NUD_ShowValue.Value;
+            value = (int)NUD_ShowValue.Value;
+            TB_ExtendedTrackBar.Value = TB_ExtendedTrackBar.Maximum + TB_ExtendedTrackBar.Minimum - value;
         }
     }
 }

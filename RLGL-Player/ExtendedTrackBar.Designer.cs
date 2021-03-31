@@ -93,6 +93,8 @@ namespace RLGL_Player
             this.TB_ExtendedTrackBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TB_ExtendedTrackBar.Location = new System.Drawing.Point(83, 3);
             this.TB_ExtendedTrackBar.Name = "TB_ExtendedTrackBar";
+            this.TB_ExtendedTrackBar.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.TB_ExtendedTrackBar.RightToLeftLayout = true;
             this.TB_ExtendedTrackBar.Size = new System.Drawing.Size(199, 48);
             this.TB_ExtendedTrackBar.TabIndex = 0;
             this.TB_ExtendedTrackBar.TickStyle = System.Windows.Forms.TickStyle.Both;

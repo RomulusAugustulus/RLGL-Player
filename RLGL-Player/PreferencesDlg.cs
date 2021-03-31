@@ -181,5 +181,12 @@ namespace RLGL_Player
                 NUD_MaxEdge.Value = NUD_MinEdge.Value;
             }
         }
+
+        //Apply current preferences without closing the options dialog.
+        private void B_Apply_Click(object sender, EventArgs e)
+        {
+            RLGLPlayer mainForm = (RLGLPlayer)this.Owner;
+            mainForm.UpdateRLGLPreferences();
+        }
     }
 }

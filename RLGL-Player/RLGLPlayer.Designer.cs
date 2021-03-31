@@ -217,6 +217,7 @@
             this.RLGL_Layout.Controls.Add(this.L_TimePassed, 3, 2);
             this.RLGL_Layout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RLGL_Layout.Location = new System.Drawing.Point(0, 0);
+            this.RLGL_Layout.Margin = new System.Windows.Forms.Padding(0);
             this.RLGL_Layout.Name = "RLGL_Layout";
             this.RLGL_Layout.RowCount = 3;
             this.RLGL_Layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
@@ -230,9 +231,10 @@
             this.VLC_Control.BackColor = System.Drawing.Color.Black;
             this.RLGL_Layout.SetColumnSpan(this.VLC_Control, 2);
             this.VLC_Control.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VLC_Control.Location = new System.Drawing.Point(53, 53);
+            this.VLC_Control.Location = new System.Drawing.Point(50, 50);
+            this.VLC_Control.Margin = new System.Windows.Forms.Padding(0);
             this.VLC_Control.Name = "VLC_Control";
-            this.VLC_Control.Size = new System.Drawing.Size(970, 457);
+            this.VLC_Control.Size = new System.Drawing.Size(976, 463);
             this.VLC_Control.Spu = -1;
             this.VLC_Control.TabIndex = 0;
             this.VLC_Control.Text = "vlcControl1";

@@ -96,6 +96,7 @@
             this.COMB_CensorSize = new System.Windows.Forms.ComboBox();
             this.L_CensorType = new System.Windows.Forms.Label();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.B_Apply = new System.Windows.Forms.Button();
             this.GB_RLGLSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinEdge)).BeginInit();
@@ -159,7 +160,7 @@
             this.ETB_EdgeChance.Name = "ETB_EdgeChance";
             this.ETB_EdgeChance.Size = new System.Drawing.Size(535, 45);
             this.ETB_EdgeChance.TabIndex = 38;
-            this.ETB_EdgeChance.Text = "Possibility:";
+            this.ETB_EdgeChance.Text = "Chance (%):";
             this.ETB_EdgeChance.TickFrequency = 10;
             this.ETB_EdgeChance.ToolTip = "Define the chance of getting an edge light after a green light.";
             this.ETB_EdgeChance.Value = 50;
@@ -677,7 +678,7 @@
             this.B_SaveExit.Name = "B_SaveExit";
             this.B_SaveExit.Size = new System.Drawing.Size(92, 23);
             this.B_SaveExit.TabIndex = 2;
-            this.B_SaveExit.Text = "Save and exit";
+            this.B_SaveExit.Text = "Save and close";
             this.B_SaveExit.UseVisualStyleBackColor = true;
             // 
             // B_Cancel
@@ -763,7 +764,7 @@
             this.ETB_MetronomeChance.Name = "ETB_MetronomeChance";
             this.ETB_MetronomeChance.Size = new System.Drawing.Size(535, 48);
             this.ETB_MetronomeChance.TabIndex = 39;
-            this.ETB_MetronomeChance.Text = "Possibility:";
+            this.ETB_MetronomeChance.Text = "Chance (%):";
             this.ETB_MetronomeChance.TickFrequency = 10;
             this.ETB_MetronomeChance.ToolTip = "Define the chance of stroking to a metronome on a green light.";
             this.ETB_MetronomeChance.Value = 50;
@@ -874,9 +875,10 @@
             this.ETB_CensorChance.Maximum = 100;
             this.ETB_CensorChance.Minimum = 1;
             this.ETB_CensorChance.Name = "ETB_CensorChance";
+            this.ETB_CensorChance.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ETB_CensorChance.Size = new System.Drawing.Size(534, 49);
             this.ETB_CensorChance.TabIndex = 30;
-            this.ETB_CensorChance.Text = "Possibility:";
+            this.ETB_CensorChance.Text = "Chance (%):";
             this.ETB_CensorChance.TickFrequency = 10;
             this.ETB_CensorChance.ToolTip = "Define the chance of censorbars showing on the next phase.";
             this.ETB_CensorChance.Value = 50;
@@ -952,11 +954,24 @@
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
             // 
+            // B_Apply
+            // 
+            this.B_Apply.Location = new System.Drawing.Point(413, 438);
+            this.B_Apply.Name = "B_Apply";
+            this.B_Apply.Size = new System.Drawing.Size(92, 23);
+            this.B_Apply.TabIndex = 5;
+            this.B_Apply.Text = "Apply";
+            this.B_Apply.UseVisualStyleBackColor = true;
+            this.B_Apply.Click += new System.EventHandler(this.B_Apply_Click);
+            // 
             // PreferencesDlg
             // 
+            this.AcceptButton = this.B_SaveExit;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.B_Cancel;
             this.ClientSize = new System.Drawing.Size(615, 473);
+            this.Controls.Add(this.B_Apply);
             this.Controls.Add(this.TAB_Preferences);
             this.Controls.Add(this.B_Cancel);
             this.Controls.Add(this.B_SaveExit);
@@ -1069,5 +1084,6 @@
         public ExtendedTrackBar ETB_CensorChance;
         public System.Windows.Forms.CheckBox CB_CensorOnlyGreen;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
+        private System.Windows.Forms.Button B_Apply;
     }
 }

@@ -50,6 +50,7 @@ public partial class RLGLPlayer : Form
         private static string[] imageFileExtensions = new string[] { ".jpg", ".png", ".bmp" };
 
         private bool fullscreen;
+        private PreferencesDlg preferencesDlg;
 
         public RLGLPlayer()
         {
@@ -63,6 +64,7 @@ public partial class RLGLPlayer : Form
             rlglCensorData = null;
             rlglVideoQueue = null;
             fullscreen = false;
+            preferencesDlg = new PreferencesDlg();
             InitializeComponent();
         }
 
@@ -82,14 +84,11 @@ public partial class RLGLPlayer : Form
         //Show the preferences dialog and save any changes that are made.
         private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PreferencesDlg preferencesDlg = new PreferencesDlg();
             rlglPreferences.LoadPreferences(preferencesDlg);
 
-            if(preferencesDlg.ShowDialog() == DialogResult.OK)
+            if(preferencesDlg.ShowDialog(this) == DialogResult.OK)
             {
-                rlglPreferences.SavePreferences(preferencesDlg);
-                RLGL_EdgingTimer.Interval = rlglPreferences.EdgingWarmup * 1000;
-                UpdateRLGLLayoutSizes();
+                UpdateRLGLPreferences();
             }
         }
 
@@ -874,6 +873,13 @@ public partial class RLGLPlayer : Form
 
                 fullscreen = !fullscreen;
             }
+        }
+
+        public void UpdateRLGLPreferences()
+        {
+            rlglPreferences.SavePreferences(preferencesDlg);
+            RLGL_EdgingTimer.Interval = rlglPreferences.EdgingWarmup * 1000;
+            UpdateRLGLLayoutSizes();
         }
     }
 }
