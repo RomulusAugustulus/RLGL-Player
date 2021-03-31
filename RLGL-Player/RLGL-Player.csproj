@@ -101,6 +101,12 @@
     <Compile Include="ExtendedTrackBar.Designer.cs">
       <DependentUpon>ExtendedTrackBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="VolumeBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VolumeBar.Designer.cs">
+      <DependentUpon>VolumeBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="PaintingOverlay.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,6 +156,9 @@
     <EmbeddedResource Include="ExtendedTrackBar.resx">
       <DependentUpon>ExtendedTrackBar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="VolumeBar.resx">
+      <DependentUpon>VolumeBar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PaintingOverlay.resx">
       <DependentUpon>PaintingOverlay.cs</DependentUpon>
     </EmbeddedResource>
@@ -167,6 +176,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="RLGLPlayingQueueDlg.resx">
       <DependentUpon>RLGLPlayingQueueDlg.cs</DependentUpon>
@@ -186,6 +196,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Speaker_Off.png" />
+    <None Include="Resources\loud-157172_1280.png" />
+    <None Include="Resources\sound-157175_1280.png" />
     <Content Include="RLGL-Player.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

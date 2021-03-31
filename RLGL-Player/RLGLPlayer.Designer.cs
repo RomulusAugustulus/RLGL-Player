@@ -59,6 +59,7 @@
             this.RLGL_EdgingTimer = new System.Windows.Forms.Timer(this.components);
             this.RLGL_Timer = new System.Windows.Forms.Timer(this.components);
             this.SaveQueueDlg = new System.Windows.Forms.SaveFileDialog();
+            this.RLGL_HideVolumeBar = new System.Windows.Forms.Timer(this.components);
             this.MainMenu.SuspendLayout();
             this.VLC_Panel.SuspendLayout();
             this.RLGL_Layout.SuspendLayout();
@@ -212,16 +213,17 @@
             this.RLGL_Layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.RLGL_Layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.RLGL_Layout.Controls.Add(this.VLC_Control, 1, 1);
-            this.RLGL_Layout.Controls.Add(this.L_Text, 2, 2);
-            this.RLGL_Layout.Controls.Add(this.TB_Volume, 0, 2);
-            this.RLGL_Layout.Controls.Add(this.L_TimePassed, 3, 2);
+            this.RLGL_Layout.Controls.Add(this.L_Text, 2, 3);
+            this.RLGL_Layout.Controls.Add(this.TB_Volume, 0, 3);
+            this.RLGL_Layout.Controls.Add(this.L_TimePassed, 3, 3);
             this.RLGL_Layout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RLGL_Layout.Location = new System.Drawing.Point(0, 0);
             this.RLGL_Layout.Margin = new System.Windows.Forms.Padding(0);
             this.RLGL_Layout.Name = "RLGL_Layout";
-            this.RLGL_Layout.RowCount = 3;
+            this.RLGL_Layout.RowCount = 4;
             this.RLGL_Layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.RLGL_Layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.RLGL_Layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.RLGL_Layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.RLGL_Layout.Size = new System.Drawing.Size(1076, 563);
             this.RLGL_Layout.TabIndex = 1;
@@ -234,6 +236,7 @@
             this.VLC_Control.Location = new System.Drawing.Point(50, 50);
             this.VLC_Control.Margin = new System.Windows.Forms.Padding(0);
             this.VLC_Control.Name = "VLC_Control";
+            this.RLGL_Layout.SetRowSpan(this.VLC_Control, 2);
             this.VLC_Control.Size = new System.Drawing.Size(976, 463);
             this.VLC_Control.Spu = -1;
             this.VLC_Control.TabIndex = 0;
@@ -256,6 +259,7 @@
             this.L_Text.TabIndex = 1;
             this.L_Text.Text = "label1";
             this.L_Text.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.L_Text.MouseHover += new System.EventHandler(this.L_Text_MouseHover);
             // 
             // TB_Volume
             // 
@@ -271,6 +275,7 @@
             this.TB_Volume.TickFrequency = 10;
             this.TB_Volume.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.TB_Volume.Value = 100;
+            this.TB_Volume.Visible = false;
             this.TB_Volume.ValueChanged += new System.EventHandler(this.TB_Volume_ValueChanged);
             // 
             // L_TimePassed
@@ -320,6 +325,11 @@
             this.SaveQueueDlg.Filter = "RLGL-Playlist (*.rgp)|*.rgp";
             this.SaveQueueDlg.Title = "Save Playlist...";
             // 
+            // RLGL_HideVolumeBar
+            // 
+            this.RLGL_HideVolumeBar.Interval = 3000;
+            this.RLGL_HideVolumeBar.Tick += new System.EventHandler(this.RLGL_HideVolumeBar_Tick);
+            // 
             // RLGLPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -334,6 +344,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.LocationChanged += new System.EventHandler(this.Form1_LocationChanged);
+            this.Move += new System.EventHandler(this.RLGLPlayer_Move);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
@@ -378,6 +389,7 @@
         private System.Windows.Forms.SaveFileDialog SaveQueueDlg;
         private System.Windows.Forms.ToolStripMenuItem sessionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem endSessionToolStripMenuItem;
+        private System.Windows.Forms.Timer RLGL_HideVolumeBar;
     }
 }
 

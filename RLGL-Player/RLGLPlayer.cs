@@ -51,6 +51,7 @@ public partial class RLGLPlayer : Form
 
         private bool fullscreen;
         private PreferencesDlg preferencesDlg;
+        private VolumeBar volumeBar;
 
         public RLGLPlayer()
         {
@@ -65,6 +66,7 @@ public partial class RLGLPlayer : Form
             rlglVideoQueue = null;
             fullscreen = false;
             preferencesDlg = new PreferencesDlg();
+            volumeBar = new VolumeBar();
             InitializeComponent();
         }
 
@@ -173,6 +175,8 @@ public partial class RLGLPlayer : Form
             metronome.SoundLocation = "250551__druminfected__metronomeup.wav";
             L_Text.Text = "";
             L_TimePassed.Text = "";
+
+            ResizeAndPositionVolumeBar();
         }
 
         //Save the preferences to the disc.
@@ -246,6 +250,7 @@ public partial class RLGLPlayer : Form
             {
                 case RLGLPhase.Green:
                     RLGL_Layout.BackColor = rlglPreferences.GreenLightColor;
+                    volumeBar.SetBackgroundColor(rlglPreferences.GreenLightColor);
                     L_Text.BackColor = rlglPreferences.GreenLightColor;
                     if (lastIteration)
                     {
@@ -277,6 +282,7 @@ public partial class RLGLPlayer : Form
 
                 case RLGLPhase.Red:
                     RLGL_Layout.BackColor = rlglPreferences.RedLightColor;
+                    volumeBar.SetBackgroundColor(rlglPreferences.RedLightColor);
                     L_Text.BackColor = rlglPreferences.RedLightColor;
                     StopMetronome();
                     if (lastIteration && rlglVideoQueue.VideosRemaining() == 0)
@@ -303,6 +309,7 @@ public partial class RLGLPlayer : Form
 
                 case RLGLPhase.Edge:
                     RLGL_Layout.BackColor = rlglPreferences.EdgeColor;
+                    volumeBar.SetBackgroundColor(rlglPreferences.EdgeColor);
                     L_Text.BackColor = rlglPreferences.EdgeColor;
                     StopMetronome();
                     L_Text.Text = "Edge!";
@@ -422,6 +429,7 @@ public partial class RLGLPlayer : Form
         private void ResetRLGLInfo()
         {
             RLGL_Layout.BackColor = SystemColors.Control;
+            volumeBar.SetBackgroundColor(SystemColors.Control);
             L_Text.BackColor = SystemColors.Control;
             L_Text.Text = "";
             StopMetronome();
@@ -667,7 +675,13 @@ public partial class RLGLPlayer : Form
         //Change the volume of the currently played media.
         private void TB_Volume_ValueChanged(object sender, EventArgs e)
         {
-            VLC_Control.Audio.Volume = TB_Volume.Value;
+            SetVolume(TB_Volume.Value);
+        }
+
+        //Change the volume of the currently played media.
+        public void SetVolume(int volume)
+        {
+            VLC_Control.Audio.Volume = volume;
         }
 
         //Show an about dialog.
@@ -700,6 +714,8 @@ public partial class RLGLPlayer : Form
             {
                 ShowCensoring(false);
             }
+
+            ResizeAndPositionVolumeBar();
         }
         
         //Show the censor editor dialog
@@ -877,11 +893,51 @@ public partial class RLGLPlayer : Form
             }
         }
 
+        //Set the currently in the dialog displayed rlglpreferences as new ones.
         public void UpdateRLGLPreferences()
         {
             rlglPreferences.SavePreferences(preferencesDlg);
             RLGL_EdgingTimer.Interval = rlglPreferences.EdgingWarmup * 1000;
             UpdateRLGLLayoutSizes();
+        }
+
+        //Show the volumebar when the mouse hovers over the bottom text.
+        private void L_Text_MouseHover(object sender, EventArgs e)
+        {
+            ShowVolumeBar();
+        }
+
+        //If the volumebar is not visible, show it.
+        private void ShowVolumeBar()
+        {
+            if (!volumeBar.Visible)
+            {
+                volumeBar.Show(this);
+                RLGL_HideVolumeBar.Start();
+            }
+        }
+
+        //Calculate the correct dimensions and position of the volumebar
+        private void ResizeAndPositionVolumeBar()
+        {
+            Point pos = RLGL_Layout.PointToScreen(Point.Empty);
+            volumeBar.SetBounds(pos.X, pos.Y + RLGL_Layout.Height - 50, volumeBar.Width, 50);
+        }
+
+        //Reposition the volumebar when the window moves.
+        private void RLGLPlayer_Move(object sender, EventArgs e)
+        {
+            ResizeAndPositionVolumeBar();
+        }
+
+        //Only if the user does not interact with the volumebar it will be hidden after 3 seconds.
+        private void RLGL_HideVolumeBar_Tick(object sender, EventArgs e)
+        {
+            if(volumeBar.Visible && !volumeBar.MouseOnControl)
+            {
+                volumeBar.Hide();
+                RLGL_HideVolumeBar.Stop();
+            }
         }
     }
 }
