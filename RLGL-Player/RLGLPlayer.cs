@@ -867,10 +867,12 @@ public partial class RLGLPlayer : Form
         {
             if (e.KeyCode == Keys.F)
             {
+                this.WindowState = FormWindowState.Normal;
+
                 MainMenu.Visible = fullscreen;
+                this.MaximizeBox = fullscreen;
                 this.WindowState = fullscreen ? FormWindowState.Normal : FormWindowState.Maximized;
                 this.FormBorderStyle = fullscreen ? FormBorderStyle.Sizable : FormBorderStyle.None;
-
                 fullscreen = !fullscreen;
             }
         }

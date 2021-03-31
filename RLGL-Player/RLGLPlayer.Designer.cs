@@ -259,8 +259,10 @@
             // 
             // TB_Volume
             // 
+            this.TB_Volume.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.RLGL_Layout.SetColumnSpan(this.TB_Volume, 2);
-            this.TB_Volume.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TB_Volume.Location = new System.Drawing.Point(3, 516);
             this.TB_Volume.Maximum = 100;
             this.TB_Volume.Name = "TB_Volume";
