@@ -417,11 +417,41 @@ namespace RLGL_Player
             }
             else
             {
-                for (int i = 0; i < EndingSettings.Count; i++)
+                bool resetChance = true;
+
+                if (!currentElement.LockChance)
                 {
-                    if (EndingSettings[i].EndingName.Equals(currentElement.Text) && EndingSettings[i].Enabled)
+                    int enabledEndings = 0;
+                    RLGLInternEnding selectedEnding = EndingSettings[0];
+                    for (int i = 0; i < EndingSettings.Count; i++)
                     {
-                        currentElement.Chance = EndingSettings[i].Chance;
+                        if (EndingSettings[i].Enabled)
+                        {
+                            enabledEndings++;
+                        }
+
+                        if (EndingSettings[i].EndingName.Equals(currentElement.Text))
+                        {
+                            selectedEnding = EndingSettings[i];
+                        }
+                    }
+
+                    if (enabledEndings == 1)
+                    {
+                        currentElement.Chance = 100;
+                        selectedEnding.Chance = 100;
+                        resetChance = false;
+                    }
+                }
+                
+                if(resetChance)
+                {
+                    for (int i = 0; i < EndingSettings.Count; i++)
+                    {
+                        if (EndingSettings[i].EndingName.Equals(currentElement.Text) && EndingSettings[i].Enabled)
+                        {
+                            currentElement.Chance = EndingSettings[i].Chance;
+                        }
                     }
                 }
             }
