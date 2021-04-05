@@ -570,7 +570,6 @@ public partial class RLGLPlayer : Form
             playEnding = false;
             currentEndingCountdown = -1;
             currentEndingPhase = null;
-            rlglCurrentMedia.Ending.ResetPhasePointer();
 
             if (rlglVideoQueue.VideosRemaining() > 0)
             {
@@ -582,6 +581,7 @@ public partial class RLGLPlayer : Form
                 edging = false;
                 StopEdging();
                 sessionToolStripMenuItem.Visible = false;
+                rlglCurrentMedia.Ending.ResetPhasePointer();
                 //RLGL_Timer.Stop();
             }
         }
