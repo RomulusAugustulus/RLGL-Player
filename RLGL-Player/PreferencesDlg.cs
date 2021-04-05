@@ -223,13 +223,13 @@ namespace RLGL_Player
             }
             else
             {
-                MessageBox.Show("There needs to be at least 1 enabled ending!", "Error");
+                MessageBox.Show(this, "There needs to be at least 1 enabled ending!", "Error");
             }
         }
 
         private bool AtleastOneEndingEnabled()
         {
-            return EndingSettings.Exists(x => x.Enabled = true);
+            return EndingSettings.Exists(x => x.Enabled == true);
         }
 
         //Creates a new ending from the users input.
@@ -283,7 +283,7 @@ namespace RLGL_Player
             CustomEndingListElement customEnding = (CustomEndingListElement)sender;
             RLGLInternEnding end = EndingSettings.Find(x => x.EndingName.Equals(customEnding.Text));
 
-            end.Enabled = customEnding.Enabled;
+            end.Enabled = customEnding.IncludeElement;
 
             if(end.Enabled)
             {
@@ -459,7 +459,7 @@ namespace RLGL_Player
         {
             if(!AtleastOneEndingEnabled())
             {
-                MessageBox.Show("There needs to be at least 1 enabled ending!", "Error");
+                MessageBox.Show(this, "There needs to be at least 1 enabled ending!", "Error");
                 this.DialogResult = DialogResult.None;
             }
         }
