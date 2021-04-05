@@ -210,9 +210,6 @@ namespace RLGL_Player
             prefDlg.NUD_MaxRed.Value = maxRed;
             prefDlg.NUD_MinGreen.Value = minGreen;
             prefDlg.NUD_MinRed.Value = minRed;
-            prefDlg.RB_EndingGreen.Checked = false;
-            prefDlg.RB_EndingRandom.Checked = false;
-            prefDlg.RB_EndingRed.Checked = false;
 
             prefDlg.CB_Metronome.Checked = metronome;
             prefDlg.NUD_MinMetronome.Value = minBpm;

@@ -39,10 +39,6 @@
             this.NUD_EdgeWarmup = new System.Windows.Forms.NumericUpDown();
             this.L_EdgeWarmup = new System.Windows.Forms.Label();
             this.CB_EdgePhase = new System.Windows.Forms.CheckBox();
-            this.RB_EndingRandom = new System.Windows.Forms.RadioButton();
-            this.RB_EndingRed = new System.Windows.Forms.RadioButton();
-            this.RB_EndingGreen = new System.Windows.Forms.RadioButton();
-            this.L_Ending = new System.Windows.Forms.Label();
             this.NUD_MaxRed = new System.Windows.Forms.NumericUpDown();
             this.L_MaxRed = new System.Windows.Forms.Label();
             this.NUD_MinRed = new System.Windows.Forms.NumericUpDown();
@@ -141,10 +137,6 @@
             this.GB_RLGLSettings.Controls.Add(this.NUD_EdgeWarmup);
             this.GB_RLGLSettings.Controls.Add(this.L_EdgeWarmup);
             this.GB_RLGLSettings.Controls.Add(this.CB_EdgePhase);
-            this.GB_RLGLSettings.Controls.Add(this.RB_EndingRandom);
-            this.GB_RLGLSettings.Controls.Add(this.RB_EndingRed);
-            this.GB_RLGLSettings.Controls.Add(this.RB_EndingGreen);
-            this.GB_RLGLSettings.Controls.Add(this.L_Ending);
             this.GB_RLGLSettings.Controls.Add(this.NUD_MaxRed);
             this.GB_RLGLSettings.Controls.Add(this.L_MaxRed);
             this.GB_RLGLSettings.Controls.Add(this.NUD_MinRed);
@@ -283,48 +275,6 @@
             this.CB_EdgePhase.Text = "Enable edge phases";
             this.CB_EdgePhase.UseVisualStyleBackColor = true;
             this.CB_EdgePhase.CheckedChanged += new System.EventHandler(this.CB_EdgePhase_CheckedChanged);
-            // 
-            // RB_EndingRandom
-            // 
-            this.RB_EndingRandom.AutoSize = true;
-            this.RB_EndingRandom.Location = new System.Drawing.Point(303, 345);
-            this.RB_EndingRandom.Name = "RB_EndingRandom";
-            this.RB_EndingRandom.Size = new System.Drawing.Size(112, 17);
-            this.RB_EndingRandom.TabIndex = 11;
-            this.RB_EndingRandom.TabStop = true;
-            this.RB_EndingRandom.Text = "let program decide";
-            this.RB_EndingRandom.UseVisualStyleBackColor = true;
-            // 
-            // RB_EndingRed
-            // 
-            this.RB_EndingRed.AutoSize = true;
-            this.RB_EndingRed.Location = new System.Drawing.Point(185, 345);
-            this.RB_EndingRed.Name = "RB_EndingRed";
-            this.RB_EndingRed.Size = new System.Drawing.Size(112, 17);
-            this.RB_EndingRed.TabIndex = 10;
-            this.RB_EndingRed.TabStop = true;
-            this.RB_EndingRed.Text = "always on red light";
-            this.RB_EndingRed.UseVisualStyleBackColor = true;
-            // 
-            // RB_EndingGreen
-            // 
-            this.RB_EndingGreen.AutoSize = true;
-            this.RB_EndingGreen.Location = new System.Drawing.Point(55, 345);
-            this.RB_EndingGreen.Name = "RB_EndingGreen";
-            this.RB_EndingGreen.Size = new System.Drawing.Size(124, 17);
-            this.RB_EndingGreen.TabIndex = 9;
-            this.RB_EndingGreen.TabStop = true;
-            this.RB_EndingGreen.Text = "always on green light";
-            this.RB_EndingGreen.UseVisualStyleBackColor = true;
-            // 
-            // L_Ending
-            // 
-            this.L_Ending.AutoSize = true;
-            this.L_Ending.Location = new System.Drawing.Point(6, 347);
-            this.L_Ending.Name = "L_Ending";
-            this.L_Ending.Size = new System.Drawing.Size(43, 13);
-            this.L_Ending.TabIndex = 8;
-            this.L_Ending.Text = "Ending:";
             // 
             // NUD_MaxRed
             // 
@@ -1094,7 +1044,6 @@
 
         private System.Windows.Forms.ColorDialog ColorPicker;
         private System.Windows.Forms.GroupBox GB_RLGLSettings;
-        private System.Windows.Forms.Label L_Ending;
         private System.Windows.Forms.Label L_MaxRed;
         private System.Windows.Forms.Label L_MinRed;
         private System.Windows.Forms.Label L_MaxGreen;
@@ -1104,9 +1053,6 @@
         private System.Windows.Forms.Label L_GreenLightColor;
         private System.Windows.Forms.Button B_SaveExit;
         private System.Windows.Forms.Button B_Cancel;
-        public System.Windows.Forms.RadioButton RB_EndingRandom;
-        public System.Windows.Forms.RadioButton RB_EndingRed;
-        public System.Windows.Forms.RadioButton RB_EndingGreen;
         public System.Windows.Forms.NumericUpDown NUD_MaxRed;
         public System.Windows.Forms.NumericUpDown NUD_MinRed;
         public System.Windows.Forms.NumericUpDown NUD_MaxGreen;
