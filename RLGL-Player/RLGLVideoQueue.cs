@@ -26,7 +26,7 @@ namespace RLGL_Player
      */ 
     public class RLGLVideoQueue
     {
-        private static ushort QueueVersion = 1;
+        private static ushort QueueVersion = 2;
         private List<string> videos;
         private int currentVideo;
         private int loop;
@@ -113,7 +113,6 @@ namespace RLGL_Player
             fileWriter.Write(prefs.MaxEdge);
             fileWriter.Write(prefs.EdgeChance);
             fileWriter.Write(prefs.GreenAfterEdge);
-            fileWriter.Write((int)prefs.Ending);
             fileWriter.Write(prefs.Metronome);
             fileWriter.Write(prefs.MinBpm);
             fileWriter.Write(prefs.MaxBpm);
@@ -143,7 +142,6 @@ namespace RLGL_Player
             int maxEdge = 0;
             int edgeChance = 1;
             bool greenAfterEdge = false;
-            RLGLEnding ending = RLGLEnding.AlwaysRed;
             bool metronome = false;
             int minBpm = 0;
             int maxBpm = 0;
@@ -181,7 +179,6 @@ namespace RLGL_Player
                     maxEdge = fileReader.ReadInt32();
                     edgeChance = fileReader.ReadInt32();
                     greenAfterEdge = fileReader.ReadBoolean();
-                    ending = (RLGLEnding)fileReader.ReadInt32();
                     metronome = fileReader.ReadBoolean();
                     minBpm = fileReader.ReadInt32();
                     maxBpm = fileReader.ReadInt32();
@@ -194,7 +191,36 @@ namespace RLGL_Player
                 }
                 else
                 {
-                    //Handle older version. This is not used at the moment!
+                    initLoop = fileReader.ReadInt32();
+                    loop = initLoop;
+                    int numVid = fileReader.ReadInt32();
+
+                    for (int i = 0; i < numVid; i++)
+                    {
+                        videos.Add(fileReader.ReadString());
+                    }
+
+                    minGreen = fileReader.ReadInt32();
+                    maxGreen = fileReader.ReadInt32();
+                    minRed = fileReader.ReadInt32();
+                    maxRed = fileReader.ReadInt32();
+                    edging = fileReader.ReadBoolean();
+                    edgingWarmup = fileReader.ReadInt32();
+                    minEdge = fileReader.ReadInt32();
+                    maxEdge = fileReader.ReadInt32();
+                    edgeChance = fileReader.ReadInt32();
+                    greenAfterEdge = fileReader.ReadBoolean();
+                    /*ending = (RLGLEnding)*/
+                    fileReader.ReadInt32();
+                    metronome = fileReader.ReadBoolean();
+                    minBpm = fileReader.ReadInt32();
+                    maxBpm = fileReader.ReadInt32();
+                    metronomeChance = fileReader.ReadInt32();
+                    censor = fileReader.ReadBoolean();
+                    censorType = (RLGLCensorType)fileReader.ReadInt32();
+                    censorSize = (RLGLCensorSize)fileReader.ReadInt32();
+                    censorOnlyGreen = fileReader.ReadBoolean();
+                    censorChance = fileReader.ReadInt32();
                 }
 
                 fileReader.Close();
@@ -204,10 +230,10 @@ namespace RLGL_Player
                 return (false, prefs);
             }
 
-            return (true, new RLGLPreferences(minGreen,maxGreen,minRed,maxRed,ending,metronome,minBpm,maxBpm,metronomeChance,
+            return (true, new RLGLPreferences(minGreen,maxGreen,minRed,maxRed,prefs.Ending,metronome,minBpm,maxBpm,metronomeChance,
                 prefs.GreenLightColor,prefs.RedLightColor,censor,censorType,censorSize,censorChance,censorOnlyGreen,
                 prefs.CensorColor,prefs.CensorPath,prefs.LeftBorder,prefs.RightBorder,prefs.TopBorder,prefs.BottomBorder,
-                edging,edgingWarmup,minEdge,maxEdge,edgeChance,greenAfterEdge,prefs.EdgeColor));
+                edging,edgingWarmup,minEdge,maxEdge,edgeChance,greenAfterEdge,prefs.EdgeColor,prefs.RuinedOrgasmColor));
         }
 
         public (int, List<string>) GetRLGLVideoQueue()

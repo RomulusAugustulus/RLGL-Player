@@ -1,6 +1,6 @@
 ﻿/*
  *  RLGL-Player - plays the famous game red light green light to any selected media.
- *  Copyright (C) 2020  Augustulus
+ *  Copyright (C) 2021  Augustulus
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

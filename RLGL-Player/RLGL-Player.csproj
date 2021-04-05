@@ -86,6 +86,12 @@
     <Compile Include="CensorEditorDlg.Designer.cs">
       <DependentUpon>CensorEditorDlg.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomEndingListElement.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomEndingListElement.Designer.cs">
+      <DependentUpon>CustomEndingListElement.cs</DependentUpon>
+    </Compile>
     <Compile Include="DecimalBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -95,12 +101,21 @@
     <Compile Include="EndingConfiguratorDlg.Designer.cs">
       <DependentUpon>EndingConfiguratorDlg.cs</DependentUpon>
     </Compile>
+    <Compile Include="EnterNameDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EnterNameDlg.Designer.cs">
+      <DependentUpon>EnterNameDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExtendedTrackBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ExtendedTrackBar.Designer.cs">
       <DependentUpon>ExtendedTrackBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="RLGLEnding.cs" />
+    <Compile Include="RLGLEndingPhase.cs" />
+    <Compile Include="RLGLInternEnding.cs" />
     <Compile Include="VolumeBar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,8 +165,14 @@
     <EmbeddedResource Include="CensorEditorDlg.resx">
       <DependentUpon>CensorEditorDlg.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CustomEndingListElement.resx">
+      <DependentUpon>CustomEndingListElement.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EndingConfiguratorDlg.resx">
       <DependentUpon>EndingConfiguratorDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EnterNameDlg.resx">
+      <DependentUpon>EnterNameDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExtendedTrackBar.resx">
       <DependentUpon>ExtendedTrackBar.cs</DependentUpon>

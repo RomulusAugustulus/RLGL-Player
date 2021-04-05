@@ -19,10 +19,10 @@
 using System.Text;
 using System.Drawing;
 using System.IO;
+using System.Collections.Generic;
 
 namespace RLGL_Player
 {
-    public enum RLGLEnding { AlwaysGreen, AlwaysRed, Random }
     public enum RLGLCensorType { Color, Image }
     public enum RLGLCensorSize { Small, Medium, Big, Unfair }
 
@@ -33,12 +33,12 @@ namespace RLGL_Player
     public class RLGLPreferences
     {
         //The current version of the file. Used to preserve backwards-compatibility.
-        private string preferencesFileVersion = "v.4";
+        private string preferencesFileVersion = "v.5";
         private int minGreen;
         private int maxGreen;
         private int minRed;
         private int maxRed;
-        private RLGLEnding ending;
+        private List<RLGLInternEnding> ending;
         private bool metronome;
         private int minBpm;
         private int maxBpm;
@@ -63,6 +63,7 @@ namespace RLGL_Player
         private int edgeChance;
         private bool greenAfterEdge;
         private Color edgeColor;
+        private Color ruinedOrgasmColor;
 
         //Minimum number of seconds a green phase will last.
         public int MinGreen { get => minGreen; }
@@ -72,8 +73,8 @@ namespace RLGL_Player
         public int MinRed { get => minRed; }
         //Maximum number of seconds a red phase will last.
         public int MaxRed { get => maxRed; }
-        //Gets at which phase the video will end.
-        public RLGLEnding Ending { get => ending; }
+        //Gets at ending phases for the videos.
+        public List<RLGLInternEnding> Ending { get => ending; }
         //The color displayed while at a green phase.
         public Color GreenLightColor { get => greenLightColor; }
         //The color displayed while at a red phase.
@@ -122,6 +123,8 @@ namespace RLGL_Player
         public Color EdgeColor { get => edgeColor; }
         //Gets if only on green/edge phases censorbars should appear or on all phases.
         public bool CensorOnlyGreen { get => censorOnlyGreen; }
+        //Gets the color of the ruined orgasm phases.
+        public Color RuinedOrgasmColor { get => ruinedOrgasmColor; }
 
         public RLGLPreferences()
         {
@@ -129,7 +132,7 @@ namespace RLGL_Player
             maxGreen = 10;
             minRed = 10;
             maxRed = 10;
-            ending = RLGLEnding.AlwaysGreen;
+            ending = new List<RLGLInternEnding>();
             greenLightColor = Color.FromArgb(255, 0, 255, 0);
             redLightColor = Color.FromArgb(255, 255, 0, 0);
             metronome = true;
@@ -154,16 +157,19 @@ namespace RLGL_Player
             greenAfterEdge = false;
             edgeColor = Color.FromArgb(255, 83, 143, 255);
             censorOnlyGreen = false;
+            ruinedOrgasmColor = Color.FromArgb(255, 199, 107, 243);
+
+            LoadEndings();
         }
 
         public RLGLPreferences(int minGreen, int maxGreen, int minRed, int maxRed, 
-                                RLGLEnding ending, bool metronome, int minBpm, int maxBpm, 
+                                List<RLGLInternEnding> ending, bool metronome, int minBpm, int maxBpm, 
                                 int metronomeChance, Color greenLightColor, Color redLightColor,
                                 bool censoring, RLGLCensorType censorType, RLGLCensorSize censorSize,
                                 int censorChance, bool censorOnlyGreen, Color censorColor, string censorPath,
                                 int leftBorder, int rightBorder, int topBorder, int bottomBorder,
                                 bool edging, int edgingWarmup, int minEdge, int maxEdge, int edgeChance,
-                                bool greenAfterEdge, Color edgeColor)
+                                bool greenAfterEdge, Color edgeColor, Color ruinedOrgasmColor)
         {
             this.minGreen = minGreen;
             this.maxGreen = maxGreen;
@@ -194,6 +200,7 @@ namespace RLGL_Player
             this.edgeChance = edgeChance;
             this.greenAfterEdge = greenAfterEdge;
             this.edgeColor = edgeColor;
+            this.ruinedOrgasmColor = ruinedOrgasmColor;
         }
 
         //Sets the controls of a PreferencesDlg object to the currently stored preferences. 
@@ -206,21 +213,6 @@ namespace RLGL_Player
             prefDlg.RB_EndingGreen.Checked = false;
             prefDlg.RB_EndingRandom.Checked = false;
             prefDlg.RB_EndingRed.Checked = false;
-
-            switch(ending)
-            {
-                case RLGLEnding.AlwaysGreen:
-                    prefDlg.RB_EndingGreen.Checked = true;
-                    break;
-
-                case RLGLEnding.AlwaysRed:
-                    prefDlg.RB_EndingRed.Checked = true;
-                    break;
-
-                case RLGLEnding.Random:
-                    prefDlg.RB_EndingRandom.Checked = true;
-                    break;
-            }
 
             prefDlg.CB_Metronome.Checked = metronome;
             prefDlg.NUD_MinMetronome.Value = minBpm;
@@ -264,6 +256,8 @@ namespace RLGL_Player
             prefDlg.NUD_MaxEdge.Enabled = edging;
             prefDlg.ETB_EdgeChance.Enabled = edging;
             prefDlg.CB_AllowGreenLight.Enabled = edging;
+
+            prefDlg.EndingSettings = ending;
         }
 
         //Gets the values from the controls of a PreferencesDlg object and stores them locally.
@@ -273,21 +267,6 @@ namespace RLGL_Player
             maxRed = (int)prefDlg.NUD_MaxRed.Value;
             minGreen = (int)prefDlg.NUD_MinGreen.Value;
             minRed = (int)prefDlg.NUD_MinRed.Value;
-            
-            if(prefDlg.RB_EndingGreen.Checked)
-            {
-                ending = RLGLEnding.AlwaysGreen;
-            }
-
-            if(prefDlg.RB_EndingRandom.Checked)
-            {
-                ending = RLGLEnding.Random;
-            }
-
-            if(prefDlg.RB_EndingRed.Checked)
-            {
-                ending = RLGLEnding.AlwaysRed;
-            }
 
             metronome = prefDlg.CB_Metronome.Checked;
             minBpm = (int)prefDlg.NUD_MinMetronome.Value;
@@ -317,6 +296,8 @@ namespace RLGL_Player
             maxEdge = (int)prefDlg.NUD_MaxEdge.Value;
             edgeChance = prefDlg.ETB_EdgeChance.Value;
             greenAfterEdge = prefDlg.CB_AllowGreenLight.Checked;
+
+            ending = prefDlg.EndingSettings;
         }
 
         //Loads the contents of the file fileName if it exists and stores it locally.
@@ -324,6 +305,8 @@ namespace RLGL_Player
         {
             if(File.Exists(fileName))
             {
+                Ending.Clear();
+
                 StreamReader prefFile = new StreamReader(fileName, Encoding.UTF8, false);
 
                 string version = prefFile.ReadLine();
@@ -334,7 +317,7 @@ namespace RLGL_Player
                     maxRed = int.Parse(prefFile.ReadLine());
                     minGreen = int.Parse(prefFile.ReadLine());
                     minRed = int.Parse(prefFile.ReadLine());
-                    ending = (RLGLEnding)int.Parse(prefFile.ReadLine());
+                    //ending = (RLGLEnding)int.Parse(prefFile.ReadLine());
                     metronome = bool.Parse(prefFile.ReadLine());
                     minBpm = int.Parse(prefFile.ReadLine());
                     maxBpm = int.Parse(prefFile.ReadLine());
@@ -359,6 +342,13 @@ namespace RLGL_Player
                     edgeChance = int.Parse(prefFile.ReadLine());
                     greenAfterEdge = bool.Parse(prefFile.ReadLine());
                     edgeColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                    ruinedOrgasmColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                    int endingCount = int.Parse(prefFile.ReadLine());
+                    for(int i=0;i<endingCount;i++)
+                    {
+                        ending.Add(new RLGLInternEnding(bool.Parse(prefFile.ReadLine()), bool.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), prefFile.ReadLine(), null));
+                    }
+                    
                 }
                 else if(version.StartsWith("v"))
                 {
@@ -379,6 +369,136 @@ namespace RLGL_Player
                 }
 
                 prefFile.Close();
+
+                LoadEndings();
+            }
+        }
+
+        private void LoadEndings()
+        {
+            bool defaultGreenLight = false;
+            bool defaultRedLight = false;
+
+            string endingDirectory = Directory.GetCurrentDirectory() + "\\Endings\\";
+            //Load endings from folder!
+            if (Directory.Exists(endingDirectory))
+            {
+                string[] endings = Directory.GetFiles(endingDirectory, "*.ending");
+
+                foreach(string e in endings)
+                {
+                    RLGLEnding end = new RLGLEnding(e);
+                    end.LoadRLGLEnding();
+                    if (ending.Exists(x => x.EndingName.Equals(end.EndingName)))
+                    {
+                        for (int i = 0; i < ending.Count; i++)
+                        {
+                            if (ending[i].EndingName.Equals(end.EndingName))
+                            {
+                                ending[i].Ending = end;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ending.Add(new RLGLInternEnding(false, false, 0, end.EndingName, end));
+                    }
+
+                    if(end.EndingName.Equals("GreenLightEnding"))
+                    {
+                        defaultGreenLight = true;
+                    }
+
+                    if(end.EndingName.Equals("RedLightEnding"))
+                    {
+                        defaultRedLight = true;
+                    }
+                }
+
+                if(!defaultGreenLight)
+                {
+                    CreateDefaultEnding(true);
+                }
+
+                if(!defaultRedLight)
+                {
+                    CreateDefaultEnding(false);
+                }
+
+                //Remove endings with entries that are no longer used!
+                int pos = 0;
+                while(pos < ending.Count)
+                {
+                    if(ending[pos].Ending == null)
+                    {
+                        ending.RemoveAt(pos);
+                    }
+                    else
+                    {
+                        pos++;
+                    }
+                }
+            }
+            else
+            {
+                Directory.CreateDirectory(endingDirectory);
+                CreateDefaultEnding(true);
+                CreateDefaultEnding(false);               
+            }
+        }
+
+        private void CreateDefaultEnding(bool greenLight)
+        {
+            if(greenLight)
+            {
+                RLGLEnding greenLightEnding = new RLGLEnding("GreenLightEnding");
+
+                RLGLEndingPhase cumPhase = new RLGLEndingPhase();
+                cumPhase.Duration = 30;
+                cumPhase.Message = "Cum!";
+                cumPhase.Name = "Cum Phase";
+                cumPhase.Phase = RLGLPhase.Green;
+                cumPhase.CountdownBegin = 10;
+                cumPhase.CountdownEnd = 0;
+                cumPhase.CountdownStep = 1;
+                greenLightEnding.AddPhase(cumPhase);
+
+                greenLightEnding.SaveRLGLEnding();
+
+                if (ending.Count == 0 || (ending.Count == 1 && ending[0].EndingName.Equals("RedLightEnding")))
+                {
+                    ending.Add(new RLGLInternEnding(true, false, 50, greenLightEnding.EndingName, greenLightEnding));
+                }
+                else
+                {
+                    ending.Add(new RLGLInternEnding(false, false, 0, greenLightEnding.EndingName, greenLightEnding));
+                }
+            }
+            else
+            {
+                RLGLEnding redLightEnding = new RLGLEnding("RedLightEnding");
+
+                RLGLEndingPhase denialPhase = new RLGLEndingPhase();
+                denialPhase.Duration = 30;
+                denialPhase.Message = "Hands off! You're denied!";
+                denialPhase.Name = "Denial Phase";
+                denialPhase.Phase = RLGLPhase.Red;
+                denialPhase.CountdownBegin = 10;
+                denialPhase.CountdownEnd = 0;
+                denialPhase.CountdownStep = 1;
+                redLightEnding.AddPhase(denialPhase);
+
+                redLightEnding.SaveRLGLEnding();
+
+                if (ending.Count == 0 || (ending.Count == 1 && ending[0].EndingName.Equals("GreenLightEnding")))
+                {
+                    ending.Add(new RLGLInternEnding(true, false, 50, redLightEnding.EndingName, redLightEnding));
+                }
+                else
+                {
+                    ending.Add(new RLGLInternEnding(false, false, 0, redLightEnding.EndingName, redLightEnding));
+                }
             }
         }
 
@@ -392,7 +512,7 @@ namespace RLGL_Player
                 maxRed = int.Parse(prefFile.ReadLine());
                 minGreen = int.Parse(prefFile.ReadLine());
                 minRed = int.Parse(prefFile.ReadLine());
-                ending = (RLGLEnding)int.Parse(prefFile.ReadLine());
+                /*ending = (RLGLEnding)*/int.Parse(prefFile.ReadLine());
                 metronome = bool.Parse(prefFile.ReadLine());
                 minBpm = int.Parse(prefFile.ReadLine());
                 maxBpm = int.Parse(prefFile.ReadLine());
@@ -425,7 +545,7 @@ namespace RLGL_Player
                 maxRed = int.Parse(prefFile.ReadLine());
                 minGreen = int.Parse(prefFile.ReadLine());
                 minRed = int.Parse(prefFile.ReadLine());
-                ending = (RLGLEnding)int.Parse(prefFile.ReadLine());
+                /*ending = (RLGLEnding)*/int.Parse(prefFile.ReadLine());
                 metronome = bool.Parse(prefFile.ReadLine());
                 minBpm = int.Parse(prefFile.ReadLine());
                 maxBpm = int.Parse(prefFile.ReadLine());
@@ -462,7 +582,7 @@ namespace RLGL_Player
                 maxRed = int.Parse(prefFile.ReadLine());
                 minGreen = int.Parse(prefFile.ReadLine());
                 minRed = int.Parse(prefFile.ReadLine());
-                ending = (RLGLEnding)int.Parse(prefFile.ReadLine());
+                /*ending = (RLGLEnding)*/int.Parse(prefFile.ReadLine());
                 metronome = bool.Parse(prefFile.ReadLine());
                 minBpm = int.Parse(prefFile.ReadLine());
                 maxBpm = int.Parse(prefFile.ReadLine());
@@ -515,7 +635,7 @@ namespace RLGL_Player
             maxRed = int.Parse(prefFile.ReadLine());
             minGreen = int.Parse(prefFile.ReadLine());
             minRed = int.Parse(prefFile.ReadLine());
-            ending = (RLGLEnding)int.Parse(prefFile.ReadLine());
+            /*ending = (RLGLEnding)*/int.Parse(prefFile.ReadLine());
             metronome = bool.Parse(prefFile.ReadLine());
             minBpm = int.Parse(prefFile.ReadLine());
             maxBpm = int.Parse(prefFile.ReadLine());
@@ -540,7 +660,6 @@ namespace RLGL_Player
             prefFile.WriteLine(maxRed);
             prefFile.WriteLine(minGreen);
             prefFile.WriteLine(minRed);
-            prefFile.WriteLine((int)ending);
             prefFile.WriteLine(metronome);
             prefFile.WriteLine(minBpm);
             prefFile.WriteLine(maxBpm);
@@ -577,8 +696,25 @@ namespace RLGL_Player
             prefFile.WriteLine(edgeColor.R);
             prefFile.WriteLine(edgeColor.G);
             prefFile.WriteLine(edgeColor.B);
+            prefFile.WriteLine(ruinedOrgasmColor.A);
+            prefFile.WriteLine(ruinedOrgasmColor.R);
+            prefFile.WriteLine(ruinedOrgasmColor.G);
+            prefFile.WriteLine(ruinedOrgasmColor.B);
+            prefFile.WriteLine(ending.Count);
+            
+            foreach (RLGLInternEnding e in ending)
+            {
+                prefFile.WriteLine(e.Enabled);
+                prefFile.WriteLine(e.Locked);
+                prefFile.WriteLine(e.Chance);
+                prefFile.WriteLine(e.EndingName);
+
+                e.Ending.SaveRLGLEnding();
+            }
 
             prefFile.Close();
+
+            
         }
     }
 }

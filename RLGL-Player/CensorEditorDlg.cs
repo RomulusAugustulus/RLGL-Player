@@ -97,7 +97,7 @@ namespace RLGL_Player
             {
                 rlglCensorData = null;
                 VLC_Editor.Stop();
-                rlglCurrentMedia = new RLGLCurrentMedia(openFileDlg.FileName, DateTime.Now, TimeSpan.Zero, RLGLPhase.Green, RLGLSpecificEnding.Denied);
+                rlglCurrentMedia = new RLGLCurrentMedia(openFileDlg.FileName, DateTime.Now, TimeSpan.Zero, RLGLPhase.Green, null);
                 InitEditor();
                 PB_KeyframeDrawingWindow.Invalidate();
             }
@@ -125,7 +125,7 @@ namespace RLGL_Player
             if(openFileDlg.ShowDialog() == DialogResult.OK)
             {
                 rlglCensorData = RLGLCensorData.ReadFromFile(openFileDlg.FileName);
-                rlglCurrentMedia = new RLGLCurrentMedia(openFileDlg.FileName, DateTime.Now, TimeSpan.Zero, RLGLPhase.Green, RLGLSpecificEnding.Denied);
+                rlglCurrentMedia = new RLGLCurrentMedia(openFileDlg.FileName, DateTime.Now, TimeSpan.Zero, RLGLPhase.Green, null);
 
                 VLC_Editor.Stop();
 

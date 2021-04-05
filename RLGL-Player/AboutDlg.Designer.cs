@@ -56,9 +56,9 @@
             this.L_AboutInfo.AutoSize = true;
             this.L_AboutInfo.Location = new System.Drawing.Point(135, 42);
             this.L_AboutInfo.Name = "L_AboutInfo";
-            this.L_AboutInfo.Size = new System.Drawing.Size(115, 13);
+            this.L_AboutInfo.Size = new System.Drawing.Size(121, 13);
             this.L_AboutInfo.TabIndex = 1;
-            this.L_AboutInfo.Text = "RLGL-Player    v. 0.9.0";
+            this.L_AboutInfo.Text = "RLGL-Player    v. 0.10.0";
             // 
             // L_Copyright
             // 

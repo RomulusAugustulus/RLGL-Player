@@ -17,6 +17,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace RLGL_Player
@@ -26,9 +27,39 @@ namespace RLGL_Player
      */ 
     public partial class PreferencesDlg : Form
     {
+        //Holds all the known endings that a user has created.
+        public List<RLGLInternEnding> EndingSettings { get; set; }
+
+
         public PreferencesDlg()
-        {
+        {            
+            if(EndingSettings == null)
+            {
+                EndingSettings = new List<RLGLInternEnding>();
+            }
+
             InitializeComponent();
+        }
+
+        //Creates a control for each found ending.
+        private void ShowEndings()
+        {
+            EndingsLayout.Controls.Clear();
+
+            for (int i=0;i<EndingSettings.Count;i++)
+            {
+                CustomEndingListElement e = new CustomEndingListElement();
+                e.Text = EndingSettings[i].EndingName;
+                e.EndingElementClick += new CustomEndingListElement.EndingElementClickHandler(this.CELE_ButtonClick);
+                e.EndingElementEnabledChanged += new CustomEndingListElement.EndingElementEnabledHandler(this.CELE_EnabledChanged);
+                e.EndingElementValueChanged += new CustomEndingListElement.EndingElementValueHandler(this.CELE_ValueChanged);
+                e.EndingElementLockedChanged += new CustomEndingListElement.EndingElementLockedHandler(this.CELE_LockedChanged);
+                e.Chance = EndingSettings[i].Chance;
+                e.IncludeElement = EndingSettings[i].Enabled;
+                e.LockChance = EndingSettings[i].Locked;
+                
+                EndingsLayout.Controls.Add(e);
+            }
         }
 
         //Minimum value can not be higher than maximal value.
@@ -185,8 +216,252 @@ namespace RLGL_Player
         //Apply current preferences without closing the options dialog.
         private void B_Apply_Click(object sender, EventArgs e)
         {
-            RLGLPlayer mainForm = (RLGLPlayer)this.Owner;
-            mainForm.UpdateRLGLPreferences();
+            if (AtleastOneEndingEnabled())
+            {
+                RLGLPlayer mainForm = (RLGLPlayer)this.Owner;
+                mainForm.UpdateRLGLPreferences();
+            }
+            else
+            {
+                MessageBox.Show("There needs to be at least 1 enabled ending!", "Error");
+            }
+        }
+
+        private bool AtleastOneEndingEnabled()
+        {
+            return EndingSettings.Exists(x => x.Enabled = true);
+        }
+
+        //Creates a new ending from the users input.
+        private void B_New_Click(object sender, EventArgs e)
+        {
+            EnterNameDlg enterNameDlg = new EnterNameDlg();
+
+            if (enterNameDlg.ShowDialog() == DialogResult.OK)
+            {
+                RLGLEnding newEnding = new RLGLEnding(enterNameDlg.Input);
+
+                RLGLEndingPhase newEndingPhase = new RLGLEndingPhase();
+                newEndingPhase.Name = "Green";
+                newEndingPhase.Message = "Cum";
+                newEndingPhase.Duration = 30;
+                newEndingPhase.CountdownBegin = 10;
+                newEndingPhase.CountdownEnd = 0;
+                newEndingPhase.CountdownStep = 1;
+                newEnding.AddPhase(newEndingPhase);
+
+                EndingSettings.Add(new RLGLInternEnding(false,false,0,newEnding.EndingName,newEnding));
+
+                ShowEndings();
+            }
+        }
+
+        //Opens an existing ending to configure it.
+        private void CELE_ButtonClick(object sender, EventArgs e)
+        {
+            EndingConfiguratorDlg endingConfiguratorDlg = new EndingConfiguratorDlg();
+            CustomEndingListElement customEnding = (CustomEndingListElement)sender;
+            string name = customEnding.Text;
+            int positionInList = -1;
+
+            for(int i=0;i<EndingSettings.Count;i++)
+            {
+                if(EndingSettings[i].EndingName.Equals(name))
+                {
+                    endingConfiguratorDlg.InitEnding(EndingSettings[i].Ending);
+                    positionInList = i;
+                }
+            }
+            if(endingConfiguratorDlg.ShowDialog() == DialogResult.OK)
+            {
+                EndingSettings[positionInList].Ending = endingConfiguratorDlg.Ending;
+            }
+        }
+
+        private void CELE_EnabledChanged(object sender, EventArgs e)
+        {
+            CustomEndingListElement customEnding = (CustomEndingListElement)sender;
+            RLGLInternEnding end = EndingSettings.Find(x => x.EndingName.Equals(customEnding.Text));
+
+            end.Enabled = customEnding.Enabled;
+
+            if(end.Enabled)
+            {
+                CalculateCurrentChanceValues(customEnding);
+            }
+            else
+            {
+                foreach(CustomEndingListElement elem in EndingsLayout.Controls)
+                {
+                    if(elem.IncludeElement)
+                    {
+                        CalculateCurrentChanceValues(elem);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void CELE_LockedChanged(object sender, EventArgs e)
+        {
+            CustomEndingListElement customEnding = (CustomEndingListElement)sender;
+            RLGLInternEnding end = EndingSettings.Find(x => x.EndingName.Equals(customEnding.Text));
+
+            end.Locked = customEnding.LockChance;
+        }
+
+        private void CELE_ValueChanged(object sender, EventArgs e)
+        {
+            CustomEndingListElement currentElement = (CustomEndingListElement)sender;
+            if (currentElement.IsActive && currentElement.IncludeElement)
+            {
+                CalculateCurrentChanceValues(currentElement);
+            }
+        }
+
+        //Calculate the chances for all enabled endings. They have to be 100 added all together!
+        private void CalculateCurrentChanceValues(CustomEndingListElement currentElement)
+        {
+            int lockValue = 100;
+            foreach (RLGLInternEnding setting in EndingSettings)
+            {
+                if (setting.Enabled && setting.Locked)
+                {
+                    if (setting.EndingName.Equals(currentElement.Text))
+                    {
+                        lockValue -= currentElement.Chance;
+                    }
+                    else
+                    {
+                        lockValue -= setting.Chance;
+                    }
+                }
+            }
+
+            if (lockValue < 100)
+            {
+                foreach (CustomEndingListElement elem in EndingsLayout.Controls)
+                {
+                    if (!elem.LockChance && elem.IncludeElement)
+                    {
+                        elem.Limit = lockValue;
+                    }
+                }
+            }
+
+            int val = currentElement.Chance;
+            int numberOfVariableElements = 0;
+
+            foreach (RLGLInternEnding setting in EndingSettings)
+            {
+                if (!setting.EndingName.Equals(currentElement.Text) && setting.Enabled)
+                {
+                    val += setting.Chance;
+
+                    if (!setting.Locked)
+                    {
+                        numberOfVariableElements++;
+                    }
+                }
+            }
+
+            if (numberOfVariableElements > 0)
+            {
+                int diff = 100 - val;
+                diff = (int)((float)diff / numberOfVariableElements);
+                int carry = (100 - val) - numberOfVariableElements * diff;
+                int loop = 0;
+                do
+                {
+                    for (int i = 0; i < EndingSettings.Count; i++)
+                    {
+                        RLGLInternEnding setting = EndingSettings[i];
+
+                        if (!((setting.Locked || setting.EndingName.Equals(currentElement.Text) && setting.Enabled)))
+                        {
+                            int c = EndingSettings[i].Chance + diff + carry;
+                            if (c > lockValue)
+                            {
+                                EndingSettings[i].Chance = lockValue;
+                                carry = c - lockValue;
+                            }
+                            else if (c < 0)
+                            {
+                                EndingSettings[i].Chance = 0;
+                                carry = c;
+                            }
+                            else
+                            {
+                                EndingSettings[i].Chance += diff + carry;
+                                carry = 0;
+                            }
+                        }
+                        else if (setting.EndingName.Equals(currentElement.Text) && setting.Enabled)
+                        {
+                            if (loop < 3)
+                            {
+                                EndingSettings[i].Chance = currentElement.Chance;
+                            }
+                            else
+                            {
+                                EndingSettings[i].Chance = currentElement.Chance + carry;
+                                currentElement.Chance = EndingSettings[i].Chance;
+                                carry = 0;
+                            }
+                        }
+                    }
+
+                    diff = 0;
+                    loop++;
+                } while (carry != 0);
+            }
+            else
+            {
+                for (int i = 0; i < EndingSettings.Count; i++)
+                {
+                    if (EndingSettings[i].EndingName.Equals(currentElement.Text) && EndingSettings[i].Enabled)
+                    {
+                        currentElement.Chance = EndingSettings[i].Chance;
+                    }
+                }
+            }
+
+            UpdateEndingElements();
+        }
+
+        //Shows the current chances on the dialog.
+        private void UpdateEndingElements()
+        {
+            foreach(CustomEndingListElement e in EndingsLayout.Controls)
+            {
+                if(!e.IsActive && e.IncludeElement)
+                {                    
+                    RLGLInternEnding element = EndingSettings.Find(x => x.EndingName.Equals(e.Text));
+                    e.Chance = element.Chance;
+                }
+            }
+        }
+
+        private void PreferencesDlg_Shown(object sender, EventArgs e)
+        {
+            ShowEndings();
+        }
+
+        private void P_RuinedOrgasmColor_Click(object sender, EventArgs e)
+        {
+            if (ColorPicker.ShowDialog() == DialogResult.OK)
+            {
+                P_RuinedOrgasmColor.BackColor = ColorPicker.Color;
+            }
+        }
+
+        private void B_SaveExit_Click(object sender, EventArgs e)
+        {
+            if(!AtleastOneEndingEnabled())
+            {
+                MessageBox.Show("There needs to be at least 1 enabled ending!", "Error");
+                this.DialogResult = DialogResult.None;
+            }
         }
     }
 }

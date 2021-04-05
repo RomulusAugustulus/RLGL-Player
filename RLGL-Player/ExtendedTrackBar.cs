@@ -30,6 +30,13 @@ namespace RLGL_Player
         private string customTooltip;
         private int value;
 
+        public delegate void ExtendedTrackBarValueHandler(object sender, EventArgs e);
+
+        /*
+         * Event is fired when the user changes the value of the trackbar.
+         */
+        public event ExtendedTrackBarValueHandler ExtendedTrackBarValueChanged;
+
         //The minimal value the trackbar can have.
         public int Minimum
         {
@@ -103,6 +110,10 @@ namespace RLGL_Player
         {
             value = TB_ExtendedTrackBar.Maximum + TB_ExtendedTrackBar.Minimum - TB_ExtendedTrackBar.Value;
             NUD_ShowValue.Value = value;
+            if (ExtendedTrackBarValueChanged != null)
+            {
+                ExtendedTrackBarValueChanged(this, e);
+            }
         }
 
         private void NUD_ShowValue_ValueChanged(object sender, EventArgs e)

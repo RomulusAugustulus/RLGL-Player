@@ -49,7 +49,6 @@
             this.RLGL_Layout = new System.Windows.Forms.TableLayoutPanel();
             this.VLC_Control = new Vlc.DotNet.Forms.VlcControl();
             this.L_Text = new System.Windows.Forms.Label();
-            this.TB_Volume = new System.Windows.Forms.TrackBar();
             this.L_TimePassed = new System.Windows.Forms.Label();
             this.OpenQueueDlg = new System.Windows.Forms.OpenFileDialog();
             this.RLGL_SwitchTimer = new System.Windows.Forms.Timer(this.components);
@@ -60,11 +59,12 @@
             this.RLGL_Timer = new System.Windows.Forms.Timer(this.components);
             this.SaveQueueDlg = new System.Windows.Forms.SaveFileDialog();
             this.RLGL_HideVolumeBar = new System.Windows.Forms.Timer(this.components);
+            this.RLGL_CountdownTimer = new System.Windows.Forms.Timer(this.components);
+            this.P_ShowVolumeBar = new System.Windows.Forms.Panel();
             this.MainMenu.SuspendLayout();
             this.VLC_Panel.SuspendLayout();
             this.RLGL_Layout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VLC_Control)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TB_Volume)).BeginInit();
             this.SuspendLayout();
             // 
             // MainMenu
@@ -207,15 +207,14 @@
             // RLGL_Layout
             // 
             this.RLGL_Layout.BackColor = System.Drawing.SystemColors.Control;
-            this.RLGL_Layout.ColumnCount = 4;
+            this.RLGL_Layout.ColumnCount = 3;
             this.RLGL_Layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.RLGL_Layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.RLGL_Layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.RLGL_Layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.RLGL_Layout.Controls.Add(this.VLC_Control, 1, 1);
-            this.RLGL_Layout.Controls.Add(this.L_Text, 2, 3);
-            this.RLGL_Layout.Controls.Add(this.TB_Volume, 0, 3);
-            this.RLGL_Layout.Controls.Add(this.L_TimePassed, 3, 3);
+            this.RLGL_Layout.Controls.Add(this.L_Text, 1, 3);
+            this.RLGL_Layout.Controls.Add(this.L_TimePassed, 2, 3);
+            this.RLGL_Layout.Controls.Add(this.P_ShowVolumeBar, 0, 3);
             this.RLGL_Layout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RLGL_Layout.Location = new System.Drawing.Point(0, 0);
             this.RLGL_Layout.Margin = new System.Windows.Forms.Padding(0);
@@ -231,7 +230,6 @@
             // VLC_Control
             // 
             this.VLC_Control.BackColor = System.Drawing.Color.Black;
-            this.RLGL_Layout.SetColumnSpan(this.VLC_Control, 2);
             this.VLC_Control.Dock = System.Windows.Forms.DockStyle.Fill;
             this.VLC_Control.Location = new System.Drawing.Point(50, 50);
             this.VLC_Control.Margin = new System.Windows.Forms.Padding(0);
@@ -253,30 +251,13 @@
             this.L_Text.AutoSize = true;
             this.L_Text.Dock = System.Windows.Forms.DockStyle.Fill;
             this.L_Text.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.L_Text.Location = new System.Drawing.Point(153, 513);
+            this.L_Text.Location = new System.Drawing.Point(53, 513);
             this.L_Text.Name = "L_Text";
-            this.L_Text.Size = new System.Drawing.Size(870, 50);
+            this.L_Text.Size = new System.Drawing.Size(970, 50);
             this.L_Text.TabIndex = 1;
             this.L_Text.Text = "label1";
             this.L_Text.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.L_Text.MouseHover += new System.EventHandler(this.L_Text_MouseHover);
-            // 
-            // TB_Volume
-            // 
-            this.TB_Volume.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.RLGL_Layout.SetColumnSpan(this.TB_Volume, 2);
-            this.TB_Volume.Location = new System.Drawing.Point(3, 516);
-            this.TB_Volume.Maximum = 100;
-            this.TB_Volume.Name = "TB_Volume";
-            this.TB_Volume.Size = new System.Drawing.Size(144, 44);
-            this.TB_Volume.TabIndex = 3;
-            this.TB_Volume.TickFrequency = 10;
-            this.TB_Volume.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.TB_Volume.Value = 100;
-            this.TB_Volume.Visible = false;
-            this.TB_Volume.ValueChanged += new System.EventHandler(this.TB_Volume_ValueChanged);
             // 
             // L_TimePassed
             // 
@@ -330,6 +311,19 @@
             this.RLGL_HideVolumeBar.Interval = 3000;
             this.RLGL_HideVolumeBar.Tick += new System.EventHandler(this.RLGL_HideVolumeBar_Tick);
             // 
+            // RLGL_CountdownTimer
+            // 
+            this.RLGL_CountdownTimer.Tick += new System.EventHandler(this.RLGL_CountdownTimer_Tick);
+            // 
+            // P_ShowVolumeBar
+            // 
+            this.P_ShowVolumeBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.P_ShowVolumeBar.Location = new System.Drawing.Point(3, 516);
+            this.P_ShowVolumeBar.Name = "P_ShowVolumeBar";
+            this.P_ShowVolumeBar.Size = new System.Drawing.Size(44, 44);
+            this.P_ShowVolumeBar.TabIndex = 5;
+            this.P_ShowVolumeBar.MouseHover += new System.EventHandler(this.L_Text_MouseHover);
+            // 
             // RLGLPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -352,7 +346,6 @@
             this.RLGL_Layout.ResumeLayout(false);
             this.RLGL_Layout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VLC_Control)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TB_Volume)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -367,14 +360,12 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.Panel VLC_Panel;
-        private Vlc.DotNet.Forms.VlcControl VLC_Control;
         private System.Windows.Forms.OpenFileDialog OpenQueueDlg;
         private System.Windows.Forms.TableLayoutPanel RLGL_Layout;
         private System.Windows.Forms.Label L_Text;
         private System.Windows.Forms.Timer RLGL_SwitchTimer;
         private System.Windows.Forms.Timer RLGL_VideoEndTimer;
         private System.Windows.Forms.Timer RLGL_Metronome;
-        private System.Windows.Forms.TrackBar TB_Volume;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editorToolStripMenuItem;
@@ -390,6 +381,9 @@
         private System.Windows.Forms.ToolStripMenuItem sessionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem endSessionToolStripMenuItem;
         private System.Windows.Forms.Timer RLGL_HideVolumeBar;
+        private System.Windows.Forms.Timer RLGL_CountdownTimer;
+        private Vlc.DotNet.Forms.VlcControl VLC_Control;
+        private System.Windows.Forms.Panel P_ShowVolumeBar;
     }
 }
 

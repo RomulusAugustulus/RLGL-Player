@@ -52,6 +52,8 @@
             this.NUD_MinGreen = new System.Windows.Forms.NumericUpDown();
             this.L_GreenMin = new System.Windows.Forms.Label();
             this.GB_ProgramSettings = new System.Windows.Forms.GroupBox();
+            this.P_RuinedOrgasmColor = new System.Windows.Forms.Panel();
+            this.L_RuinedOrgasmColor = new System.Windows.Forms.Label();
             this.P_CensorColor = new System.Windows.Forms.Panel();
             this.L_CensorColor = new System.Windows.Forms.Label();
             this.L_Appearing = new System.Windows.Forms.Label();
@@ -86,6 +88,10 @@
             this.NUD_MinMetronome = new System.Windows.Forms.NumericUpDown();
             this.L_MinMetronome = new System.Windows.Forms.Label();
             this.CB_Metronome = new System.Windows.Forms.CheckBox();
+            this.TAB_Ending = new System.Windows.Forms.TabPage();
+            this.GB_EndingSettings = new System.Windows.Forms.GroupBox();
+            this.B_New = new System.Windows.Forms.Button();
+            this.EndingsLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.TAB_Censor = new System.Windows.Forms.TabPage();
             this.GB_CensorSettings = new System.Windows.Forms.GroupBox();
             this.ETB_CensorChance = new RLGL_Player.ExtendedTrackBar();
@@ -117,6 +123,8 @@
             this.GB_MetronomeSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxMetronome)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinMetronome)).BeginInit();
+            this.TAB_Ending.SuspendLayout();
+            this.GB_EndingSettings.SuspendLayout();
             this.TAB_Censor.SuspendLayout();
             this.GB_CensorSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
@@ -448,6 +456,8 @@
             // 
             // GB_ProgramSettings
             // 
+            this.GB_ProgramSettings.Controls.Add(this.P_RuinedOrgasmColor);
+            this.GB_ProgramSettings.Controls.Add(this.L_RuinedOrgasmColor);
             this.GB_ProgramSettings.Controls.Add(this.P_CensorColor);
             this.GB_ProgramSettings.Controls.Add(this.L_CensorColor);
             this.GB_ProgramSettings.Controls.Add(this.L_Appearing);
@@ -475,19 +485,37 @@
             this.GB_ProgramSettings.TabStop = false;
             this.GB_ProgramSettings.Text = "General Settings";
             // 
+            // P_RuinedOrgasmColor
+            // 
+            this.P_RuinedOrgasmColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(107)))), ((int)(((byte)(243)))));
+            this.P_RuinedOrgasmColor.Location = new System.Drawing.Point(115, 122);
+            this.P_RuinedOrgasmColor.Name = "P_RuinedOrgasmColor";
+            this.P_RuinedOrgasmColor.Size = new System.Drawing.Size(434, 26);
+            this.P_RuinedOrgasmColor.TabIndex = 20;
+            this.P_RuinedOrgasmColor.Click += new System.EventHandler(this.P_RuinedOrgasmColor_Click);
+            // 
+            // L_RuinedOrgasmColor
+            // 
+            this.L_RuinedOrgasmColor.AutoSize = true;
+            this.L_RuinedOrgasmColor.Location = new System.Drawing.Point(6, 127);
+            this.L_RuinedOrgasmColor.Name = "L_RuinedOrgasmColor";
+            this.L_RuinedOrgasmColor.Size = new System.Drawing.Size(109, 13);
+            this.L_RuinedOrgasmColor.TabIndex = 19;
+            this.L_RuinedOrgasmColor.Text = "Ruined Orgasm color:";
+            // 
             // P_CensorColor
             // 
             this.P_CensorColor.BackColor = System.Drawing.Color.Black;
-            this.P_CensorColor.Location = new System.Drawing.Point(99, 121);
+            this.P_CensorColor.Location = new System.Drawing.Point(115, 155);
             this.P_CensorColor.Name = "P_CensorColor";
-            this.P_CensorColor.Size = new System.Drawing.Size(450, 26);
+            this.P_CensorColor.Size = new System.Drawing.Size(434, 26);
             this.P_CensorColor.TabIndex = 18;
             this.P_CensorColor.Click += new System.EventHandler(this.P_CensorColor_Click);
             // 
             // L_CensorColor
             // 
             this.L_CensorColor.AutoSize = true;
-            this.L_CensorColor.Location = new System.Drawing.Point(6, 126);
+            this.L_CensorColor.Location = new System.Drawing.Point(6, 160);
             this.L_CensorColor.Name = "L_CensorColor";
             this.L_CensorColor.Size = new System.Drawing.Size(84, 13);
             this.L_CensorColor.TabIndex = 17;
@@ -496,7 +524,7 @@
             // L_Appearing
             // 
             this.L_Appearing.AutoSize = true;
-            this.L_Appearing.Location = new System.Drawing.Point(6, 214);
+            this.L_Appearing.Location = new System.Drawing.Point(6, 243);
             this.L_Appearing.Name = "L_Appearing";
             this.L_Appearing.Size = new System.Drawing.Size(160, 13);
             this.L_Appearing.TabIndex = 16;
@@ -504,7 +532,7 @@
             // 
             // NUD_BottomBorder
             // 
-            this.NUD_BottomBorder.Location = new System.Drawing.Point(99, 318);
+            this.NUD_BottomBorder.Location = new System.Drawing.Point(99, 347);
             this.NUD_BottomBorder.Minimum = new decimal(new int[] {
             80,
             0,
@@ -522,7 +550,7 @@
             // L_BottomBorder
             // 
             this.L_BottomBorder.AutoSize = true;
-            this.L_BottomBorder.Location = new System.Drawing.Point(6, 320);
+            this.L_BottomBorder.Location = new System.Drawing.Point(6, 349);
             this.L_BottomBorder.Name = "L_BottomBorder";
             this.L_BottomBorder.Size = new System.Drawing.Size(93, 13);
             this.L_BottomBorder.TabIndex = 14;
@@ -530,7 +558,7 @@
             // 
             // NUD_TopBorder
             // 
-            this.NUD_TopBorder.Location = new System.Drawing.Point(99, 292);
+            this.NUD_TopBorder.Location = new System.Drawing.Point(99, 321);
             this.NUD_TopBorder.Name = "NUD_TopBorder";
             this.NUD_TopBorder.Size = new System.Drawing.Size(450, 20);
             this.NUD_TopBorder.TabIndex = 13;
@@ -543,7 +571,7 @@
             // L_TopBorder
             // 
             this.L_TopBorder.AutoSize = true;
-            this.L_TopBorder.Location = new System.Drawing.Point(6, 294);
+            this.L_TopBorder.Location = new System.Drawing.Point(6, 323);
             this.L_TopBorder.Name = "L_TopBorder";
             this.L_TopBorder.Size = new System.Drawing.Size(79, 13);
             this.L_TopBorder.TabIndex = 12;
@@ -551,7 +579,7 @@
             // 
             // NUD_RightBorder
             // 
-            this.NUD_RightBorder.Location = new System.Drawing.Point(99, 266);
+            this.NUD_RightBorder.Location = new System.Drawing.Point(99, 295);
             this.NUD_RightBorder.Name = "NUD_RightBorder";
             this.NUD_RightBorder.Size = new System.Drawing.Size(450, 20);
             this.NUD_RightBorder.TabIndex = 11;
@@ -564,7 +592,7 @@
             // L_RightBorder
             // 
             this.L_RightBorder.AutoSize = true;
-            this.L_RightBorder.Location = new System.Drawing.Point(6, 268);
+            this.L_RightBorder.Location = new System.Drawing.Point(6, 297);
             this.L_RightBorder.Name = "L_RightBorder";
             this.L_RightBorder.Size = new System.Drawing.Size(85, 13);
             this.L_RightBorder.TabIndex = 10;
@@ -572,7 +600,7 @@
             // 
             // NUD_LeftBorder
             // 
-            this.NUD_LeftBorder.Location = new System.Drawing.Point(99, 240);
+            this.NUD_LeftBorder.Location = new System.Drawing.Point(99, 269);
             this.NUD_LeftBorder.Name = "NUD_LeftBorder";
             this.NUD_LeftBorder.Size = new System.Drawing.Size(450, 20);
             this.NUD_LeftBorder.TabIndex = 9;
@@ -585,7 +613,7 @@
             // L_BorderLeft
             // 
             this.L_BorderLeft.AutoSize = true;
-            this.L_BorderLeft.Location = new System.Drawing.Point(6, 242);
+            this.L_BorderLeft.Location = new System.Drawing.Point(6, 271);
             this.L_BorderLeft.Name = "L_BorderLeft";
             this.L_BorderLeft.Size = new System.Drawing.Size(78, 13);
             this.L_BorderLeft.TabIndex = 8;
@@ -593,7 +621,7 @@
             // 
             // B_CensorPath
             // 
-            this.B_CensorPath.Location = new System.Drawing.Point(518, 173);
+            this.B_CensorPath.Location = new System.Drawing.Point(518, 202);
             this.B_CensorPath.Name = "B_CensorPath";
             this.B_CensorPath.Size = new System.Drawing.Size(31, 23);
             this.B_CensorPath.TabIndex = 4;
@@ -603,7 +631,7 @@
             // 
             // TBox_CensorPath
             // 
-            this.TBox_CensorPath.Location = new System.Drawing.Point(115, 175);
+            this.TBox_CensorPath.Location = new System.Drawing.Point(115, 204);
             this.TBox_CensorPath.Name = "TBox_CensorPath";
             this.TBox_CensorPath.Size = new System.Drawing.Size(397, 20);
             this.TBox_CensorPath.TabIndex = 7;
@@ -611,7 +639,7 @@
             // L_CensorPath
             // 
             this.L_CensorPath.AutoSize = true;
-            this.L_CensorPath.Location = new System.Drawing.Point(6, 178);
+            this.L_CensorPath.Location = new System.Drawing.Point(6, 207);
             this.L_CensorPath.Name = "L_CensorPath";
             this.L_CensorPath.Size = new System.Drawing.Size(103, 13);
             this.L_CensorPath.TabIndex = 6;
@@ -620,9 +648,9 @@
             // P_EdgeLightColor
             // 
             this.P_EdgeLightColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(143)))), ((int)(((byte)(255)))));
-            this.P_EdgeLightColor.Location = new System.Drawing.Point(99, 89);
+            this.P_EdgeLightColor.Location = new System.Drawing.Point(115, 89);
             this.P_EdgeLightColor.Name = "P_EdgeLightColor";
-            this.P_EdgeLightColor.Size = new System.Drawing.Size(450, 26);
+            this.P_EdgeLightColor.Size = new System.Drawing.Size(434, 26);
             this.P_EdgeLightColor.TabIndex = 5;
             this.P_EdgeLightColor.Click += new System.EventHandler(this.P_EdgeLightColor_Click);
             // 
@@ -638,9 +666,9 @@
             // P_RedLightColor
             // 
             this.P_RedLightColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.P_RedLightColor.Location = new System.Drawing.Point(99, 57);
+            this.P_RedLightColor.Location = new System.Drawing.Point(115, 57);
             this.P_RedLightColor.Name = "P_RedLightColor";
-            this.P_RedLightColor.Size = new System.Drawing.Size(450, 26);
+            this.P_RedLightColor.Size = new System.Drawing.Size(434, 26);
             this.P_RedLightColor.TabIndex = 3;
             this.P_RedLightColor.Click += new System.EventHandler(this.P_RedLightColor_Click);
             // 
@@ -656,9 +684,9 @@
             // P_GreenLightColor
             // 
             this.P_GreenLightColor.BackColor = System.Drawing.Color.Green;
-            this.P_GreenLightColor.Location = new System.Drawing.Point(99, 25);
+            this.P_GreenLightColor.Location = new System.Drawing.Point(115, 25);
             this.P_GreenLightColor.Name = "P_GreenLightColor";
-            this.P_GreenLightColor.Size = new System.Drawing.Size(450, 26);
+            this.P_GreenLightColor.Size = new System.Drawing.Size(434, 26);
             this.P_GreenLightColor.TabIndex = 1;
             this.P_GreenLightColor.Click += new System.EventHandler(this.P_GreenLightColor_Click);
             // 
@@ -680,6 +708,7 @@
             this.B_SaveExit.TabIndex = 2;
             this.B_SaveExit.Text = "Save and close";
             this.B_SaveExit.UseVisualStyleBackColor = true;
+            this.B_SaveExit.Click += new System.EventHandler(this.B_SaveExit_Click);
             // 
             // B_Cancel
             // 
@@ -700,6 +729,7 @@
             this.TAB_Preferences.Controls.Add(this.TAB_GeneralSettings);
             this.TAB_Preferences.Controls.Add(this.TAB_RLGLSettings);
             this.TAB_Preferences.Controls.Add(this.TAB_Metronome);
+            this.TAB_Preferences.Controls.Add(this.TAB_Ending);
             this.TAB_Preferences.Controls.Add(this.TAB_Censor);
             this.TAB_Preferences.Location = new System.Drawing.Point(12, 12);
             this.TAB_Preferences.Name = "TAB_Preferences";
@@ -842,6 +872,49 @@
             this.CB_Metronome.UseVisualStyleBackColor = true;
             this.CB_Metronome.CheckedChanged += new System.EventHandler(this.CB_Metronome_CheckedChanged);
             // 
+            // TAB_Ending
+            // 
+            this.TAB_Ending.BackColor = System.Drawing.SystemColors.Control;
+            this.TAB_Ending.Controls.Add(this.GB_EndingSettings);
+            this.TAB_Ending.Location = new System.Drawing.Point(4, 22);
+            this.TAB_Ending.Name = "TAB_Ending";
+            this.TAB_Ending.Padding = new System.Windows.Forms.Padding(3);
+            this.TAB_Ending.Size = new System.Drawing.Size(583, 393);
+            this.TAB_Ending.TabIndex = 4;
+            this.TAB_Ending.Text = "Ending Settings";
+            // 
+            // GB_EndingSettings
+            // 
+            this.GB_EndingSettings.Controls.Add(this.B_New);
+            this.GB_EndingSettings.Controls.Add(this.EndingsLayout);
+            this.GB_EndingSettings.Location = new System.Drawing.Point(4, 6);
+            this.GB_EndingSettings.Name = "GB_EndingSettings";
+            this.GB_EndingSettings.Size = new System.Drawing.Size(574, 381);
+            this.GB_EndingSettings.TabIndex = 2;
+            this.GB_EndingSettings.TabStop = false;
+            this.GB_EndingSettings.Text = "Ending Settings";
+            // 
+            // B_New
+            // 
+            this.B_New.Location = new System.Drawing.Point(476, 352);
+            this.B_New.Name = "B_New";
+            this.B_New.Size = new System.Drawing.Size(92, 23);
+            this.B_New.TabIndex = 1;
+            this.B_New.Text = "New Ending";
+            this.B_New.UseVisualStyleBackColor = true;
+            this.B_New.Click += new System.EventHandler(this.B_New_Click);
+            // 
+            // EndingsLayout
+            // 
+            this.EndingsLayout.AutoScroll = true;
+            this.EndingsLayout.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.EndingsLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.EndingsLayout.Location = new System.Drawing.Point(6, 19);
+            this.EndingsLayout.Name = "EndingsLayout";
+            this.EndingsLayout.Size = new System.Drawing.Size(562, 325);
+            this.EndingsLayout.TabIndex = 0;
+            this.EndingsLayout.WrapContents = false;
+            // 
             // TAB_Censor
             // 
             this.TAB_Censor.BackColor = System.Drawing.SystemColors.Control;
@@ -966,7 +1039,7 @@
             // 
             // PreferencesDlg
             // 
-            this.AcceptButton = this.B_SaveExit;
+            this.AcceptButton = this.B_Apply;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.B_Cancel;
@@ -983,6 +1056,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Preferences...";
+            this.Shown += new System.EventHandler(this.PreferencesDlg_Shown);
             this.GB_RLGLSettings.ResumeLayout(false);
             this.GB_RLGLSettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxEdge)).EndInit();
@@ -1006,6 +1080,8 @@
             this.GB_MetronomeSettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxMetronome)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinMetronome)).EndInit();
+            this.TAB_Ending.ResumeLayout(false);
+            this.GB_EndingSettings.ResumeLayout(false);
             this.TAB_Censor.ResumeLayout(false);
             this.GB_CensorSettings.ResumeLayout(false);
             this.GB_CensorSettings.PerformLayout();
@@ -1085,5 +1161,11 @@
         public System.Windows.Forms.CheckBox CB_CensorOnlyGreen;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
         private System.Windows.Forms.Button B_Apply;
+        private System.Windows.Forms.TabPage TAB_Ending;
+        private System.Windows.Forms.GroupBox GB_EndingSettings;
+        private System.Windows.Forms.Button B_New;
+        private System.Windows.Forms.FlowLayoutPanel EndingsLayout;
+        public System.Windows.Forms.Panel P_RuinedOrgasmColor;
+        private System.Windows.Forms.Label L_RuinedOrgasmColor;
     }
 }

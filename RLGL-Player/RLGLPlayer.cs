@@ -47,6 +47,9 @@ public partial class RLGLPlayer : Form
         private List<Blackbar> censorbars;
         private bool censoring;
         private bool edging;
+        private bool playEnding;
+        private RLGLEndingPhase currentEndingPhase;
+        private int currentEndingCountdown;
         private static string[] imageFileExtensions = new string[] { ".jpg", ".png", ".bmp" };
 
         private bool fullscreen;
@@ -62,8 +65,10 @@ public partial class RLGLPlayer : Form
             censorbars = new List<Blackbar>();
             censoring = false;
             edging = false;
+            playEnding = false;
             rlglCensorData = null;
             rlglVideoQueue = null;
+            currentEndingPhase = null;
             fullscreen = false;
             preferencesDlg = new PreferencesDlg();
             volumeBar = new VolumeBar();
@@ -103,53 +108,39 @@ public partial class RLGLPlayer : Form
         //Switches between the different phases.
         private void RLGL_SwitchTimer_Tick(object sender, EventArgs e)
         {
-            if(rlglCurrentMedia.CurrentPhase == RLGLPhase.Green)
+            if (!playEnding)
             {
-                bool edge = false;
-                if(edging)
+                if (rlglCurrentMedia.CurrentPhase == RLGLPhase.Green)
                 {
-                    if(randomNumberGenerator.Next(1,101) <= rlglPreferences.EdgeChance)
+                    bool edge = false;
+                    if (edging)
                     {
-                        edge = true;
+                        if (randomNumberGenerator.Next(1, 101) <= rlglPreferences.EdgeChance)
+                        {
+                            edge = true;
+                        }
+                    }
+
+                    if (edge)
+                    {
+                        ShowPhase(RLGLPhase.Edge);
+                        rlglCurrentMedia.CurrentPhase = RLGLPhase.Edge;
+                        RLGL_SwitchTimer.Stop();
+                        RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinEdge, rlglPreferences.MaxEdge) * 1000;
+                        RLGL_SwitchTimer.Start();
+                    }
+                    else
+                    {
+                        ShowPhase(RLGLPhase.Red);
+                        rlglCurrentMedia.CurrentPhase = RLGLPhase.Red;
+                        RLGL_SwitchTimer.Stop();
+                        RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed) * 1000;
+                        RLGL_SwitchTimer.Start();
                     }
                 }
-
-                if (edge)
+                else if (rlglCurrentMedia.CurrentPhase == RLGLPhase.Red)
                 {
-                    ShowPhase(RLGLPhase.Edge, false);
-                    rlglCurrentMedia.CurrentPhase = RLGLPhase.Edge;
-                    RLGL_SwitchTimer.Stop();
-                    RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinEdge, rlglPreferences.MaxEdge) * 1000;
-                    RLGL_SwitchTimer.Start();
-                }
-                else
-                {
-                    ShowPhase(RLGLPhase.Red, false);
-                    rlglCurrentMedia.CurrentPhase = RLGLPhase.Red;
-                    RLGL_SwitchTimer.Stop();
-                    RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed) * 1000;
-                    RLGL_SwitchTimer.Start();
-                }
-            }
-            else if(rlglCurrentMedia.CurrentPhase == RLGLPhase.Red)
-            {
-                ShowPhase(RLGLPhase.Green, false);
-                rlglCurrentMedia.CurrentPhase = RLGLPhase.Green;
-                RLGL_SwitchTimer.Stop();
-                RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen) * 1000;
-                RLGL_SwitchTimer.Start();
-            }
-            else
-            {
-                bool green = false;
-                if(rlglPreferences.GreenAfterEdge)
-                {
-                    green = randomNumberGenerator.Next(0, 2) < 1;
-                }
-
-                if(green)
-                {
-                    ShowPhase(RLGLPhase.Green, false);
+                    ShowPhase(RLGLPhase.Green);
                     rlglCurrentMedia.CurrentPhase = RLGLPhase.Green;
                     RLGL_SwitchTimer.Stop();
                     RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen) * 1000;
@@ -157,11 +148,47 @@ public partial class RLGLPlayer : Form
                 }
                 else
                 {
-                    ShowPhase(RLGLPhase.Red, false);
-                    rlglCurrentMedia.CurrentPhase = RLGLPhase.Red;
+                    bool green = false;
+                    if (rlglPreferences.GreenAfterEdge)
+                    {
+                        green = randomNumberGenerator.Next(0, 2) < 1;
+                    }
+
+                    if (green)
+                    {
+                        ShowPhase(RLGLPhase.Green);
+                        rlglCurrentMedia.CurrentPhase = RLGLPhase.Green;
+                        RLGL_SwitchTimer.Stop();
+                        RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen) * 1000;
+                        RLGL_SwitchTimer.Start();
+                    }
+                    else
+                    {
+                        ShowPhase(RLGLPhase.Red);
+                        rlglCurrentMedia.CurrentPhase = RLGLPhase.Red;
+                        RLGL_SwitchTimer.Stop();
+                        RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed) * 1000;
+                        RLGL_SwitchTimer.Start();
+                    }
+                }
+            }
+            else
+            {
+                RLGL_CountdownTimer.Stop();
+                currentEndingPhase = rlglCurrentMedia.Ending.GetNextPhase();
+                if (currentEndingPhase != null)
+                {
+                    ShowPhase(currentEndingPhase);
                     RLGL_SwitchTimer.Stop();
-                    RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed) * 1000;
+                    RLGL_SwitchTimer.Interval = currentEndingPhase.Duration * 1000;
                     RLGL_SwitchTimer.Start();
+
+                    if (currentEndingPhase.Phase == RLGLPhase.Countdown)
+                    {
+                        currentEndingCountdown = currentEndingPhase.CountdownBegin;
+                        RLGL_CountdownTimer.Interval = currentEndingPhase.CountdownStep * 1000;
+                        RLGL_CountdownTimer.Start();
+                    }
                 }
             }
         }
@@ -198,52 +225,48 @@ public partial class RLGLPlayer : Form
             this.BeginInvoke(new Action(() => SetVideoEndTimer()));
         }
 
-        //Near the end of the video stop all timer and show the last phase.
+        //Near the end of the video stop random mode and show the ending phases.
         private void RLGL_VideoEndTimer_Tick(object sender, EventArgs e)
         {
+            Console.Out.WriteLine("Video end phase started!");
+            Console.Out.WriteLine("Videos remaining: " + rlglVideoQueue.VideosRemaining());
             RLGL_SwitchTimer.Stop();
             RLGL_VideoEndTimer.Stop();
-            RLGL_Censor.Stop();
-
+            
             if (rlglVideoQueue.VideosRemaining() == 0)
             {
-                switch (rlglPreferences.Ending)
+                playEnding = true;
+                currentEndingPhase = rlglCurrentMedia.Ending.GetNextPhase();
+                if (currentEndingPhase != null)
                 {
-                    case RLGLEnding.AlwaysGreen:
-                        ShowPhase(RLGLPhase.Green, true);
-                        break;
+                    ShowPhase(currentEndingPhase);
+                    RLGL_SwitchTimer.Interval = currentEndingPhase.Duration * 1000;
+                    RLGL_SwitchTimer.Start();
 
-                    case RLGLEnding.AlwaysRed:
-                        ShowPhase(RLGLPhase.Red, true);
-                        break;
-
-                    case RLGLEnding.Random:
-                        if (rlglCurrentMedia.Ending == RLGLSpecificEnding.Cum)
-                        {
-                            ShowPhase(RLGLPhase.Green, true);
-                        }
-                        else if(rlglCurrentMedia.Ending == RLGLSpecificEnding.Denied)
-                        {
-                            ShowPhase(RLGLPhase.Red, true);
-                        }
-                        break;
+                    if (currentEndingPhase.Phase == RLGLPhase.Countdown)
+                    {
+                        currentEndingCountdown = currentEndingPhase.CountdownBegin;
+                        RLGL_CountdownTimer.Interval = currentEndingPhase.CountdownStep * 1000;
+                        RLGL_CountdownTimer.Start();
+                    }
                 }
             }
             else
             {
-                ShowPhase(RLGLPhase.Red, true);
+                ShowPhase(RLGLPhase.Red);
             }
         }
 
         //Calculates the duration of the video and sets the timer accordingly.
         private void SetVideoEndTimer()
         {
+            Console.Out.WriteLine(VLC_Control.GetCurrentMedia().Duration.TotalMilliseconds);
             RLGL_VideoEndTimer.Interval = (int)(VLC_Control.GetCurrentMedia().Duration - (rlglCurrentMedia.End + TimeSpan.FromSeconds(2))).TotalMilliseconds;
             RLGL_VideoEndTimer.Start();
         }
 
         //Show the given phase to the user.
-        private void ShowPhase(RLGLPhase phase, bool lastIteration)
+        private void ShowPhase(RLGLPhase phase)
         {
             rlglCurrentMedia.ResetCensorDimension();
             switch(phase)
@@ -252,14 +275,8 @@ public partial class RLGLPlayer : Form
                     RLGL_Layout.BackColor = rlglPreferences.GreenLightColor;
                     volumeBar.SetBackgroundColor(rlglPreferences.GreenLightColor);
                     L_Text.BackColor = rlglPreferences.GreenLightColor;
-                    if (lastIteration)
-                    {
-                        L_Text.Text = "Cum!";
-                    }
-                    else
-                    {
-                        L_Text.Text = "Stroke";                        
-                    }
+                    L_Text.Text = "Stroke";                        
+
 
                     if(rlglPreferences.Metronome && randomNumberGenerator.Next(1,101) <= rlglPreferences.MetronomeChance)
                     {
@@ -285,15 +302,8 @@ public partial class RLGLPlayer : Form
                     volumeBar.SetBackgroundColor(rlglPreferences.RedLightColor);
                     L_Text.BackColor = rlglPreferences.RedLightColor;
                     StopMetronome();
-                    if (lastIteration && rlglVideoQueue.VideosRemaining() == 0)
-                    {
-                        L_Text.Text = "Hands off! You're denied!";
-                    }
-                    else
-                    {
-                        L_Text.Text = "Hands off";
-                    }
-
+                    L_Text.Text = "Hands off";
+                    
                     if(rlglPreferences.Censoring && 
                         !rlglPreferences.CensorOnlyGreen && 
                         randomNumberGenerator.Next(1,101) <= rlglPreferences.CensorChance)
@@ -329,6 +339,129 @@ public partial class RLGLPlayer : Form
             }            
         }
 
+        //Show the given ending phase to the user.
+        private void ShowPhase(RLGLEndingPhase phase)
+        {
+            rlglCurrentMedia.ResetCensorDimension();
+            switch (phase.Phase)
+            {
+                case RLGLPhase.Green:
+                    RLGL_Layout.BackColor = rlglPreferences.GreenLightColor;
+                    volumeBar.SetBackgroundColor(rlglPreferences.GreenLightColor);
+                    L_Text.BackColor = rlglPreferences.GreenLightColor;
+                    L_Text.Text = phase.Message;                    
+
+                    if (rlglPreferences.Metronome && randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeChance)
+                    {
+                        SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinBpm, rlglPreferences.MaxBpm + 1));
+                    }
+
+                    if (rlglPreferences.Censoring)
+                    {
+                        if (randomNumberGenerator.Next(1, 101) <= rlglPreferences.CensorChance)
+                        {
+                            ShowCensoring(true);
+                        }
+                    }
+                    else
+                    {
+                        HideCensoring();
+                    }
+                    break;
+
+                case RLGLPhase.Red:
+                    RLGL_Layout.BackColor = rlglPreferences.RedLightColor;
+                    volumeBar.SetBackgroundColor(rlglPreferences.RedLightColor);
+                    L_Text.BackColor = rlglPreferences.RedLightColor;
+                    StopMetronome();
+                    L_Text.Text = phase.Message;
+
+                    if (rlglPreferences.Censoring &&
+                        !rlglPreferences.CensorOnlyGreen &&
+                        randomNumberGenerator.Next(1, 101) <= rlglPreferences.CensorChance)
+                    {
+                        ShowCensoring(true);
+                    }
+                    else
+                    {
+                        HideCensoring();
+                    }
+
+                    break;
+
+                case RLGLPhase.Edge:
+                    RLGL_Layout.BackColor = rlglPreferences.EdgeColor;
+                    volumeBar.SetBackgroundColor(rlglPreferences.EdgeColor);
+                    L_Text.BackColor = rlglPreferences.EdgeColor;
+                    StopMetronome();
+                    L_Text.Text = phase.Message;
+
+                    if (rlglPreferences.Censoring)
+                    {
+                        if (randomNumberGenerator.Next(1, 101) <= rlglPreferences.CensorChance)
+                        {
+                            ShowCensoring(true);
+                        }
+                    }
+                    else
+                    {
+                        HideCensoring();
+                    }
+                    break;
+
+                case RLGLPhase.Ruin:
+                    RLGL_Layout.BackColor = rlglPreferences.RuinedOrgasmColor;
+                    volumeBar.SetBackgroundColor(rlglPreferences.RuinedOrgasmColor);
+                    L_Text.BackColor = rlglPreferences.RuinedOrgasmColor;
+                    StopMetronome();
+                    L_Text.Text = phase.Message;
+
+                    if (rlglPreferences.Censoring)
+                    {
+                        if (randomNumberGenerator.Next(1, 101) <= rlglPreferences.CensorChance)
+                        {
+                            ShowCensoring(true);
+                        }
+                    }
+                    else
+                    {
+                        HideCensoring();
+                    }
+                    break;
+
+                case RLGLPhase.Countdown:
+                    RLGL_Layout.BackColor = rlglPreferences.GreenLightColor;
+                    volumeBar.SetBackgroundColor(rlglPreferences.GreenLightColor);
+                    L_Text.BackColor = rlglPreferences.GreenLightColor;
+                    if (phase.Message.Length > 0)
+                    {
+                        L_Text.Text = phase.Message + ": " + phase.CountdownBegin;
+                    }
+                    else
+                    {
+                        L_Text.Text = phase.CountdownBegin.ToString();
+                    }
+
+                    if (rlglPreferences.Metronome && randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeChance)
+                    {
+                        SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinBpm, rlglPreferences.MaxBpm + 1));
+                    }
+
+                    if (rlglPreferences.Censoring)
+                    {
+                        if (randomNumberGenerator.Next(1, 101) <= rlglPreferences.CensorChance)
+                        {
+                            ShowCensoring(true);
+                        }
+                    }
+                    else
+                    {
+                        HideCensoring();
+                    }
+                    break;
+            }
+        }
+
         // Play the next video in the currently selected queue
         private void PlayNextVideo(bool sessionStart)
         {
@@ -337,33 +470,30 @@ public partial class RLGLPlayer : Form
             VLC_Control.SetMedia(fs);
 
             TimeSpan lastDuration = TimeSpan.FromSeconds(0);
-            RLGLSpecificEnding ending = RLGLSpecificEnding.Denied;
+            RLGLEnding ending = null;
 
             if (rlglVideoQueue.VideosRemaining() == 0)
             {
-                switch (rlglPreferences.Ending)
+                int selector = randomNumberGenerator.Next(1, 100);
+                int currentOffset = 0;
+                for(int i=0;i<rlglPreferences.Ending.Count;i++)
                 {
-                    case RLGLEnding.AlwaysGreen:
-                        lastDuration = TimeSpan.FromSeconds(randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen));
-                        ending = RLGLSpecificEnding.Cum;
-                        break;
-
-                    case RLGLEnding.AlwaysRed:
-                        lastDuration = TimeSpan.FromSeconds(randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed));
-                        break;
-
-                    case RLGLEnding.Random:
-                        ending = (RLGLSpecificEnding)randomNumberGenerator.Next(0, 2);
-                        if (ending == RLGLSpecificEnding.Cum)
+                    if (rlglPreferences.Ending[i].Enabled)
+                    {
+                        if (selector <= rlglPreferences.Ending[i].Chance + currentOffset)
                         {
-                            lastDuration = TimeSpan.FromSeconds(randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen));
+                            ending = rlglPreferences.Ending[i].Ending;
+                            break;
                         }
-                        else if(ending == RLGLSpecificEnding.Denied)
+                        else
                         {
-                            lastDuration = TimeSpan.FromSeconds(randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed));
+                            currentOffset += rlglPreferences.Ending[i].Chance;
                         }
-                        break;
+                    }
                 }
+
+                lastDuration = TimeSpan.FromSeconds(ending.Duration);
+                Console.Out.WriteLine("Decided for ending: " + ending.EndingName);
             }
             else
             {
@@ -407,7 +537,7 @@ public partial class RLGLPlayer : Form
                 censorbars.Add(new Blackbar());
             }
 
-            ShowPhase(rlglCurrentMedia.CurrentPhase, false);
+            ShowPhase(rlglCurrentMedia.CurrentPhase);
 
             VLC_Control.Play();
 
@@ -435,8 +565,14 @@ public partial class RLGLPlayer : Form
             StopMetronome();
             RLGL_SwitchTimer.Stop();
             RLGL_VideoEndTimer.Stop();
+            RLGL_Censor.Stop();
+            RLGL_CountdownTimer.Stop();
+            playEnding = false;
+            currentEndingCountdown = -1;
+            currentEndingPhase = null;
+            rlglCurrentMedia.Ending.ResetPhasePointer();
 
-            if(rlglVideoQueue.VideosRemaining() > 0)
+            if (rlglVideoQueue.VideosRemaining() > 0)
             {
                 PlayNextVideo(false);
             }
@@ -673,12 +809,6 @@ public partial class RLGLPlayer : Form
         }
 
         //Change the volume of the currently played media.
-        private void TB_Volume_ValueChanged(object sender, EventArgs e)
-        {
-            SetVolume(TB_Volume.Value);
-        }
-
-        //Change the volume of the currently played media.
         public void SetVolume(int volume)
         {
             VLC_Control.Audio.Volume = volume;
@@ -767,7 +897,7 @@ public partial class RLGLPlayer : Form
             RLGL_Layout.RowStyles[0].Height = (float)rlglPreferences.TopBorder/100.0f * 50;
             RLGL_Layout.RowStyles[2].Height = (float)rlglPreferences.BottomBorder/100.0f * 50;
             RLGL_Layout.ColumnStyles[0].Width = (float)rlglPreferences.LeftBorder/100.0f * 50;
-            RLGL_Layout.ColumnStyles[3].Width = (float)rlglPreferences.RightBorder/100.0f * 50;
+            RLGL_Layout.ColumnStyles[2].Width = (float)rlglPreferences.RightBorder/100.0f * 50;
         }
 
         //Enable edging phases.
@@ -937,6 +1067,25 @@ public partial class RLGLPlayer : Form
             {
                 volumeBar.Hide();
                 RLGL_HideVolumeBar.Stop();
+            }
+        }
+
+        private void RLGL_CountdownTimer_Tick(object sender, EventArgs e)
+        {
+            currentEndingCountdown--;
+
+            if (currentEndingPhase.Message.Length > 0)
+            {
+                L_Text.Text = currentEndingPhase.Message + ": " + currentEndingCountdown.ToString();
+            }
+            else
+            {
+                L_Text.Text = currentEndingCountdown.ToString();
+            }
+
+            if(currentEndingCountdown <= currentEndingPhase.CountdownEnd)
+            {
+                RLGL_CountdownTimer.Stop();
             }
         }
     }
