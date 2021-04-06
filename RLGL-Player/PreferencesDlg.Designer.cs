@@ -684,6 +684,7 @@
             this.TAB_Preferences.SelectedIndex = 0;
             this.TAB_Preferences.Size = new System.Drawing.Size(591, 419);
             this.TAB_Preferences.TabIndex = 4;
+            this.TAB_Preferences.Selected += new System.Windows.Forms.TabControlEventHandler(this.TAB_Preferences_Selected);
             // 
             // TAB_GeneralSettings
             // 

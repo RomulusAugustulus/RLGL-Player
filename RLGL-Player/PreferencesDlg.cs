@@ -498,5 +498,10 @@ namespace RLGL_Player
                 this.DialogResult = DialogResult.None;
             }
         }
+
+        private void TAB_Preferences_Selected(object sender, TabControlEventArgs e)
+        {
+            ShowEndings();
+        }
     }
 }
