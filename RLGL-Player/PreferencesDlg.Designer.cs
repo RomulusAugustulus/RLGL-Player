@@ -770,6 +770,7 @@
             0,
             0,
             0});
+            this.NUD_MaxMetronome.ValueChanged += new System.EventHandler(this.NUD_MaxMetronome_ValueChanged);
             // 
             // L_MaxMetronome
             // 
@@ -801,6 +802,7 @@
             0,
             0,
             0});
+            this.NUD_MinMetronome.ValueChanged += new System.EventHandler(this.NUD_MinMetronome_ValueChanged);
             // 
             // L_MinMetronome
             // 
