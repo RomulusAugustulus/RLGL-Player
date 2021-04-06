@@ -124,6 +124,10 @@
             this.GB_CensorSettings.SuspendLayout();
             this.SuspendLayout();
             // 
+            // ColorPicker
+            // 
+            this.ColorPicker.AnyColor = true;
+            // 
             // GB_RLGLSettings
             // 
             this.GB_RLGLSettings.Controls.Add(this.ETB_EdgeChance);

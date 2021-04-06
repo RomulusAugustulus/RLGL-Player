@@ -123,16 +123,19 @@ namespace RLGL_Player
             {
                 LB_EndingParts.Items.Insert(0, phase.Name);
                 phases.Insert(0, phase);
+                LB_EndingParts.SelectedIndex = 0;
             }
             else if (selIndex + change >= LB_EndingParts.Items.Count)
             {
                 LB_EndingParts.Items.Add(phase.Name);
                 phases.Add(phase);
+                LB_EndingParts.SelectedIndex = LB_EndingParts.Items.Count-1;
             }
             else
             {
                 LB_EndingParts.Items.Insert(selIndex + change, phase.Name);
                 phases.Insert(selIndex + change, phase);
+                LB_EndingParts.SelectedIndex = selIndex + change;
             }
         }
 

@@ -153,16 +153,19 @@ namespace RLGL_Player
             {
                 LB_Queue.Items.Insert(0, elem);
                 videos.Insert(0, vidElem);
+                LB_Queue.SelectedIndex = 0;
             }
             else if(selIndex + change >= LB_Queue.Items.Count)
             {
                 LB_Queue.Items.Add(elem);
                 videos.Add(vidElem);
+                LB_Queue.SelectedIndex = LB_Queue.Items.Count - 1;
             }
             else
             {
                 LB_Queue.Items.Insert(selIndex + change, elem);
                 videos.Insert(selIndex + change, vidElem);
+                LB_Queue.SelectedIndex = selIndex + change;
             }
         }
     }
