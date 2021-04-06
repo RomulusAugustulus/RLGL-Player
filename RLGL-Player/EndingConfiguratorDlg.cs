@@ -193,7 +193,7 @@ namespace RLGL_Player
                 NUD_CountdownEnd.Enabled = true;
                 NUD_CountdownStepDuration.Enabled = true;
 
-                NUD_PhaseDuration.ReadOnly = true;
+                NUD_PhaseDuration.Enabled = false;
                 CalculateCountdownTime();
             }
             else
@@ -202,7 +202,7 @@ namespace RLGL_Player
                 NUD_CountdownEnd.Enabled = false;
                 NUD_CountdownStepDuration.Enabled = false;
 
-                NUD_PhaseDuration.ReadOnly = false;
+                NUD_PhaseDuration.Enabled = true;
             }
         }
 
