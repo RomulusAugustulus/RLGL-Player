@@ -204,6 +204,7 @@ public partial class RLGLPlayer : Form
             L_TimePassed.Text = "";
 
             ResizeAndPositionVolumeBar();
+            volumeBar.Show(this);
         }
 
         //Save the preferences to the disc.
@@ -582,6 +583,12 @@ public partial class RLGLPlayer : Form
                 StopEdging();
                 sessionToolStripMenuItem.Visible = false;
                 rlglCurrentMedia.Ending.ResetPhasePointer();
+                RLGL_HideVolumeBar.Stop();
+                if(!volumeBar.Visible)
+                {
+                    volumeBar.Show(this);
+                    this.Focus();
+                }
                 //RLGL_Timer.Stop();
             }
         }
@@ -993,6 +1000,12 @@ public partial class RLGLPlayer : Form
                 }
 
                 PlayNextVideo(true);
+
+                if (volumeBar.Visible)
+                {
+                    volumeBar.Hide();
+                }
+                 
                 //RLGL_Timer.Start();
             }
         }
