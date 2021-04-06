@@ -302,14 +302,14 @@ namespace RLGL_Player
         {
             if(File.Exists(fileName))
             {
-                Ending.Clear();
-
                 StreamReader prefFile = new StreamReader(fileName, Encoding.UTF8, false);
 
                 string version = prefFile.ReadLine();
                 
                 if (version.Equals(preferencesFileVersion))
                 {
+                    Ending.Clear();
+
                     maxGreen = int.Parse(prefFile.ReadLine());
                     maxRed = int.Parse(prefFile.ReadLine());
                     minGreen = int.Parse(prefFile.ReadLine());
@@ -616,6 +616,38 @@ namespace RLGL_Player
                 }
 
                 metronomeChance *= 10;
+            }
+            else if(version.Equals("v.4"))
+            {
+                maxGreen = int.Parse(prefFile.ReadLine());
+                maxRed = int.Parse(prefFile.ReadLine());
+                minGreen = int.Parse(prefFile.ReadLine());
+                minRed = int.Parse(prefFile.ReadLine());
+                /*ending = (RLGLEnding)*/int.Parse(prefFile.ReadLine());
+                metronome = bool.Parse(prefFile.ReadLine());
+                minBpm = int.Parse(prefFile.ReadLine());
+                maxBpm = int.Parse(prefFile.ReadLine());
+                metronomeChance = int.Parse(prefFile.ReadLine());
+                greenLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                redLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                censoring = bool.Parse(prefFile.ReadLine());
+                censorType = (RLGLCensorType)int.Parse(prefFile.ReadLine());
+                censorSize = (RLGLCensorSize)int.Parse(prefFile.ReadLine());
+                censorChance = int.Parse(prefFile.ReadLine());
+                censorOnlyGreen = bool.Parse(prefFile.ReadLine());
+                censorColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                censorPath = prefFile.ReadLine();
+                leftBorder = int.Parse(prefFile.ReadLine());
+                rightBorder = int.Parse(prefFile.ReadLine());
+                topBorder = int.Parse(prefFile.ReadLine());
+                bottomBorder = int.Parse(prefFile.ReadLine());
+                edging = bool.Parse(prefFile.ReadLine());
+                edgingWarmup = int.Parse(prefFile.ReadLine());
+                minEdge = int.Parse(prefFile.ReadLine());
+                maxEdge = int.Parse(prefFile.ReadLine());
+                edgeChance = int.Parse(prefFile.ReadLine());
+                greenAfterEdge = bool.Parse(prefFile.ReadLine());
+                edgeColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
             }
             else
             {
