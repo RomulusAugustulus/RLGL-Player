@@ -177,7 +177,7 @@
             // 
             // NUD_MaxEdge
             // 
-            this.NUD_MaxEdge.Location = new System.Drawing.Point(198, 228);
+            this.NUD_MaxEdge.Location = new System.Drawing.Point(207, 228);
             this.NUD_MaxEdge.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -203,13 +203,13 @@
             this.L_MaxEdge.AutoSize = true;
             this.L_MaxEdge.Location = new System.Drawing.Point(28, 230);
             this.L_MaxEdge.Name = "L_MaxEdge";
-            this.L_MaxEdge.Size = new System.Drawing.Size(164, 13);
+            this.L_MaxEdge.Size = new System.Drawing.Size(170, 13);
             this.L_MaxEdge.TabIndex = 33;
-            this.L_MaxEdge.Text = "Maximal duration of edge light (s):";
+            this.L_MaxEdge.Text = "Maximum duration of edge light (s):";
             // 
             // NUD_MinEdge
             // 
-            this.NUD_MinEdge.Location = new System.Drawing.Point(198, 200);
+            this.NUD_MinEdge.Location = new System.Drawing.Point(207, 200);
             this.NUD_MinEdge.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -233,15 +233,15 @@
             // L_MinEdge
             // 
             this.L_MinEdge.AutoSize = true;
-            this.L_MinEdge.Location = new System.Drawing.Point(28, 202);
+            this.L_MinEdge.Location = new System.Drawing.Point(28, 204);
             this.L_MinEdge.Name = "L_MinEdge";
-            this.L_MinEdge.Size = new System.Drawing.Size(161, 13);
+            this.L_MinEdge.Size = new System.Drawing.Size(167, 13);
             this.L_MinEdge.TabIndex = 31;
-            this.L_MinEdge.Text = "Minimal duration of edge light: (s)";
+            this.L_MinEdge.Text = "Minimum duration of edge light: (s)";
             // 
             // NUD_EdgeWarmup
             // 
-            this.NUD_EdgeWarmup.Location = new System.Drawing.Point(198, 172);
+            this.NUD_EdgeWarmup.Location = new System.Drawing.Point(207, 172);
             this.NUD_EdgeWarmup.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -278,7 +278,7 @@
             // 
             // NUD_MaxRed
             // 
-            this.NUD_MaxRed.Location = new System.Drawing.Point(176, 115);
+            this.NUD_MaxRed.Location = new System.Drawing.Point(185, 115);
             this.NUD_MaxRed.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -304,13 +304,13 @@
             this.L_MaxRed.AutoSize = true;
             this.L_MaxRed.Location = new System.Drawing.Point(6, 117);
             this.L_MaxRed.Name = "L_MaxRed";
-            this.L_MaxRed.Size = new System.Drawing.Size(155, 13);
+            this.L_MaxRed.Size = new System.Drawing.Size(161, 13);
             this.L_MaxRed.TabIndex = 6;
-            this.L_MaxRed.Text = "Maximal duration of red light (s):";
+            this.L_MaxRed.Text = "Maximum duration of red light (s):";
             // 
             // NUD_MinRed
             // 
-            this.NUD_MinRed.Location = new System.Drawing.Point(176, 87);
+            this.NUD_MinRed.Location = new System.Drawing.Point(185, 87);
             this.NUD_MinRed.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -336,13 +336,13 @@
             this.L_MinRed.AutoSize = true;
             this.L_MinRed.Location = new System.Drawing.Point(6, 89);
             this.L_MinRed.Name = "L_MinRed";
-            this.L_MinRed.Size = new System.Drawing.Size(152, 13);
+            this.L_MinRed.Size = new System.Drawing.Size(158, 13);
             this.L_MinRed.TabIndex = 4;
-            this.L_MinRed.Text = "Minimal duration of red light (s):";
+            this.L_MinRed.Text = "Minimum duration of red light (s):";
             // 
             // NUD_MaxGreen
             // 
-            this.NUD_MaxGreen.Location = new System.Drawing.Point(176, 56);
+            this.NUD_MaxGreen.Location = new System.Drawing.Point(185, 56);
             this.NUD_MaxGreen.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -368,13 +368,13 @@
             this.L_MaxGreen.AutoSize = true;
             this.L_MaxGreen.Location = new System.Drawing.Point(6, 58);
             this.L_MaxGreen.Name = "L_MaxGreen";
-            this.L_MaxGreen.Size = new System.Drawing.Size(167, 13);
+            this.L_MaxGreen.Size = new System.Drawing.Size(173, 13);
             this.L_MaxGreen.TabIndex = 2;
-            this.L_MaxGreen.Text = "Maximal duration of green light (s):";
+            this.L_MaxGreen.Text = "Maximum duration of green light (s):";
             // 
             // NUD_MinGreen
             // 
-            this.NUD_MinGreen.Location = new System.Drawing.Point(176, 28);
+            this.NUD_MinGreen.Location = new System.Drawing.Point(185, 28);
             this.NUD_MinGreen.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -400,9 +400,9 @@
             this.L_GreenMin.AutoSize = true;
             this.L_GreenMin.Location = new System.Drawing.Point(6, 30);
             this.L_GreenMin.Name = "L_GreenMin";
-            this.L_GreenMin.Size = new System.Drawing.Size(164, 13);
+            this.L_GreenMin.Size = new System.Drawing.Size(170, 13);
             this.L_GreenMin.TabIndex = 0;
-            this.L_GreenMin.Text = "Minimal duration of green light (s):";
+            this.L_GreenMin.Text = "Minimum duration of green light (s):";
             // 
             // GB_ProgramSettings
             // 
@@ -776,9 +776,9 @@
             this.L_MaxMetronome.AutoSize = true;
             this.L_MaxMetronome.Location = new System.Drawing.Point(290, 50);
             this.L_MaxMetronome.Name = "L_MaxMetronome";
-            this.L_MaxMetronome.Size = new System.Drawing.Size(71, 13);
+            this.L_MaxMetronome.Size = new System.Drawing.Size(77, 13);
             this.L_MaxMetronome.TabIndex = 15;
-            this.L_MaxMetronome.Text = "Maximal bpm:";
+            this.L_MaxMetronome.Text = "Maximum bpm:";
             // 
             // NUD_MinMetronome
             // 
@@ -807,9 +807,9 @@
             this.L_MinMetronome.AutoSize = true;
             this.L_MinMetronome.Location = new System.Drawing.Point(24, 50);
             this.L_MinMetronome.Name = "L_MinMetronome";
-            this.L_MinMetronome.Size = new System.Drawing.Size(68, 13);
+            this.L_MinMetronome.Size = new System.Drawing.Size(74, 13);
             this.L_MinMetronome.TabIndex = 13;
-            this.L_MinMetronome.Text = "Minimal bpm:";
+            this.L_MinMetronome.Text = "Minimum bpm:";
             // 
             // CB_Metronome
             // 
