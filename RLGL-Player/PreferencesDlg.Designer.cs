@@ -162,7 +162,7 @@
             this.ETB_EdgeChance.TabIndex = 38;
             this.ETB_EdgeChance.Text = "Chance (%):";
             this.ETB_EdgeChance.TickFrequency = 10;
-            this.ETB_EdgeChance.ToolTip = "Define the chance of getting an edge light after a green light.";
+            this.ETB_EdgeChance.ToolTip = "Defines the chance of getting an edge light after a green light.";
             this.ETB_EdgeChance.Value = 50;
             // 
             // CB_AllowGreenLight
@@ -746,7 +746,7 @@
             this.ETB_MetronomeChance.TabIndex = 39;
             this.ETB_MetronomeChance.Text = "Chance (%):";
             this.ETB_MetronomeChance.TickFrequency = 10;
-            this.ETB_MetronomeChance.ToolTip = "Define the chance of stroking to a metronome on a green light.";
+            this.ETB_MetronomeChance.ToolTip = "Defines the chance of stroking to a metronome on a green light.";
             this.ETB_MetronomeChance.Value = 50;
             // 
             // NUD_MaxMetronome
@@ -903,7 +903,7 @@
             this.ETB_CensorChance.TabIndex = 30;
             this.ETB_CensorChance.Text = "Chance (%):";
             this.ETB_CensorChance.TickFrequency = 10;
-            this.ETB_CensorChance.ToolTip = "Define the chance of censorbars showing on the next phase.";
+            this.ETB_CensorChance.ToolTip = "Defines the chance of censorbars showing on the next phase.";
             this.ETB_CensorChance.Value = 50;
             // 
             // CB_CensorOnlyGreen

@@ -114,9 +114,12 @@ namespace RLGL_Player
             // ExtendedTrackBarTooltip
             // 
             this.ExtendedTrackBarTooltip.AutoPopDelay = 10000;
+            this.ExtendedTrackBarTooltip.BackColor = System.Drawing.SystemColors.HighlightText;
             this.ExtendedTrackBarTooltip.InitialDelay = 500;
+            this.ExtendedTrackBarTooltip.OwnerDraw = true;
             this.ExtendedTrackBarTooltip.ReshowDelay = 100;
             this.ExtendedTrackBarTooltip.ToolTipTitle = "Help";
+            this.ExtendedTrackBarTooltip.Draw += new System.Windows.Forms.DrawToolTipEventHandler(this.ExtendedTrackBarTooltip_Draw);
             // 
             // ExtendedTrackBar
             // 

@@ -17,6 +17,7 @@
  */
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace RLGL_Player
@@ -120,6 +121,13 @@ namespace RLGL_Player
         {
             value = (int)NUD_ShowValue.Value;
             TB_ExtendedTrackBar.Value = TB_ExtendedTrackBar.Maximum + TB_ExtendedTrackBar.Minimum - value;
+        }
+
+        private void ExtendedTrackBarTooltip_Draw(object sender, DrawToolTipEventArgs e)
+        {
+            e.DrawBackground();
+            e.DrawBorder();
+            e.DrawText(TextFormatFlags.Default | TextFormatFlags.VerticalCenter);
         }
     }
 }
