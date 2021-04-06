@@ -97,7 +97,6 @@
             this.COMB_CensorType = new System.Windows.Forms.ComboBox();
             this.COMB_CensorSize = new System.Windows.Forms.ComboBox();
             this.L_CensorType = new System.Windows.Forms.Label();
-            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.B_Apply = new System.Windows.Forms.Button();
             this.GB_RLGLSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxEdge)).BeginInit();
@@ -123,7 +122,6 @@
             this.GB_EndingSettings.SuspendLayout();
             this.TAB_Censor.SuspendLayout();
             this.GB_CensorSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
             // 
             // GB_RLGLSettings
@@ -974,11 +972,6 @@
             this.L_CensorType.TabIndex = 26;
             this.L_CensorType.Text = "Censor type:";
             // 
-            // fileSystemWatcher1
-            // 
-            this.fileSystemWatcher1.EnableRaisingEvents = true;
-            this.fileSystemWatcher1.SynchronizingObject = this;
-            // 
             // B_Apply
             // 
             this.B_Apply.Location = new System.Drawing.Point(413, 438);
@@ -1037,7 +1030,6 @@
             this.TAB_Censor.ResumeLayout(false);
             this.GB_CensorSettings.ResumeLayout(false);
             this.GB_CensorSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1107,7 +1099,6 @@
         public ExtendedTrackBar ETB_MetronomeChance;
         public ExtendedTrackBar ETB_CensorChance;
         public System.Windows.Forms.CheckBox CB_CensorOnlyGreen;
-        private System.IO.FileSystemWatcher fileSystemWatcher1;
         private System.Windows.Forms.Button B_Apply;
         private System.Windows.Forms.TabPage TAB_Ending;
         private System.Windows.Forms.GroupBox GB_EndingSettings;

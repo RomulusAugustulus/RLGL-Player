@@ -101,6 +101,7 @@ namespace RLGL_Player
         //Get the color from the color dialog.
         private void P_GreenLightColor_Click(object sender, EventArgs e)
         {
+            ColorPicker.Color = P_GreenLightColor.BackColor;
             if(ColorPicker.ShowDialog() == DialogResult.OK)
             {
                 P_GreenLightColor.BackColor = ColorPicker.Color;
@@ -110,6 +111,7 @@ namespace RLGL_Player
         //Get the color from the color dialog.
         private void P_RedLightColor_Click(object sender, EventArgs e)
         {
+            ColorPicker.Color = P_RedLightColor.BackColor;
             if (ColorPicker.ShowDialog() == DialogResult.OK)
             {
                 P_RedLightColor.BackColor = ColorPicker.Color;
@@ -148,6 +150,7 @@ namespace RLGL_Player
         //Get the color from the color dialog.
         private void P_CensorColor_Click(object sender, EventArgs e)
         {
+            ColorPicker.Color = P_CensorColor.BackColor;
             if (ColorPicker.ShowDialog() == DialogResult.OK)
             {
                 P_CensorColor.BackColor = ColorPicker.Color;
@@ -177,6 +180,7 @@ namespace RLGL_Player
         //Get the color from the color dialog.
         private void P_EdgeLightColor_Click(object sender, EventArgs e)
         {
+            ColorPicker.Color = P_EdgeLightColor.BackColor;
             if (ColorPicker.ShowDialog() == DialogResult.OK)
             {
                 P_EdgeLightColor.BackColor = ColorPicker.Color;
@@ -479,6 +483,7 @@ namespace RLGL_Player
 
         private void P_RuinedOrgasmColor_Click(object sender, EventArgs e)
         {
+            ColorPicker.Color = P_RuinedOrgasmColor.BackColor;
             if (ColorPicker.ShowDialog() == DialogResult.OK)
             {
                 P_RuinedOrgasmColor.BackColor = ColorPicker.Color;
