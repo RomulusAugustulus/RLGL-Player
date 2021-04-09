@@ -30,7 +30,7 @@ namespace RLGL_Player
     {
         //Holds all the known endings that a user has created.
         public List<RLGLInternEnding> EndingSettings { get; set; }
-
+        public List<int> CustomColorDlgColors { get; set; }
 
         public PreferencesDlg()
         {            
@@ -40,6 +40,11 @@ namespace RLGL_Player
             }
 
             InitializeComponent();
+        }
+
+        public void SetCustomColorDlgColors()
+        {
+            ColorPicker.CustomColors = CustomColorDlgColors.ToArray();
         }
 
         //Creates a control for each found ending.
@@ -103,10 +108,12 @@ namespace RLGL_Player
         private void P_GreenLightColor_Click(object sender, EventArgs e)
         {
             ColorPicker.Color = P_GreenLightColor.BackColor;
-            if(ColorPicker.ShowDialog() == DialogResult.OK)
+            if (ColorPicker.ShowDialog() == DialogResult.OK)
             {
                 P_GreenLightColor.BackColor = ColorPicker.Color;
             }
+
+            CustomColorDlgColors = new List<int>(ColorPicker.CustomColors);
         }
 
         //Get the color from the color dialog.
@@ -117,6 +124,8 @@ namespace RLGL_Player
             {
                 P_RedLightColor.BackColor = ColorPicker.Color;
             }
+
+            CustomColorDlgColors = new List<int>(ColorPicker.CustomColors);
         }
 
         //Enable/Disable settings for metronome usage
@@ -156,6 +165,8 @@ namespace RLGL_Player
             {
                 P_CensorColor.BackColor = ColorPicker.Color;
             }
+
+            CustomColorDlgColors = new List<int>(ColorPicker.CustomColors);
         }
 
         //Get the path from the folderbrowserdialog.
@@ -186,6 +197,8 @@ namespace RLGL_Player
             {
                 P_EdgeLightColor.BackColor = ColorPicker.Color;
             }
+
+            CustomColorDlgColors = new List<int>(ColorPicker.CustomColors);
         }
 
         //Enable/Disable settings for edge phases
@@ -489,6 +502,8 @@ namespace RLGL_Player
             {
                 P_RuinedOrgasmColor.BackColor = ColorPicker.Color;
             }
+
+            CustomColorDlgColors = new List<int>(ColorPicker.CustomColors);
         }
 
         private void B_SaveExit_Click(object sender, EventArgs e)

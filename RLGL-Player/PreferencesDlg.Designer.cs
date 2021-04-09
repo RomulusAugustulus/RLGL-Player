@@ -48,6 +48,12 @@
             this.NUD_MinGreen = new System.Windows.Forms.NumericUpDown();
             this.L_GreenMin = new System.Windows.Forms.Label();
             this.GB_ProgramSettings = new System.Windows.Forms.GroupBox();
+            this.B_ResetAll = new System.Windows.Forms.Button();
+            this.B_ResetCensor = new System.Windows.Forms.Button();
+            this.B_ResetRuin = new System.Windows.Forms.Button();
+            this.B_ResetEdge = new System.Windows.Forms.Button();
+            this.B_ResetRed = new System.Windows.Forms.Button();
+            this.B_ResetGreen = new System.Windows.Forms.Button();
             this.P_RuinedOrgasmColor = new System.Windows.Forms.Panel();
             this.L_RuinedOrgasmColor = new System.Windows.Forms.Label();
             this.P_CensorColor = new System.Windows.Forms.Panel();
@@ -98,12 +104,6 @@
             this.COMB_CensorSize = new System.Windows.Forms.ComboBox();
             this.L_CensorType = new System.Windows.Forms.Label();
             this.B_Apply = new System.Windows.Forms.Button();
-            this.B_ResetGreen = new System.Windows.Forms.Button();
-            this.B_ResetRed = new System.Windows.Forms.Button();
-            this.B_ResetEdge = new System.Windows.Forms.Button();
-            this.B_ResetRuin = new System.Windows.Forms.Button();
-            this.B_ResetCensor = new System.Windows.Forms.Button();
-            this.B_ResetAll = new System.Windows.Forms.Button();
             this.GB_RLGLSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinEdge)).BeginInit();
@@ -133,6 +133,7 @@
             // ColorPicker
             // 
             this.ColorPicker.AnyColor = true;
+            this.ColorPicker.FullOpen = true;
             // 
             // GB_RLGLSettings
             // 
@@ -448,6 +449,66 @@
             this.GB_ProgramSettings.TabIndex = 1;
             this.GB_ProgramSettings.TabStop = false;
             this.GB_ProgramSettings.Text = "General Settings";
+            // 
+            // B_ResetAll
+            // 
+            this.B_ResetAll.Location = new System.Drawing.Point(492, 184);
+            this.B_ResetAll.Name = "B_ResetAll";
+            this.B_ResetAll.Size = new System.Drawing.Size(75, 23);
+            this.B_ResetAll.TabIndex = 26;
+            this.B_ResetAll.Text = "Reset all";
+            this.B_ResetAll.UseVisualStyleBackColor = true;
+            this.B_ResetAll.Click += new System.EventHandler(this.B_ResetAll_Click);
+            // 
+            // B_ResetCensor
+            // 
+            this.B_ResetCensor.Location = new System.Drawing.Point(518, 155);
+            this.B_ResetCensor.Name = "B_ResetCensor";
+            this.B_ResetCensor.Size = new System.Drawing.Size(49, 23);
+            this.B_ResetCensor.TabIndex = 25;
+            this.B_ResetCensor.Text = "Reset";
+            this.B_ResetCensor.UseVisualStyleBackColor = true;
+            this.B_ResetCensor.Click += new System.EventHandler(this.B_ResetCensor_Click);
+            // 
+            // B_ResetRuin
+            // 
+            this.B_ResetRuin.Location = new System.Drawing.Point(518, 122);
+            this.B_ResetRuin.Name = "B_ResetRuin";
+            this.B_ResetRuin.Size = new System.Drawing.Size(49, 23);
+            this.B_ResetRuin.TabIndex = 24;
+            this.B_ResetRuin.Text = "Reset";
+            this.B_ResetRuin.UseVisualStyleBackColor = true;
+            this.B_ResetRuin.Click += new System.EventHandler(this.B_ResetRuin_Click);
+            // 
+            // B_ResetEdge
+            // 
+            this.B_ResetEdge.Location = new System.Drawing.Point(518, 89);
+            this.B_ResetEdge.Name = "B_ResetEdge";
+            this.B_ResetEdge.Size = new System.Drawing.Size(49, 23);
+            this.B_ResetEdge.TabIndex = 23;
+            this.B_ResetEdge.Text = "Reset";
+            this.B_ResetEdge.UseVisualStyleBackColor = true;
+            this.B_ResetEdge.Click += new System.EventHandler(this.B_ResetEdge_Click);
+            // 
+            // B_ResetRed
+            // 
+            this.B_ResetRed.Location = new System.Drawing.Point(518, 57);
+            this.B_ResetRed.Name = "B_ResetRed";
+            this.B_ResetRed.Size = new System.Drawing.Size(49, 23);
+            this.B_ResetRed.TabIndex = 22;
+            this.B_ResetRed.Text = "Reset";
+            this.B_ResetRed.UseVisualStyleBackColor = true;
+            this.B_ResetRed.Click += new System.EventHandler(this.B_ResetRed_Click);
+            // 
+            // B_ResetGreen
+            // 
+            this.B_ResetGreen.Location = new System.Drawing.Point(518, 25);
+            this.B_ResetGreen.Name = "B_ResetGreen";
+            this.B_ResetGreen.Size = new System.Drawing.Size(49, 23);
+            this.B_ResetGreen.TabIndex = 21;
+            this.B_ResetGreen.Text = "Reset";
+            this.B_ResetGreen.UseVisualStyleBackColor = true;
+            this.B_ResetGreen.Click += new System.EventHandler(this.B_ResetGreen_Click);
             // 
             // P_RuinedOrgasmColor
             // 
@@ -998,66 +1059,6 @@
             this.B_Apply.Text = "Apply";
             this.B_Apply.UseVisualStyleBackColor = true;
             this.B_Apply.Click += new System.EventHandler(this.B_Apply_Click);
-            // 
-            // B_ResetGreen
-            // 
-            this.B_ResetGreen.Location = new System.Drawing.Point(518, 25);
-            this.B_ResetGreen.Name = "B_ResetGreen";
-            this.B_ResetGreen.Size = new System.Drawing.Size(49, 23);
-            this.B_ResetGreen.TabIndex = 21;
-            this.B_ResetGreen.Text = "Reset";
-            this.B_ResetGreen.UseVisualStyleBackColor = true;
-            this.B_ResetGreen.Click += new System.EventHandler(this.B_ResetGreen_Click);
-            // 
-            // B_ResetRed
-            // 
-            this.B_ResetRed.Location = new System.Drawing.Point(518, 57);
-            this.B_ResetRed.Name = "B_ResetRed";
-            this.B_ResetRed.Size = new System.Drawing.Size(49, 23);
-            this.B_ResetRed.TabIndex = 22;
-            this.B_ResetRed.Text = "Reset";
-            this.B_ResetRed.UseVisualStyleBackColor = true;
-            this.B_ResetRed.Click += new System.EventHandler(this.B_ResetRed_Click);
-            // 
-            // B_ResetEdge
-            // 
-            this.B_ResetEdge.Location = new System.Drawing.Point(518, 89);
-            this.B_ResetEdge.Name = "B_ResetEdge";
-            this.B_ResetEdge.Size = new System.Drawing.Size(49, 23);
-            this.B_ResetEdge.TabIndex = 23;
-            this.B_ResetEdge.Text = "Reset";
-            this.B_ResetEdge.UseVisualStyleBackColor = true;
-            this.B_ResetEdge.Click += new System.EventHandler(this.B_ResetEdge_Click);
-            // 
-            // B_ResetRuin
-            // 
-            this.B_ResetRuin.Location = new System.Drawing.Point(518, 122);
-            this.B_ResetRuin.Name = "B_ResetRuin";
-            this.B_ResetRuin.Size = new System.Drawing.Size(49, 23);
-            this.B_ResetRuin.TabIndex = 24;
-            this.B_ResetRuin.Text = "Reset";
-            this.B_ResetRuin.UseVisualStyleBackColor = true;
-            this.B_ResetRuin.Click += new System.EventHandler(this.B_ResetRuin_Click);
-            // 
-            // B_ResetCensor
-            // 
-            this.B_ResetCensor.Location = new System.Drawing.Point(518, 155);
-            this.B_ResetCensor.Name = "B_ResetCensor";
-            this.B_ResetCensor.Size = new System.Drawing.Size(49, 23);
-            this.B_ResetCensor.TabIndex = 25;
-            this.B_ResetCensor.Text = "Reset";
-            this.B_ResetCensor.UseVisualStyleBackColor = true;
-            this.B_ResetCensor.Click += new System.EventHandler(this.B_ResetCensor_Click);
-            // 
-            // B_ResetAll
-            // 
-            this.B_ResetAll.Location = new System.Drawing.Point(492, 184);
-            this.B_ResetAll.Name = "B_ResetAll";
-            this.B_ResetAll.Size = new System.Drawing.Size(75, 23);
-            this.B_ResetAll.TabIndex = 26;
-            this.B_ResetAll.Text = "Reset all";
-            this.B_ResetAll.UseVisualStyleBackColor = true;
-            this.B_ResetAll.Click += new System.EventHandler(this.B_ResetAll_Click);
             // 
             // PreferencesDlg
             // 

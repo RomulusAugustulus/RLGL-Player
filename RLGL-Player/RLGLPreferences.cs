@@ -33,7 +33,7 @@ namespace RLGL_Player
     public class RLGLPreferences
     {
         //The current version of the file. Used to preserve backwards-compatibility.
-        private string preferencesFileVersion = "v.5";
+        private string preferencesFileVersion = "v.6";
         private int minGreen;
         private int maxGreen;
         private int minRed;
@@ -64,6 +64,7 @@ namespace RLGL_Player
         private bool greenAfterEdge;
         private Color edgeColor;
         private Color ruinedOrgasmColor;
+        private List<int> customColors;
 
         //Minimum number of seconds a green phase will last.
         public int MinGreen { get => minGreen; }
@@ -158,6 +159,7 @@ namespace RLGL_Player
             edgeColor = Color.FromArgb(255, 83, 143, 255);
             censorOnlyGreen = false;
             ruinedOrgasmColor = Color.FromArgb(255, 199, 107, 243);
+            customColors = new List<int>();
 
             LoadEndings();
         }
@@ -201,6 +203,8 @@ namespace RLGL_Player
             this.greenAfterEdge = greenAfterEdge;
             this.edgeColor = edgeColor;
             this.ruinedOrgasmColor = ruinedOrgasmColor;
+
+            customColors = new List<int>();
         }
 
         //Sets the controls of a PreferencesDlg object to the currently stored preferences. 
@@ -255,6 +259,10 @@ namespace RLGL_Player
             prefDlg.CB_AllowGreenLight.Enabled = edging;
 
             prefDlg.EndingSettings = ending;
+
+            prefDlg.CustomColorDlgColors = customColors;
+
+            prefDlg.SetCustomColorDlgColors();
         }
 
         //Gets the values from the controls of a PreferencesDlg object and stores them locally.
@@ -295,6 +303,8 @@ namespace RLGL_Player
             greenAfterEdge = prefDlg.CB_AllowGreenLight.Checked;
 
             ending = prefDlg.EndingSettings;
+
+            customColors = prefDlg.CustomColorDlgColors;
         }
 
         //Loads the contents of the file fileName if it exists and stores it locally.
@@ -345,7 +355,11 @@ namespace RLGL_Player
                     {
                         ending.Add(new RLGLInternEnding(bool.Parse(prefFile.ReadLine()), bool.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), prefFile.ReadLine(), null));
                     }
-                    
+                    int customColorCount = int.Parse(prefFile.ReadLine());
+                    for(int i=0;i<customColorCount;i++)
+                    {
+                        customColors.Add(int.Parse(prefFile.ReadLine()));
+                    }                    
                 }
                 else if(version.StartsWith("v"))
                 {
@@ -649,6 +663,46 @@ namespace RLGL_Player
                 greenAfterEdge = bool.Parse(prefFile.ReadLine());
                 edgeColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
             }
+            else if(version.Equals("v.5"))
+            {
+                Ending.Clear();
+
+                maxGreen = int.Parse(prefFile.ReadLine());
+                maxRed = int.Parse(prefFile.ReadLine());
+                minGreen = int.Parse(prefFile.ReadLine());
+                minRed = int.Parse(prefFile.ReadLine());
+                //ending = (RLGLEnding)int.Parse(prefFile.ReadLine());
+                metronome = bool.Parse(prefFile.ReadLine());
+                minBpm = int.Parse(prefFile.ReadLine());
+                maxBpm = int.Parse(prefFile.ReadLine());
+                metronomeChance = int.Parse(prefFile.ReadLine());
+                greenLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                redLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                censoring = bool.Parse(prefFile.ReadLine());
+                censorType = (RLGLCensorType)int.Parse(prefFile.ReadLine());
+                censorSize = (RLGLCensorSize)int.Parse(prefFile.ReadLine());
+                censorChance = int.Parse(prefFile.ReadLine());
+                censorOnlyGreen = bool.Parse(prefFile.ReadLine());
+                censorColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                censorPath = prefFile.ReadLine();
+                leftBorder = int.Parse(prefFile.ReadLine());
+                rightBorder = int.Parse(prefFile.ReadLine());
+                topBorder = int.Parse(prefFile.ReadLine());
+                bottomBorder = int.Parse(prefFile.ReadLine());
+                edging = bool.Parse(prefFile.ReadLine());
+                edgingWarmup = int.Parse(prefFile.ReadLine());
+                minEdge = int.Parse(prefFile.ReadLine());
+                maxEdge = int.Parse(prefFile.ReadLine());
+                edgeChance = int.Parse(prefFile.ReadLine());
+                greenAfterEdge = bool.Parse(prefFile.ReadLine());
+                edgeColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                ruinedOrgasmColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                int endingCount = int.Parse(prefFile.ReadLine());
+                for (int i = 0; i < endingCount; i++)
+                {
+                    ending.Add(new RLGLInternEnding(bool.Parse(prefFile.ReadLine()), bool.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), prefFile.ReadLine(), null));
+                }
+            }
             else
             {
                 //Not a correct version. Do nothing for now.                
@@ -741,9 +795,14 @@ namespace RLGL_Player
                 e.Ending.SaveRLGLEnding();
             }
 
-            prefFile.Close();
-
+            prefFile.WriteLine(customColors.Count);
             
+            foreach(int c in customColors)
+            {
+                prefFile.WriteLine(c);
+            }
+
+            prefFile.Close();            
         }
     }
 }
