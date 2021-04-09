@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace RLGL_Player
@@ -502,6 +503,40 @@ namespace RLGL_Player
         private void TAB_Preferences_Selected(object sender, TabControlEventArgs e)
         {
             ShowEndings();
+        }
+
+        private void B_ResetGreen_Click(object sender, EventArgs e)
+        {
+            P_GreenLightColor.BackColor = Color.FromArgb(255, 0, 255, 0);
+        }
+
+        private void B_ResetRed_Click(object sender, EventArgs e)
+        {
+            P_RedLightColor.BackColor = Color.FromArgb(255, 255, 0, 0);
+        }
+
+        private void B_ResetEdge_Click(object sender, EventArgs e)
+        {
+            P_EdgeLightColor.BackColor = Color.FromArgb(255, 83, 143, 255);
+        }
+
+        private void B_ResetRuin_Click(object sender, EventArgs e)
+        {
+            P_RuinedOrgasmColor.BackColor = Color.FromArgb(255, 199, 107, 243);
+        }
+
+        private void B_ResetCensor_Click(object sender, EventArgs e)
+        {
+            P_CensorColor.BackColor = Color.FromArgb(255, 0, 0, 0);
+        }
+
+        private void B_ResetAll_Click(object sender, EventArgs e)
+        {
+            P_GreenLightColor.BackColor = Color.FromArgb(255, 0, 255, 0);
+            P_RedLightColor.BackColor = Color.FromArgb(255, 255, 0, 0);
+            P_EdgeLightColor.BackColor = Color.FromArgb(255, 83, 143, 255); 
+            P_RuinedOrgasmColor.BackColor = Color.FromArgb(255, 199, 107, 243);
+            P_CensorColor.BackColor = Color.FromArgb(255, 0, 0, 0);
         }
     }
 }

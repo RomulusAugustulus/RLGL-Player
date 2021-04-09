@@ -98,6 +98,12 @@
             this.COMB_CensorSize = new System.Windows.Forms.ComboBox();
             this.L_CensorType = new System.Windows.Forms.Label();
             this.B_Apply = new System.Windows.Forms.Button();
+            this.B_ResetGreen = new System.Windows.Forms.Button();
+            this.B_ResetRed = new System.Windows.Forms.Button();
+            this.B_ResetEdge = new System.Windows.Forms.Button();
+            this.B_ResetRuin = new System.Windows.Forms.Button();
+            this.B_ResetCensor = new System.Windows.Forms.Button();
+            this.B_ResetAll = new System.Windows.Forms.Button();
             this.GB_RLGLSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinEdge)).BeginInit();
@@ -408,6 +414,12 @@
             // 
             // GB_ProgramSettings
             // 
+            this.GB_ProgramSettings.Controls.Add(this.B_ResetAll);
+            this.GB_ProgramSettings.Controls.Add(this.B_ResetCensor);
+            this.GB_ProgramSettings.Controls.Add(this.B_ResetRuin);
+            this.GB_ProgramSettings.Controls.Add(this.B_ResetEdge);
+            this.GB_ProgramSettings.Controls.Add(this.B_ResetRed);
+            this.GB_ProgramSettings.Controls.Add(this.B_ResetGreen);
             this.GB_ProgramSettings.Controls.Add(this.P_RuinedOrgasmColor);
             this.GB_ProgramSettings.Controls.Add(this.L_RuinedOrgasmColor);
             this.GB_ProgramSettings.Controls.Add(this.P_CensorColor);
@@ -442,7 +454,7 @@
             this.P_RuinedOrgasmColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(107)))), ((int)(((byte)(243)))));
             this.P_RuinedOrgasmColor.Location = new System.Drawing.Point(115, 122);
             this.P_RuinedOrgasmColor.Name = "P_RuinedOrgasmColor";
-            this.P_RuinedOrgasmColor.Size = new System.Drawing.Size(434, 26);
+            this.P_RuinedOrgasmColor.Size = new System.Drawing.Size(397, 26);
             this.P_RuinedOrgasmColor.TabIndex = 20;
             this.P_RuinedOrgasmColor.Click += new System.EventHandler(this.P_RuinedOrgasmColor_Click);
             // 
@@ -460,7 +472,7 @@
             this.P_CensorColor.BackColor = System.Drawing.Color.Black;
             this.P_CensorColor.Location = new System.Drawing.Point(115, 155);
             this.P_CensorColor.Name = "P_CensorColor";
-            this.P_CensorColor.Size = new System.Drawing.Size(434, 26);
+            this.P_CensorColor.Size = new System.Drawing.Size(397, 26);
             this.P_CensorColor.TabIndex = 18;
             this.P_CensorColor.Click += new System.EventHandler(this.P_CensorColor_Click);
             // 
@@ -573,7 +585,7 @@
             // 
             // B_CensorPath
             // 
-            this.B_CensorPath.Location = new System.Drawing.Point(518, 202);
+            this.B_CensorPath.Location = new System.Drawing.Point(518, 215);
             this.B_CensorPath.Name = "B_CensorPath";
             this.B_CensorPath.Size = new System.Drawing.Size(31, 23);
             this.B_CensorPath.TabIndex = 4;
@@ -583,7 +595,7 @@
             // 
             // TBox_CensorPath
             // 
-            this.TBox_CensorPath.Location = new System.Drawing.Point(115, 204);
+            this.TBox_CensorPath.Location = new System.Drawing.Point(115, 217);
             this.TBox_CensorPath.Name = "TBox_CensorPath";
             this.TBox_CensorPath.Size = new System.Drawing.Size(397, 20);
             this.TBox_CensorPath.TabIndex = 7;
@@ -591,7 +603,7 @@
             // L_CensorPath
             // 
             this.L_CensorPath.AutoSize = true;
-            this.L_CensorPath.Location = new System.Drawing.Point(6, 207);
+            this.L_CensorPath.Location = new System.Drawing.Point(6, 220);
             this.L_CensorPath.Name = "L_CensorPath";
             this.L_CensorPath.Size = new System.Drawing.Size(103, 13);
             this.L_CensorPath.TabIndex = 6;
@@ -602,7 +614,7 @@
             this.P_EdgeLightColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(143)))), ((int)(((byte)(255)))));
             this.P_EdgeLightColor.Location = new System.Drawing.Point(115, 89);
             this.P_EdgeLightColor.Name = "P_EdgeLightColor";
-            this.P_EdgeLightColor.Size = new System.Drawing.Size(434, 26);
+            this.P_EdgeLightColor.Size = new System.Drawing.Size(397, 26);
             this.P_EdgeLightColor.TabIndex = 5;
             this.P_EdgeLightColor.Click += new System.EventHandler(this.P_EdgeLightColor_Click);
             // 
@@ -620,7 +632,7 @@
             this.P_RedLightColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.P_RedLightColor.Location = new System.Drawing.Point(115, 57);
             this.P_RedLightColor.Name = "P_RedLightColor";
-            this.P_RedLightColor.Size = new System.Drawing.Size(434, 26);
+            this.P_RedLightColor.Size = new System.Drawing.Size(397, 26);
             this.P_RedLightColor.TabIndex = 3;
             this.P_RedLightColor.Click += new System.EventHandler(this.P_RedLightColor_Click);
             // 
@@ -638,7 +650,7 @@
             this.P_GreenLightColor.BackColor = System.Drawing.Color.Green;
             this.P_GreenLightColor.Location = new System.Drawing.Point(115, 25);
             this.P_GreenLightColor.Name = "P_GreenLightColor";
-            this.P_GreenLightColor.Size = new System.Drawing.Size(434, 26);
+            this.P_GreenLightColor.Size = new System.Drawing.Size(397, 26);
             this.P_GreenLightColor.TabIndex = 1;
             this.P_GreenLightColor.Click += new System.EventHandler(this.P_GreenLightColor_Click);
             // 
@@ -987,6 +999,66 @@
             this.B_Apply.UseVisualStyleBackColor = true;
             this.B_Apply.Click += new System.EventHandler(this.B_Apply_Click);
             // 
+            // B_ResetGreen
+            // 
+            this.B_ResetGreen.Location = new System.Drawing.Point(518, 25);
+            this.B_ResetGreen.Name = "B_ResetGreen";
+            this.B_ResetGreen.Size = new System.Drawing.Size(49, 23);
+            this.B_ResetGreen.TabIndex = 21;
+            this.B_ResetGreen.Text = "Reset";
+            this.B_ResetGreen.UseVisualStyleBackColor = true;
+            this.B_ResetGreen.Click += new System.EventHandler(this.B_ResetGreen_Click);
+            // 
+            // B_ResetRed
+            // 
+            this.B_ResetRed.Location = new System.Drawing.Point(518, 57);
+            this.B_ResetRed.Name = "B_ResetRed";
+            this.B_ResetRed.Size = new System.Drawing.Size(49, 23);
+            this.B_ResetRed.TabIndex = 22;
+            this.B_ResetRed.Text = "Reset";
+            this.B_ResetRed.UseVisualStyleBackColor = true;
+            this.B_ResetRed.Click += new System.EventHandler(this.B_ResetRed_Click);
+            // 
+            // B_ResetEdge
+            // 
+            this.B_ResetEdge.Location = new System.Drawing.Point(518, 89);
+            this.B_ResetEdge.Name = "B_ResetEdge";
+            this.B_ResetEdge.Size = new System.Drawing.Size(49, 23);
+            this.B_ResetEdge.TabIndex = 23;
+            this.B_ResetEdge.Text = "Reset";
+            this.B_ResetEdge.UseVisualStyleBackColor = true;
+            this.B_ResetEdge.Click += new System.EventHandler(this.B_ResetEdge_Click);
+            // 
+            // B_ResetRuin
+            // 
+            this.B_ResetRuin.Location = new System.Drawing.Point(518, 122);
+            this.B_ResetRuin.Name = "B_ResetRuin";
+            this.B_ResetRuin.Size = new System.Drawing.Size(49, 23);
+            this.B_ResetRuin.TabIndex = 24;
+            this.B_ResetRuin.Text = "Reset";
+            this.B_ResetRuin.UseVisualStyleBackColor = true;
+            this.B_ResetRuin.Click += new System.EventHandler(this.B_ResetRuin_Click);
+            // 
+            // B_ResetCensor
+            // 
+            this.B_ResetCensor.Location = new System.Drawing.Point(518, 155);
+            this.B_ResetCensor.Name = "B_ResetCensor";
+            this.B_ResetCensor.Size = new System.Drawing.Size(49, 23);
+            this.B_ResetCensor.TabIndex = 25;
+            this.B_ResetCensor.Text = "Reset";
+            this.B_ResetCensor.UseVisualStyleBackColor = true;
+            this.B_ResetCensor.Click += new System.EventHandler(this.B_ResetCensor_Click);
+            // 
+            // B_ResetAll
+            // 
+            this.B_ResetAll.Location = new System.Drawing.Point(492, 184);
+            this.B_ResetAll.Name = "B_ResetAll";
+            this.B_ResetAll.Size = new System.Drawing.Size(75, 23);
+            this.B_ResetAll.TabIndex = 26;
+            this.B_ResetAll.Text = "Reset all";
+            this.B_ResetAll.UseVisualStyleBackColor = true;
+            this.B_ResetAll.Click += new System.EventHandler(this.B_ResetAll_Click);
+            // 
             // PreferencesDlg
             // 
             this.AcceptButton = this.B_Apply;
@@ -1111,5 +1183,11 @@
         private System.Windows.Forms.FlowLayoutPanel EndingsLayout;
         public System.Windows.Forms.Panel P_RuinedOrgasmColor;
         private System.Windows.Forms.Label L_RuinedOrgasmColor;
+        private System.Windows.Forms.Button B_ResetAll;
+        private System.Windows.Forms.Button B_ResetCensor;
+        private System.Windows.Forms.Button B_ResetRuin;
+        private System.Windows.Forms.Button B_ResetEdge;
+        private System.Windows.Forms.Button B_ResetRed;
+        private System.Windows.Forms.Button B_ResetGreen;
     }
 }
