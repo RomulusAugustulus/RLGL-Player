@@ -82,6 +82,12 @@ public partial class RLGLPlayer : Form
 
             if(rlglPlayingQueueDlg.ShowDialog() == DialogResult.OK)
             {
+                if (rlglVideoQueue != null)
+                {
+                    rlglVideoQueue.CancelQueue();
+                    ResetRLGLInfo();
+                }
+
                 rlglVideoQueue = rlglPlayingQueueDlg.VideoQueue;
 
                 StartQueue(rlglPreferences);
@@ -902,7 +908,7 @@ public partial class RLGLPlayer : Form
         private void UpdateRLGLLayoutSizes()
         {
             RLGL_Layout.RowStyles[0].Height = (float)rlglPreferences.TopBorder/100.0f * 50;
-            RLGL_Layout.RowStyles[2].Height = (float)rlglPreferences.BottomBorder/100.0f * 50;
+            RLGL_Layout.RowStyles[3].Height = (float)rlglPreferences.BottomBorder/100.0f * 50;
             RLGL_Layout.ColumnStyles[0].Width = (float)rlglPreferences.LeftBorder/100.0f * 50;
             RLGL_Layout.ColumnStyles[2].Width = (float)rlglPreferences.RightBorder/100.0f * 50;
         }
