@@ -26,7 +26,7 @@ namespace RLGL_Player
      */ 
     public class RLGLVideoQueue
     {
-        private static ushort QueueVersion = 2;
+        private static ushort QueueVersion = 3;
         private List<string> videos;
         private int currentVideo;
         private int loop;
@@ -89,8 +89,8 @@ namespace RLGL_Player
             currentVideo = videos.Count;
         }
 
-        //Save a video queue as a file. Stores also the user preferences used with this queue.
-        public void SaveVideoQueue(string filename, RLGLPreferences prefs)
+        //Save a video queue as a file.
+        public void SaveVideoQueue(string filename)
         {
             BinaryWriter fileWriter = new BinaryWriter(File.OpenWrite(filename));
 
@@ -103,137 +103,43 @@ namespace RLGL_Player
                 fileWriter.Write(videos[i]);
             }
 
-            fileWriter.Write(prefs.MinGreen);
-            fileWriter.Write(prefs.MaxGreen);
-            fileWriter.Write(prefs.MinRed);
-            fileWriter.Write(prefs.MaxRed);
-            fileWriter.Write(prefs.Edging);
-            fileWriter.Write(prefs.EdgingWarmup);
-            fileWriter.Write(prefs.MinEdge);
-            fileWriter.Write(prefs.MaxEdge);
-            fileWriter.Write(prefs.EdgeChance);
-            fileWriter.Write(prefs.GreenAfterEdge);
-            fileWriter.Write(prefs.Metronome);
-            fileWriter.Write(prefs.MinBpm);
-            fileWriter.Write(prefs.MaxBpm);
-            fileWriter.Write(prefs.MetronomeChance);
-            fileWriter.Write(prefs.Censoring);
-            fileWriter.Write((int)prefs.CensorType);
-            fileWriter.Write((int)prefs.CensorSize);
-            fileWriter.Write(prefs.CensorOnlyGreen);
-            fileWriter.Write(prefs.CensorChance);
-
             fileWriter.Close();
         }
 
         /*
-         * Load a queue from a file. Returns a tuple of the preferences stored in this queue and 
-         * a flag showing if loading the queue was successful!
+         * Load a queue from a file. Returns true if the queue was loaded successfully and adds a message indicating problems.
          */ 
-        public (bool, RLGLPreferences) LoadVideoQueue(string filename, RLGLPreferences prefs)
+        public (bool, string) LoadVideoQueue(string filename)
         {
-            int minGreen = 0;
-            int maxGreen = 0;
-            int minRed = 0;
-            int maxRed = 0;
-            bool edging = false;
-            int edgingWarmup = 0;
-            int minEdge = 0;
-            int maxEdge = 0;
-            int edgeChance = 1;
-            bool greenAfterEdge = false;
-            bool metronome = false;
-            int minBpm = 0;
-            int maxBpm = 0;
-            int metronomeChance = 1;
-            bool censor = false;
-            RLGLCensorType censorType = RLGLCensorType.Color;
-            RLGLCensorSize censorSize = RLGLCensorSize.Medium;
-            bool censorOnlyGreen = false;
-            int censorChance = 1;
-
+            string message = "";
             try
             {
                 BinaryReader fileReader = new BinaryReader(File.OpenRead(filename));
 
                 ushort version = fileReader.ReadUInt16();
+                initLoop = fileReader.ReadInt32();
+                loop = initLoop;
+                int numVid = fileReader.ReadInt32();
 
-                if(version == QueueVersion)
+                for (int i = 0; i < numVid; i++)
                 {
-                    initLoop = fileReader.ReadInt32();
-                    loop = initLoop;
-                    int numVid = fileReader.ReadInt32();
-
-                    for(int i=0;i<numVid;i++)
-                    {
-                        videos.Add(fileReader.ReadString());
-                    }
-
-                    minGreen = fileReader.ReadInt32();
-                    maxGreen = fileReader.ReadInt32();
-                    minRed = fileReader.ReadInt32();
-                    maxRed = fileReader.ReadInt32();
-                    edging = fileReader.ReadBoolean();
-                    edgingWarmup = fileReader.ReadInt32();
-                    minEdge = fileReader.ReadInt32();
-                    maxEdge = fileReader.ReadInt32();
-                    edgeChance = fileReader.ReadInt32();
-                    greenAfterEdge = fileReader.ReadBoolean();
-                    metronome = fileReader.ReadBoolean();
-                    minBpm = fileReader.ReadInt32();
-                    maxBpm = fileReader.ReadInt32();
-                    metronomeChance = fileReader.ReadInt32();
-                    censor = fileReader.ReadBoolean();
-                    censorType = (RLGLCensorType)fileReader.ReadInt32();
-                    censorSize = (RLGLCensorSize)fileReader.ReadInt32();
-                    censorOnlyGreen = fileReader.ReadBoolean();
-                    censorChance = fileReader.ReadInt32();
+                    videos.Add(fileReader.ReadString());
                 }
-                else
+                
+                if (version < QueueVersion)
                 {
-                    initLoop = fileReader.ReadInt32();
-                    loop = initLoop;
-                    int numVid = fileReader.ReadInt32();
-
-                    for (int i = 0; i < numVid; i++)
-                    {
-                        videos.Add(fileReader.ReadString());
-                    }
-
-                    minGreen = fileReader.ReadInt32();
-                    maxGreen = fileReader.ReadInt32();
-                    minRed = fileReader.ReadInt32();
-                    maxRed = fileReader.ReadInt32();
-                    edging = fileReader.ReadBoolean();
-                    edgingWarmup = fileReader.ReadInt32();
-                    minEdge = fileReader.ReadInt32();
-                    maxEdge = fileReader.ReadInt32();
-                    edgeChance = fileReader.ReadInt32();
-                    greenAfterEdge = fileReader.ReadBoolean();
-                    /*ending = (RLGLEnding)*/
-                    fileReader.ReadInt32();
-                    metronome = fileReader.ReadBoolean();
-                    minBpm = fileReader.ReadInt32();
-                    maxBpm = fileReader.ReadInt32();
-                    metronomeChance = fileReader.ReadInt32();
-                    censor = fileReader.ReadBoolean();
-                    censorType = (RLGLCensorType)fileReader.ReadInt32();
-                    censorSize = (RLGLCensorSize)fileReader.ReadInt32();
-                    censorOnlyGreen = fileReader.ReadBoolean();
-                    censorChance = fileReader.ReadInt32();
+                    message = "Recognized an older playlist version! Stored preferences inside playlists are no longer supported and will be ignored.";
                 }
-
+                
                 fileReader.Close();
             }
             catch(Exception)
             {
-                return (false, prefs);
+                message = "Failed to load the playlist.";
+                return (false, message);
             }
 
-            return (true, new RLGLPreferences(minGreen,maxGreen,minRed,maxRed,prefs.Ending,metronome,minBpm,maxBpm,metronomeChance,
-                prefs.GreenLightColor,prefs.RedLightColor,censor,censorType,censorSize,censorChance,censorOnlyGreen,
-                prefs.CensorColor,prefs.CensorPath,prefs.LeftBorder,prefs.RightBorder,prefs.TopBorder,prefs.BottomBorder,
-                edging,edgingWarmup,minEdge,maxEdge,edgeChance,greenAfterEdge,prefs.EdgeColor,prefs.RuinedOrgasmColor));
+            return (true, message);
         }
 
         public (int, List<string>) GetRLGLVideoQueue()

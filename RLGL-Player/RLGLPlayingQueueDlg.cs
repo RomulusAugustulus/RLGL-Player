@@ -26,9 +26,7 @@ namespace RLGL_Player
     {
         private List<(string, string)> videos;
         private RLGLVideoQueue videoQueue;
-        private bool ignoreQueuePreferences;
         public RLGLVideoQueue VideoQueue { get => videoQueue; }
-        public bool IgnoreQueuePreferences { get => ignoreQueuePreferences; }
 
         public RLGLPlayingQueueDlg()
         {
@@ -37,13 +35,11 @@ namespace RLGL_Player
             videoQueue = new RLGLVideoQueue();
             videos = new List<(string, string)>();
             L_FullPath.Text = "";
-            ignoreQueuePreferences = true;
         }
 
         //Changes the appearance of the dialog to alter an existing queue.
         public void InitCustomizationDlg(RLGLVideoQueue queue)
         {
-            CB_IgnorePlaylistPreferences.Visible = true;
             LB_Queue.Items.Clear();
 
             (int, List<string>) loadedQueue = queue.GetRLGLVideoQueue();
@@ -66,6 +62,7 @@ namespace RLGL_Player
                     string filename = Path.GetFileName(OpenVideoDlg.FileNames[i]);
                     videos.Add((filename, OpenVideoDlg.FileNames[i]));
                     LB_Queue.Items.Add(filename);
+                    B_SavePlaylist.Enabled = true;
                 }
             }
         }
@@ -85,38 +82,16 @@ namespace RLGL_Player
             videos.RemoveAt(LB_Queue.SelectedIndex);
             LB_Queue.Items.RemoveAt(LB_Queue.SelectedIndex);
             LB_Queue.SelectedIndex = -1;
+
+            if(LB_Queue.Items.Count == 0)
+            {
+                B_SavePlaylist.Enabled = false;
+            }
         }
 
         private void B_OK_Click(object sender, EventArgs e)
         {
-            Random rand = new Random();
-
-            if(NUD_Loop.Value != 0)
-            {
-                videoQueue = new RLGLVideoQueue((int)NUD_Loop.Value);
-            }
-
-            if (CB_Shuffle.Checked)
-            {
-                while (videos.Count != 0)
-                {
-                    int vid = rand.Next(videos.Count);
-                    videoQueue.AddVideo(videos[vid].Item2);
-                    videos.RemoveAt(vid);
-                }
-            }
-            else
-            {
-                for (int i = 0; i < videos.Count; i++)
-                {
-                    videoQueue.AddVideo(videos[i].Item2);
-                }
-            }
-
-            if(!CB_IgnorePlaylistPreferences.Checked)
-            {
-                ignoreQueuePreferences = false;
-            }
+            CreateRLGLVideoQueue();
         }
 
         private void LB_Queue_SelectedIndexChanged(object sender, EventArgs e)
@@ -166,6 +141,80 @@ namespace RLGL_Player
                 LB_Queue.Items.Insert(selIndex + change, elem);
                 videos.Insert(selIndex + change, vidElem);
                 LB_Queue.SelectedIndex = selIndex + change;
+            }
+        }
+
+        private void CreateRLGLVideoQueue()
+        {
+            Random rand = new Random();
+
+            if (NUD_Loop.Value != 0)
+            {
+                videoQueue = new RLGLVideoQueue((int)NUD_Loop.Value);
+            }
+
+            if (CB_Shuffle.Checked)
+            {
+                while (videos.Count != 0)
+                {
+                    int vid = rand.Next(videos.Count);
+                    videoQueue.AddVideo(videos[vid].Item2);
+                    videos.RemoveAt(vid);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < videos.Count; i++)
+                {
+                    videoQueue.AddVideo(videos[i].Item2);
+                }
+            }
+        }
+
+        private void B_LoadPlaylist_Click(object sender, EventArgs e)
+        {
+            bool cancelLoad = false;
+            if(LB_Queue.Items.Count != 0)
+            {
+                if(MessageBox.Show("Already added videos will be removed when loading an existing playlist.\nDo you want to load a playlist?","Added videos found",MessageBoxButtons.YesNo) == DialogResult.No)
+                {
+                    cancelLoad = true;
+                }
+            }
+
+            if(!cancelLoad)
+            {
+                if (OpenQueueDlg.ShowDialog() == DialogResult.OK)
+                {
+                    videoQueue = new RLGLVideoQueue();
+                    (bool, string) loadedQueue = videoQueue.LoadVideoQueue(OpenQueueDlg.FileName);
+
+                    if (loadedQueue.Item1)
+                    {
+                        InitCustomizationDlg(videoQueue);
+
+                        if (loadedQueue.Item2.Length != 0)
+                        {
+                            MessageBox.Show(loadedQueue.Item2, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+
+                        B_SavePlaylist.Enabled = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show(loadedQueue.Item2, "Error");
+                    }
+                }
+            }
+        }
+
+        private void B_SavePlaylist_Click(object sender, EventArgs e)
+        {
+            if (SaveQueueDlg.ShowDialog() == DialogResult.OK)
+            {
+                CreateRLGLVideoQueue();
+                videoQueue.SaveVideoQueue(SaveQueueDlg.FileName);
+                MessageBox.Show("Saved playlist.", "Save");
             }
         }
     }
