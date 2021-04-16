@@ -136,25 +136,76 @@ namespace RLGL_Player
             NUD_MinMetronome.Enabled = check;
             NUD_MaxMetronome.Enabled = check;
             ETB_MetronomeChance.Enabled = check;
-            
+
+            NUD_MinMetronomeEdge.Enabled = check;
+            NUD_MaxMetronomeEdge.Enabled = check;
+            ETB_MetronomeEdgeChance.Enabled = check;
+
+            NUD_MinMetronomeEnding.Enabled = check;
+            NUD_MaxMetronomeEnding.Enabled = check;
+            ETB_MetronomeEndingChance.Enabled = check;
+
         }
 
         //Minimum value can not be higher than maximal value.
         private void NUD_MinMetronome_ValueChanged(object sender, EventArgs e)
         {
-            if (NUD_MaxMetronome.Value < NUD_MinMetronome.Value)
+            NumericUpDown elem = (NumericUpDown)sender;
+                        
+            switch((string)elem.Tag)
             {
-                NUD_MaxMetronome.Value = NUD_MinMetronome.Value;
-            }
+                case "green":
+                    if (NUD_MaxMetronome.Value < NUD_MinMetronome.Value)
+                    {
+                        NUD_MaxMetronome.Value = NUD_MinMetronome.Value;
+                    }
+                    break;
+
+                case "edge":
+                    if (NUD_MaxMetronomeEdge.Value < NUD_MinMetronomeEdge.Value)
+                    {
+                        NUD_MaxMetronomeEdge.Value = NUD_MinMetronomeEdge.Value;
+                    }
+                    break;
+
+                case "ending":
+                    if (NUD_MaxMetronomeEnding.Value < NUD_MinMetronomeEnding.Value)
+                    {
+                        NUD_MaxMetronomeEnding.Value = NUD_MinMetronomeEnding.Value;
+                    }
+                    break;
+            }            
         }
 
         //Maximal value can not be lower than minimal value.
         private void NUD_MaxMetronome_ValueChanged(object sender, EventArgs e)
         {
-            if (NUD_MinMetronome.Value > NUD_MaxMetronome.Value)
+            NumericUpDown elem = (NumericUpDown)sender;
+
+            switch ((string)elem.Tag)
             {
-                NUD_MinMetronome.Value = NUD_MaxMetronome.Value;
+                case "green":
+                    if (NUD_MinMetronome.Value > NUD_MaxMetronome.Value)
+                    {
+                        NUD_MinMetronome.Value = NUD_MaxMetronome.Value;
+                    }
+                    break;
+
+                case "edge":
+                    if (NUD_MinMetronomeEdge.Value > NUD_MaxMetronomeEdge.Value)
+                    {
+                        NUD_MinMetronomeEdge.Value = NUD_MaxMetronomeEdge.Value;
+                    }
+                    break;
+
+                case "ending":
+                    if (NUD_MinMetronomeEnding.Value > NUD_MaxMetronomeEnding.Value)
+                    {
+                        NUD_MinMetronomeEnding.Value = NUD_MaxMetronomeEnding.Value;
+                    }
+                    break;
             }
+            
         }
 
         //Get the color from the color dialog.
@@ -241,7 +292,7 @@ namespace RLGL_Player
             }
             else
             {
-                MessageBox.Show(this, "There needs to be at least 1 enabled ending!", "Error");
+                MessageBox.Show(this, "There needs to be at least 1 ending enabled!", "Error");
             }
         }
 

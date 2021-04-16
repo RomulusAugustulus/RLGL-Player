@@ -33,7 +33,7 @@ namespace RLGL_Player
     public class RLGLPreferences
     {
         //The current version of the file. Used to preserve backwards-compatibility.
-        private string preferencesFileVersion = "v.6";
+        private string preferencesFileVersion = "v.7";
         private int minGreen;
         private int maxGreen;
         private int minRed;
@@ -42,7 +42,13 @@ namespace RLGL_Player
         private bool metronome;
         private int minBpm;
         private int maxBpm;
+        private int minEdgeBpm;
+        private int maxEdgeBpm;
+        private int minEndingBpm;
+        private int maxEndingBpm;
         private int metronomeChance;
+        private int metronomeEdgeChance;
+        private int metronomeEndingChance;
         private bool censoring;
         private RLGLCensorType censorType;
         private RLGLCensorSize censorSize;
@@ -80,12 +86,24 @@ namespace RLGL_Player
         public Color GreenLightColor { get => greenLightColor; }
         //The color displayed while at a red phase.
         public Color RedLightColor { get => redLightColor; }
-        //Getss how likely a metronome will be played at green phase.
+        //Gets how likely a metronome will be played at green phases.
         public int MetronomeChance { get => metronomeChance; }
+        //Gets how likely a metronome will be played at edge phases.
+        public int MetronomeEdgeChance { get => metronomeEdgeChance; }
+        //Gets how likely a metronome will be played at ending phases.
+        public int MetronomeEndingChance { get => metronomeEndingChance; }
         //The fastes speed the metronome will play in beats per minute.
         public int MaxBpm { get => maxBpm; }
         //The slowest speed the metronome will play in beats per minute.
         public int MinBpm { get => minBpm; }
+        //The fastes speed the metronome will play in beats per minute.
+        public int MaxEdgeBpm { get => maxEdgeBpm; }
+        //The slowest speed the metronome will play in beats per minute.
+        public int MinEdgeBpm { get => minEdgeBpm; }
+        //The fastes speed the metronome will play in beats per minute.
+        public int MaxEndingBpm { get => maxEndingBpm; }
+        //The slowest speed the metronome will play in beats per minute.
+        public int MinEndingBpm { get => minEndingBpm; }
         //Gets if a metronome can be used.
         public bool Metronome { get => metronome; }
         //Gets if censorbars may block parts of the played media.
@@ -139,7 +157,13 @@ namespace RLGL_Player
             metronome = true;
             minBpm = 10;
             maxBpm = 10;
+            minEdgeBpm = 10;
+            maxEdgeBpm = 10;
+            minEndingBpm = 10;
+            maxEndingBpm = 10;
             metronomeChance = 50;
+            metronomeEdgeChance = 50;
+            metronomeEndingChance = 50;
             censoring = false;
             censorType = RLGLCensorType.Color;
             censorSize = RLGLCensorSize.Medium;
@@ -165,8 +189,9 @@ namespace RLGL_Player
         }
 
         public RLGLPreferences(int minGreen, int maxGreen, int minRed, int maxRed, 
-                                List<RLGLInternEnding> ending, bool metronome, int minBpm, int maxBpm, 
-                                int metronomeChance, Color greenLightColor, Color redLightColor,
+                                List<RLGLInternEnding> ending, bool metronome, int minBpm, int maxBpm, int minEdgeBpm,
+                                int maxEdgeBpm, int minEndingBpm, int maxEndingBpm, int metronomeChance, 
+                                int metronomeEdgeChance, int metronomeEndingChance, Color greenLightColor, Color redLightColor,
                                 bool censoring, RLGLCensorType censorType, RLGLCensorSize censorSize,
                                 int censorChance, bool censorOnlyGreen, Color censorColor, string censorPath,
                                 int leftBorder, int rightBorder, int topBorder, int bottomBorder,
@@ -181,7 +206,13 @@ namespace RLGL_Player
             this.metronome = metronome;
             this.minBpm = minBpm;
             this.maxBpm = maxBpm;
+            this.minEdgeBpm = minEdgeBpm;
+            this.maxEdgeBpm = maxEdgeBpm;
+            this.minEndingBpm = minEndingBpm;
+            this.maxEndingBpm = maxEndingBpm;
             this.metronomeChance = metronomeChance;
+            this.metronomeEdgeChance = metronomeEdgeChance;
+            this.metronomeEndingChance = metronomeEndingChance;
             this.greenLightColor = greenLightColor;
             this.redLightColor = redLightColor;
             this.censoring = censoring;
@@ -219,10 +250,22 @@ namespace RLGL_Player
             prefDlg.NUD_MinMetronome.Value = minBpm;
             prefDlg.NUD_MaxMetronome.Value = maxBpm;
             prefDlg.ETB_MetronomeChance.Value = metronomeChance;
+            prefDlg.NUD_MinMetronomeEdge.Value = minEdgeBpm;
+            prefDlg.NUD_MaxMetronomeEdge.Value = maxEdgeBpm;
+            prefDlg.ETB_MetronomeEdgeChance.Value = metronomeEdgeChance;
+            prefDlg.NUD_MaxMetronomeEnding.Value = maxEndingBpm;
+            prefDlg.NUD_MinMetronomeEnding.Value = minEndingBpm;
+            prefDlg.ETB_MetronomeEndingChance.Value = metronomeEndingChance;
 
             prefDlg.NUD_MaxMetronome.Enabled = metronome;
             prefDlg.NUD_MinMetronome.Enabled = metronome;
-            prefDlg.ETB_MetronomeChance.Enabled = metronome;           
+            prefDlg.ETB_MetronomeChance.Enabled = metronome;
+            prefDlg.NUD_MaxMetronomeEdge.Enabled = metronome;
+            prefDlg.NUD_MaxMetronomeEnding.Enabled = metronome;
+            prefDlg.NUD_MinMetronomeEdge.Enabled = metronome;
+            prefDlg.NUD_MinMetronomeEnding.Enabled = metronome;
+            prefDlg.ETB_MetronomeEdgeChance.Enabled = metronome;
+            prefDlg.ETB_MetronomeEndingChance.Enabled = metronome;
 
             prefDlg.P_GreenLightColor.BackColor = greenLightColor;
             prefDlg.P_RedLightColor.BackColor = redLightColor;
@@ -277,7 +320,13 @@ namespace RLGL_Player
             minBpm = (int)prefDlg.NUD_MinMetronome.Value;
             maxBpm = (int)prefDlg.NUD_MaxMetronome.Value;
             metronomeChance = prefDlg.ETB_MetronomeChance.Value;
-            
+            minEdgeBpm = (int)prefDlg.NUD_MinMetronomeEdge.Value;
+            maxEdgeBpm = (int)prefDlg.NUD_MaxMetronomeEdge.Value;
+            metronomeEdgeChance = prefDlg.ETB_MetronomeEdgeChance.Value;
+            minEndingBpm = (int)prefDlg.NUD_MinMetronomeEnding.Value;
+            maxEndingBpm = (int)prefDlg.NUD_MaxMetronomeEnding.Value;
+            metronomeEndingChance = prefDlg.ETB_MetronomeEndingChance.Value;
+
             greenLightColor = prefDlg.P_GreenLightColor.BackColor;
             redLightColor = prefDlg.P_RedLightColor.BackColor;
             censorColor = prefDlg.P_CensorColor.BackColor;
@@ -324,11 +373,16 @@ namespace RLGL_Player
                     maxRed = int.Parse(prefFile.ReadLine());
                     minGreen = int.Parse(prefFile.ReadLine());
                     minRed = int.Parse(prefFile.ReadLine());
-                    //ending = (RLGLEnding)int.Parse(prefFile.ReadLine());
                     metronome = bool.Parse(prefFile.ReadLine());
                     minBpm = int.Parse(prefFile.ReadLine());
                     maxBpm = int.Parse(prefFile.ReadLine());
                     metronomeChance = int.Parse(prefFile.ReadLine());
+                    minEdgeBpm = int.Parse(prefFile.ReadLine());
+                    maxEdgeBpm = int.Parse(prefFile.ReadLine());
+                    metronomeEdgeChance = int.Parse(prefFile.ReadLine());
+                    minEndingBpm = int.Parse(prefFile.ReadLine());
+                    maxEndingBpm = int.Parse(prefFile.ReadLine());
+                    metronomeEndingChance = int.Parse(prefFile.ReadLine());
                     greenLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                     redLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                     censoring = bool.Parse(prefFile.ReadLine());
@@ -351,15 +405,15 @@ namespace RLGL_Player
                     edgeColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                     ruinedOrgasmColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                     int endingCount = int.Parse(prefFile.ReadLine());
-                    for(int i=0;i<endingCount;i++)
+                    for (int i = 0; i < endingCount; i++)
                     {
                         ending.Add(new RLGLInternEnding(bool.Parse(prefFile.ReadLine()), bool.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), prefFile.ReadLine(), null));
                     }
                     int customColorCount = int.Parse(prefFile.ReadLine());
-                    for(int i=0;i<customColorCount;i++)
+                    for (int i = 0; i < customColorCount; i++)
                     {
                         customColors.Add(int.Parse(prefFile.ReadLine()));
-                    }                    
+                    }
                 }
                 else if(version.StartsWith("v"))
                 {
@@ -703,10 +757,62 @@ namespace RLGL_Player
                     ending.Add(new RLGLInternEnding(bool.Parse(prefFile.ReadLine()), bool.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), prefFile.ReadLine(), null));
                 }
             }
+            else if(version.Equals("v.6"))
+            {
+                Ending.Clear();
+
+                maxGreen = int.Parse(prefFile.ReadLine());
+                maxRed = int.Parse(prefFile.ReadLine());
+                minGreen = int.Parse(prefFile.ReadLine());
+                minRed = int.Parse(prefFile.ReadLine());
+                metronome = bool.Parse(prefFile.ReadLine());
+                minBpm = int.Parse(prefFile.ReadLine());
+                maxBpm = int.Parse(prefFile.ReadLine());
+                metronomeChance = int.Parse(prefFile.ReadLine());
+                greenLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                redLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                censoring = bool.Parse(prefFile.ReadLine());
+                censorType = (RLGLCensorType)int.Parse(prefFile.ReadLine());
+                censorSize = (RLGLCensorSize)int.Parse(prefFile.ReadLine());
+                censorChance = int.Parse(prefFile.ReadLine());
+                censorOnlyGreen = bool.Parse(prefFile.ReadLine());
+                censorColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                censorPath = prefFile.ReadLine();
+                leftBorder = int.Parse(prefFile.ReadLine());
+                rightBorder = int.Parse(prefFile.ReadLine());
+                topBorder = int.Parse(prefFile.ReadLine());
+                bottomBorder = int.Parse(prefFile.ReadLine());
+                edging = bool.Parse(prefFile.ReadLine());
+                edgingWarmup = int.Parse(prefFile.ReadLine());
+                minEdge = int.Parse(prefFile.ReadLine());
+                maxEdge = int.Parse(prefFile.ReadLine());
+                edgeChance = int.Parse(prefFile.ReadLine());
+                greenAfterEdge = bool.Parse(prefFile.ReadLine());
+                edgeColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                ruinedOrgasmColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                int endingCount = int.Parse(prefFile.ReadLine());
+                for (int i = 0; i < endingCount; i++)
+                {
+                    ending.Add(new RLGLInternEnding(bool.Parse(prefFile.ReadLine()), bool.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), prefFile.ReadLine(), null));
+                }
+                int customColorCount = int.Parse(prefFile.ReadLine());
+                for (int i = 0; i < customColorCount; i++)
+                {
+                    customColors.Add(int.Parse(prefFile.ReadLine()));
+                }
+            }
             else
             {
                 //Not a correct version. Do nothing for now.                
             }
+
+            //Set all new metronomes to the old one
+            minEdgeBpm = minBpm;
+            minEndingBpm = minBpm;
+            maxEdgeBpm = maxBpm;
+            maxEndingBpm = maxBpm;
+            metronomeEdgeChance = metronomeChance;
+            metronomeEndingChance = metronomeChance;
         }
 
         //Load a file with the first layout of the file.
@@ -731,6 +837,12 @@ namespace RLGL_Player
             censorSize = RLGLCensorSize.Medium;
             censorType = RLGLCensorType.Color;
             censorChance = 50;
+            minEdgeBpm = minBpm;
+            minEndingBpm = minBpm;
+            maxEdgeBpm = maxBpm;
+            maxEndingBpm = maxBpm;
+            metronomeEdgeChance = metronomeChance;
+            metronomeEndingChance = metronomeChance;
         }
 
         //Save the current locally stored preferences to a file fileName.
@@ -747,6 +859,12 @@ namespace RLGL_Player
             prefFile.WriteLine(minBpm);
             prefFile.WriteLine(maxBpm);
             prefFile.WriteLine(metronomeChance);
+            prefFile.WriteLine(minEdgeBpm);
+            prefFile.WriteLine(maxEdgeBpm);
+            prefFile.WriteLine(metronomeEdgeChance);
+            prefFile.WriteLine(minEndingBpm);
+            prefFile.WriteLine(maxEndingBpm);
+            prefFile.WriteLine(metronomeEndingChance);
             prefFile.WriteLine(greenLightColor.A);
             prefFile.WriteLine(greenLightColor.R);
             prefFile.WriteLine(greenLightColor.G);

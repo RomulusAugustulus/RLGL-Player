@@ -84,6 +84,19 @@
             this.TAB_RLGLSettings = new System.Windows.Forms.TabPage();
             this.TAB_Metronome = new System.Windows.Forms.TabPage();
             this.GB_MetronomeSettings = new System.Windows.Forms.GroupBox();
+            this.L_EndingPhaseMetronome = new System.Windows.Forms.Label();
+            this.L_EdgePhaseMetronome = new System.Windows.Forms.Label();
+            this.L_GreenPhaseMetronome = new System.Windows.Forms.Label();
+            this.ETB_MetronomeEndingChance = new RLGL_Player.ExtendedTrackBar();
+            this.NUD_MaxMetronomeEnding = new System.Windows.Forms.NumericUpDown();
+            this.L_MaxMetronomeEnding = new System.Windows.Forms.Label();
+            this.NUD_MinMetronomeEnding = new System.Windows.Forms.NumericUpDown();
+            this.L_MinMetronomeEnding = new System.Windows.Forms.Label();
+            this.ETB_MetronomeEdgeChance = new RLGL_Player.ExtendedTrackBar();
+            this.NUD_MaxMetronomeEdge = new System.Windows.Forms.NumericUpDown();
+            this.L_MaxMetronomeEdge = new System.Windows.Forms.Label();
+            this.NUD_MinMetronomeEdge = new System.Windows.Forms.NumericUpDown();
+            this.L_MinMetronomeEdge = new System.Windows.Forms.Label();
             this.ETB_MetronomeChance = new RLGL_Player.ExtendedTrackBar();
             this.NUD_MaxMetronome = new System.Windows.Forms.NumericUpDown();
             this.L_MaxMetronome = new System.Windows.Forms.Label();
@@ -122,6 +135,10 @@
             this.TAB_RLGLSettings.SuspendLayout();
             this.TAB_Metronome.SuspendLayout();
             this.GB_MetronomeSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxMetronomeEnding)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_MinMetronomeEnding)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxMetronomeEdge)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_MinMetronomeEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxMetronome)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinMetronome)).BeginInit();
             this.TAB_Ending.SuspendLayout();
@@ -799,6 +816,19 @@
             // 
             // GB_MetronomeSettings
             // 
+            this.GB_MetronomeSettings.Controls.Add(this.L_EndingPhaseMetronome);
+            this.GB_MetronomeSettings.Controls.Add(this.L_EdgePhaseMetronome);
+            this.GB_MetronomeSettings.Controls.Add(this.L_GreenPhaseMetronome);
+            this.GB_MetronomeSettings.Controls.Add(this.ETB_MetronomeEndingChance);
+            this.GB_MetronomeSettings.Controls.Add(this.NUD_MaxMetronomeEnding);
+            this.GB_MetronomeSettings.Controls.Add(this.L_MaxMetronomeEnding);
+            this.GB_MetronomeSettings.Controls.Add(this.NUD_MinMetronomeEnding);
+            this.GB_MetronomeSettings.Controls.Add(this.L_MinMetronomeEnding);
+            this.GB_MetronomeSettings.Controls.Add(this.ETB_MetronomeEdgeChance);
+            this.GB_MetronomeSettings.Controls.Add(this.NUD_MaxMetronomeEdge);
+            this.GB_MetronomeSettings.Controls.Add(this.L_MaxMetronomeEdge);
+            this.GB_MetronomeSettings.Controls.Add(this.NUD_MinMetronomeEdge);
+            this.GB_MetronomeSettings.Controls.Add(this.L_MinMetronomeEdge);
             this.GB_MetronomeSettings.Controls.Add(this.ETB_MetronomeChance);
             this.GB_MetronomeSettings.Controls.Add(this.NUD_MaxMetronome);
             this.GB_MetronomeSettings.Controls.Add(this.L_MaxMetronome);
@@ -812,22 +842,207 @@
             this.GB_MetronomeSettings.TabStop = false;
             this.GB_MetronomeSettings.Text = "Metronome Settings";
             // 
+            // L_EndingPhaseMetronome
+            // 
+            this.L_EndingPhaseMetronome.AutoSize = true;
+            this.L_EndingPhaseMetronome.Location = new System.Drawing.Point(25, 270);
+            this.L_EndingPhaseMetronome.Name = "L_EndingPhaseMetronome";
+            this.L_EndingPhaseMetronome.Size = new System.Drawing.Size(80, 13);
+            this.L_EndingPhaseMetronome.TabIndex = 52;
+            this.L_EndingPhaseMetronome.Text = "Ending phases:";
+            // 
+            // L_EdgePhaseMetronome
+            // 
+            this.L_EdgePhaseMetronome.AutoSize = true;
+            this.L_EdgePhaseMetronome.Location = new System.Drawing.Point(25, 156);
+            this.L_EdgePhaseMetronome.Name = "L_EdgePhaseMetronome";
+            this.L_EdgePhaseMetronome.Size = new System.Drawing.Size(72, 13);
+            this.L_EdgePhaseMetronome.TabIndex = 51;
+            this.L_EdgePhaseMetronome.Text = "Edge phases:";
+            // 
+            // L_GreenPhaseMetronome
+            // 
+            this.L_GreenPhaseMetronome.AutoSize = true;
+            this.L_GreenPhaseMetronome.Location = new System.Drawing.Point(25, 48);
+            this.L_GreenPhaseMetronome.Name = "L_GreenPhaseMetronome";
+            this.L_GreenPhaseMetronome.Size = new System.Drawing.Size(76, 13);
+            this.L_GreenPhaseMetronome.TabIndex = 50;
+            this.L_GreenPhaseMetronome.Text = "Green phases:";
+            // 
+            // ETB_MetronomeEndingChance
+            // 
+            this.ETB_MetronomeEndingChance.Location = new System.Drawing.Point(17, 320);
+            this.ETB_MetronomeEndingChance.Maximum = 100;
+            this.ETB_MetronomeEndingChance.Minimum = 1;
+            this.ETB_MetronomeEndingChance.Name = "ETB_MetronomeEndingChance";
+            this.ETB_MetronomeEndingChance.Size = new System.Drawing.Size(530, 48);
+            this.ETB_MetronomeEndingChance.TabIndex = 49;
+            this.ETB_MetronomeEndingChance.Text = "Chance (%):";
+            this.ETB_MetronomeEndingChance.TickFrequency = 10;
+            this.ETB_MetronomeEndingChance.ToolTip = "Defines the chance of stroking to a metronome while the ending is playing.";
+            this.ETB_MetronomeEndingChance.Value = 50;
+            // 
+            // NUD_MaxMetronomeEnding
+            // 
+            this.NUD_MaxMetronomeEnding.Location = new System.Drawing.Point(367, 294);
+            this.NUD_MaxMetronomeEnding.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.NUD_MaxMetronomeEnding.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_MaxMetronomeEnding.Name = "NUD_MaxMetronomeEnding";
+            this.NUD_MaxMetronomeEnding.Size = new System.Drawing.Size(180, 20);
+            this.NUD_MaxMetronomeEnding.TabIndex = 48;
+            this.NUD_MaxMetronomeEnding.Tag = "ending";
+            this.NUD_MaxMetronomeEnding.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_MaxMetronomeEnding.ValueChanged += new System.EventHandler(this.NUD_MaxMetronome_ValueChanged);
+            // 
+            // L_MaxMetronomeEnding
+            // 
+            this.L_MaxMetronomeEnding.AutoSize = true;
+            this.L_MaxMetronomeEnding.Location = new System.Drawing.Point(290, 296);
+            this.L_MaxMetronomeEnding.Name = "L_MaxMetronomeEnding";
+            this.L_MaxMetronomeEnding.Size = new System.Drawing.Size(77, 13);
+            this.L_MaxMetronomeEnding.TabIndex = 47;
+            this.L_MaxMetronomeEnding.Text = "Maximum bpm:";
+            // 
+            // NUD_MinMetronomeEnding
+            // 
+            this.NUD_MinMetronomeEnding.Location = new System.Drawing.Point(98, 294);
+            this.NUD_MinMetronomeEnding.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.NUD_MinMetronomeEnding.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_MinMetronomeEnding.Name = "NUD_MinMetronomeEnding";
+            this.NUD_MinMetronomeEnding.Size = new System.Drawing.Size(180, 20);
+            this.NUD_MinMetronomeEnding.TabIndex = 46;
+            this.NUD_MinMetronomeEnding.Tag = "ending";
+            this.NUD_MinMetronomeEnding.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_MinMetronomeEnding.ValueChanged += new System.EventHandler(this.NUD_MinMetronome_ValueChanged);
+            // 
+            // L_MinMetronomeEnding
+            // 
+            this.L_MinMetronomeEnding.AutoSize = true;
+            this.L_MinMetronomeEnding.Location = new System.Drawing.Point(24, 296);
+            this.L_MinMetronomeEnding.Name = "L_MinMetronomeEnding";
+            this.L_MinMetronomeEnding.Size = new System.Drawing.Size(74, 13);
+            this.L_MinMetronomeEnding.TabIndex = 45;
+            this.L_MinMetronomeEnding.Text = "Minimum bpm:";
+            // 
+            // ETB_MetronomeEdgeChance
+            // 
+            this.ETB_MetronomeEdgeChance.Location = new System.Drawing.Point(17, 207);
+            this.ETB_MetronomeEdgeChance.Maximum = 100;
+            this.ETB_MetronomeEdgeChance.Minimum = 1;
+            this.ETB_MetronomeEdgeChance.Name = "ETB_MetronomeEdgeChance";
+            this.ETB_MetronomeEdgeChance.Size = new System.Drawing.Size(530, 48);
+            this.ETB_MetronomeEdgeChance.TabIndex = 44;
+            this.ETB_MetronomeEdgeChance.Text = "Chance (%):";
+            this.ETB_MetronomeEdgeChance.TickFrequency = 10;
+            this.ETB_MetronomeEdgeChance.ToolTip = "Defines the chance of stroking to a metronome on an edge phase.";
+            this.ETB_MetronomeEdgeChance.Value = 50;
+            // 
+            // NUD_MaxMetronomeEdge
+            // 
+            this.NUD_MaxMetronomeEdge.Location = new System.Drawing.Point(367, 181);
+            this.NUD_MaxMetronomeEdge.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.NUD_MaxMetronomeEdge.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_MaxMetronomeEdge.Name = "NUD_MaxMetronomeEdge";
+            this.NUD_MaxMetronomeEdge.Size = new System.Drawing.Size(180, 20);
+            this.NUD_MaxMetronomeEdge.TabIndex = 43;
+            this.NUD_MaxMetronomeEdge.Tag = "edge";
+            this.NUD_MaxMetronomeEdge.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_MaxMetronomeEdge.ValueChanged += new System.EventHandler(this.NUD_MaxMetronome_ValueChanged);
+            // 
+            // L_MaxMetronomeEdge
+            // 
+            this.L_MaxMetronomeEdge.AutoSize = true;
+            this.L_MaxMetronomeEdge.Location = new System.Drawing.Point(290, 183);
+            this.L_MaxMetronomeEdge.Name = "L_MaxMetronomeEdge";
+            this.L_MaxMetronomeEdge.Size = new System.Drawing.Size(77, 13);
+            this.L_MaxMetronomeEdge.TabIndex = 42;
+            this.L_MaxMetronomeEdge.Text = "Maximum bpm:";
+            // 
+            // NUD_MinMetronomeEdge
+            // 
+            this.NUD_MinMetronomeEdge.Location = new System.Drawing.Point(98, 181);
+            this.NUD_MinMetronomeEdge.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.NUD_MinMetronomeEdge.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_MinMetronomeEdge.Name = "NUD_MinMetronomeEdge";
+            this.NUD_MinMetronomeEdge.Size = new System.Drawing.Size(180, 20);
+            this.NUD_MinMetronomeEdge.TabIndex = 41;
+            this.NUD_MinMetronomeEdge.Tag = "edge";
+            this.NUD_MinMetronomeEdge.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.NUD_MinMetronomeEdge.ValueChanged += new System.EventHandler(this.NUD_MinMetronome_ValueChanged);
+            // 
+            // L_MinMetronomeEdge
+            // 
+            this.L_MinMetronomeEdge.AutoSize = true;
+            this.L_MinMetronomeEdge.Location = new System.Drawing.Point(24, 183);
+            this.L_MinMetronomeEdge.Name = "L_MinMetronomeEdge";
+            this.L_MinMetronomeEdge.Size = new System.Drawing.Size(74, 13);
+            this.L_MinMetronomeEdge.TabIndex = 40;
+            this.L_MinMetronomeEdge.Text = "Minimum bpm:";
+            // 
             // ETB_MetronomeChance
             // 
-            this.ETB_MetronomeChance.Location = new System.Drawing.Point(12, 74);
+            this.ETB_MetronomeChance.Location = new System.Drawing.Point(17, 95);
             this.ETB_MetronomeChance.Maximum = 100;
             this.ETB_MetronomeChance.Minimum = 1;
             this.ETB_MetronomeChance.Name = "ETB_MetronomeChance";
-            this.ETB_MetronomeChance.Size = new System.Drawing.Size(535, 48);
+            this.ETB_MetronomeChance.Size = new System.Drawing.Size(530, 48);
             this.ETB_MetronomeChance.TabIndex = 39;
             this.ETB_MetronomeChance.Text = "Chance (%):";
             this.ETB_MetronomeChance.TickFrequency = 10;
-            this.ETB_MetronomeChance.ToolTip = "Defines the chance of stroking to a metronome on a green light.";
+            this.ETB_MetronomeChance.ToolTip = "Defines the chance of stroking to a metronome on a green phase.";
             this.ETB_MetronomeChance.Value = 50;
             // 
             // NUD_MaxMetronome
             // 
-            this.NUD_MaxMetronome.Location = new System.Drawing.Point(367, 48);
+            this.NUD_MaxMetronome.Location = new System.Drawing.Point(367, 69);
             this.NUD_MaxMetronome.Maximum = new decimal(new int[] {
             250,
             0,
@@ -841,6 +1056,7 @@
             this.NUD_MaxMetronome.Name = "NUD_MaxMetronome";
             this.NUD_MaxMetronome.Size = new System.Drawing.Size(180, 20);
             this.NUD_MaxMetronome.TabIndex = 16;
+            this.NUD_MaxMetronome.Tag = "green";
             this.NUD_MaxMetronome.Value = new decimal(new int[] {
             10,
             0,
@@ -851,7 +1067,7 @@
             // L_MaxMetronome
             // 
             this.L_MaxMetronome.AutoSize = true;
-            this.L_MaxMetronome.Location = new System.Drawing.Point(290, 50);
+            this.L_MaxMetronome.Location = new System.Drawing.Point(290, 71);
             this.L_MaxMetronome.Name = "L_MaxMetronome";
             this.L_MaxMetronome.Size = new System.Drawing.Size(77, 13);
             this.L_MaxMetronome.TabIndex = 15;
@@ -859,7 +1075,7 @@
             // 
             // NUD_MinMetronome
             // 
-            this.NUD_MinMetronome.Location = new System.Drawing.Point(98, 48);
+            this.NUD_MinMetronome.Location = new System.Drawing.Point(98, 69);
             this.NUD_MinMetronome.Maximum = new decimal(new int[] {
             250,
             0,
@@ -873,6 +1089,7 @@
             this.NUD_MinMetronome.Name = "NUD_MinMetronome";
             this.NUD_MinMetronome.Size = new System.Drawing.Size(180, 20);
             this.NUD_MinMetronome.TabIndex = 14;
+            this.NUD_MinMetronome.Tag = "green";
             this.NUD_MinMetronome.Value = new decimal(new int[] {
             10,
             0,
@@ -883,7 +1100,7 @@
             // L_MinMetronome
             // 
             this.L_MinMetronome.AutoSize = true;
-            this.L_MinMetronome.Location = new System.Drawing.Point(24, 50);
+            this.L_MinMetronome.Location = new System.Drawing.Point(24, 71);
             this.L_MinMetronome.Name = "L_MinMetronome";
             this.L_MinMetronome.Size = new System.Drawing.Size(74, 13);
             this.L_MinMetronome.TabIndex = 13;
@@ -1101,6 +1318,10 @@
             this.TAB_Metronome.ResumeLayout(false);
             this.GB_MetronomeSettings.ResumeLayout(false);
             this.GB_MetronomeSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxMetronomeEnding)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_MinMetronomeEnding)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxMetronomeEdge)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_MinMetronomeEdge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxMetronome)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinMetronome)).EndInit();
             this.TAB_Ending.ResumeLayout(false);
@@ -1190,5 +1411,18 @@
         private System.Windows.Forms.Button B_ResetEdge;
         private System.Windows.Forms.Button B_ResetRed;
         private System.Windows.Forms.Button B_ResetGreen;
+        private System.Windows.Forms.Label L_EndingPhaseMetronome;
+        private System.Windows.Forms.Label L_EdgePhaseMetronome;
+        private System.Windows.Forms.Label L_GreenPhaseMetronome;
+        public ExtendedTrackBar ETB_MetronomeEndingChance;
+        public System.Windows.Forms.NumericUpDown NUD_MaxMetronomeEnding;
+        private System.Windows.Forms.Label L_MaxMetronomeEnding;
+        public System.Windows.Forms.NumericUpDown NUD_MinMetronomeEnding;
+        private System.Windows.Forms.Label L_MinMetronomeEnding;
+        public ExtendedTrackBar ETB_MetronomeEdgeChance;
+        public System.Windows.Forms.NumericUpDown NUD_MaxMetronomeEdge;
+        private System.Windows.Forms.Label L_MaxMetronomeEdge;
+        public System.Windows.Forms.NumericUpDown NUD_MinMetronomeEdge;
+        private System.Windows.Forms.Label L_MinMetronomeEdge;
     }
 }

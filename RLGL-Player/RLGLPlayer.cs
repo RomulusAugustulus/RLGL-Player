@@ -265,7 +265,18 @@ public partial class RLGLPlayer : Form
         private void SetVideoEndTimer()
         {
             Console.Out.WriteLine(VLC_Control.GetCurrentMedia().Duration.TotalMilliseconds);
-            RLGL_VideoEndTimer.Interval = (int)(VLC_Control.GetCurrentMedia().Duration - (rlglCurrentMedia.End + TimeSpan.FromSeconds(2))).TotalMilliseconds;
+            int duration = (int)(VLC_Control.GetCurrentMedia().Duration - (rlglCurrentMedia.End + TimeSpan.FromSeconds(2))).TotalMilliseconds;
+
+            if (duration < 1)
+            {
+                MessageBox.Show("Current selected ending is " + Math.Abs(duration)/1000 + " seconds longer than the video! Session will end before ending has finished!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                RLGL_VideoEndTimer.Interval = 1;
+            }
+            else
+            {
+                RLGL_VideoEndTimer.Interval = duration;
+            }
+
             RLGL_VideoEndTimer.Start();
         }
 
@@ -286,6 +297,10 @@ public partial class RLGLPlayer : Form
                     {
                         L_Text.Text += " - follow the beat";
                         SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinBpm, rlglPreferences.MaxBpm+1));
+                    }
+                    else
+                    {
+                        StopMetronome();
                     }
 
                     if (rlglPreferences.Censoring)
@@ -324,9 +339,18 @@ public partial class RLGLPlayer : Form
                 case RLGLPhase.Edge:
                     RLGL_Layout.BackColor = rlglPreferences.EdgeColor;
                     volumeBar.SetBackgroundColor(rlglPreferences.EdgeColor);
-                    L_Text.BackColor = rlglPreferences.EdgeColor;
-                    StopMetronome();
+                    L_Text.BackColor = rlglPreferences.EdgeColor;                   
                     L_Text.Text = "Edge!";
+
+                    if (rlglPreferences.Metronome && randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeEdgeChance)
+                    {
+                        L_Text.Text += " - follow the beat";
+                        SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinEdgeBpm, rlglPreferences.MaxEdgeBpm + 1));
+                    }
+                    else
+                    {
+                        StopMetronome();
+                    }
 
                     if (rlglPreferences.Censoring)
                     {
@@ -355,9 +379,13 @@ public partial class RLGLPlayer : Form
                     L_Text.BackColor = rlglPreferences.GreenLightColor;
                     L_Text.Text = phase.Message;                    
 
-                    if (rlglPreferences.Metronome && randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeChance)
+                    if (rlglPreferences.Metronome && randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeEndingChance)
                     {
-                        SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinBpm, rlglPreferences.MaxBpm + 1));
+                        SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinEndingBpm, rlglPreferences.MaxEndingBpm + 1));
+                    }
+                    else
+                    {
+                        StopMetronome();
                     }
 
                     if (rlglPreferences.Censoring)
@@ -397,8 +425,16 @@ public partial class RLGLPlayer : Form
                     RLGL_Layout.BackColor = rlglPreferences.EdgeColor;
                     volumeBar.SetBackgroundColor(rlglPreferences.EdgeColor);
                     L_Text.BackColor = rlglPreferences.EdgeColor;
-                    StopMetronome();
                     L_Text.Text = phase.Message;
+
+                    if (rlglPreferences.Metronome && randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeEndingChance)
+                    {
+                        SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinEndingBpm, rlglPreferences.MaxEndingBpm + 1));
+                    }
+                    else
+                    {
+                        StopMetronome();
+                    }
 
                     if (rlglPreferences.Censoring)
                     {
@@ -446,7 +482,7 @@ public partial class RLGLPlayer : Form
                         volumeBar.SetBackgroundColor(rlglPreferences.GreenLightColor);
                         L_Text.BackColor = rlglPreferences.GreenLightColor;
                     }
-                    
+
                     if (phase.Message.Length > 0)
                     {
                         L_Text.Text = phase.Message + ": " + phase.CountdownBegin;
@@ -456,9 +492,13 @@ public partial class RLGLPlayer : Form
                         L_Text.Text = phase.CountdownBegin.ToString();
                     }
 
-                    if (rlglPreferences.Metronome && randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeChance)
+                    if (rlglPreferences.Metronome && randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeEndingChance)
                     {
-                        SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinBpm, rlglPreferences.MaxBpm + 1));
+                        SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinEndingBpm, rlglPreferences.MaxEndingBpm + 1));
+                    }
+                    else
+                    {
+                        StopMetronome();
                     }
 
                     if (rlglPreferences.Censoring)
