@@ -73,6 +73,7 @@ namespace RLGL_Player
                 p.CountdownBegin = 10;
                 p.CountdownEnd = 0;
                 p.CountdownStep = 1;
+                p.CountdownEdge = false;
 
                 phases.Add(p);
                 LB_EndingParts.Items.Add(p.Name);
@@ -185,6 +186,7 @@ namespace RLGL_Player
                 currentPhase.CountdownBegin = (int)NUD_CountdownBegin.Value;
                 currentPhase.CountdownEnd = (int)NUD_CountdownEnd.Value;
                 currentPhase.CountdownStep = (int)NUD_CountdownStepDuration.Value;
+                currentPhase.CountdownEdge = CB_UseEdgeLight.Checked;
             }
         }
 
@@ -195,6 +197,7 @@ namespace RLGL_Player
                 NUD_CountdownBegin.Enabled = true;
                 NUD_CountdownEnd.Enabled = true;
                 NUD_CountdownStepDuration.Enabled = true;
+                CB_UseEdgeLight.Enabled = true;
 
                 NUD_PhaseDuration.Enabled = false;
                 CalculateCountdownTime();
@@ -204,6 +207,7 @@ namespace RLGL_Player
                 NUD_CountdownBegin.Enabled = false;
                 NUD_CountdownEnd.Enabled = false;
                 NUD_CountdownStepDuration.Enabled = false;
+                CB_UseEdgeLight.Enabled = false;
 
                 NUD_PhaseDuration.Enabled = true;
             }
@@ -249,6 +253,7 @@ namespace RLGL_Player
                 NUD_CountdownBegin.Value = Math.Min(NUD_CountdownBegin.Maximum, Math.Max(currentPhase.CountdownBegin, NUD_CountdownBegin.Minimum));
                 NUD_CountdownEnd.Value = Math.Min(NUD_CountdownEnd.Maximum, Math.Max(currentPhase.CountdownEnd, NUD_CountdownEnd.Minimum));
                 NUD_CountdownStepDuration.Value = Math.Min(NUD_CountdownStepDuration.Maximum, Math.Max(currentPhase.CountdownStep, NUD_CountdownStepDuration.Minimum));
+                CB_UseEdgeLight.Checked = currentPhase.CountdownEdge;
 
                 EnableCountdownControls();
             }
@@ -263,6 +268,7 @@ namespace RLGL_Player
                 NUD_CountdownBegin.Value = 10;
                 NUD_CountdownEnd.Value = 0;
                 NUD_CountdownStepDuration.Value = 1;
+                CB_UseEdgeLight.Checked = false;
                 TB_Text.Text = "";
             }
         }

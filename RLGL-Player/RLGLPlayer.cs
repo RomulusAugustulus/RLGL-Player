@@ -437,9 +437,19 @@ public partial class RLGLPlayer : Form
                     break;
 
                 case RLGLPhase.Countdown:
-                    RLGL_Layout.BackColor = rlglPreferences.GreenLightColor;
-                    volumeBar.SetBackgroundColor(rlglPreferences.GreenLightColor);
-                    L_Text.BackColor = rlglPreferences.GreenLightColor;
+                    if (phase.CountdownEdge)
+                    {
+                        RLGL_Layout.BackColor = rlglPreferences.EdgeColor;
+                        volumeBar.SetBackgroundColor(rlglPreferences.EdgeColor);
+                        L_Text.BackColor = rlglPreferences.EdgeColor;
+                    }
+                    else
+                    {
+                        RLGL_Layout.BackColor = rlglPreferences.GreenLightColor;
+                        volumeBar.SetBackgroundColor(rlglPreferences.GreenLightColor);
+                        L_Text.BackColor = rlglPreferences.GreenLightColor;
+                    }
+                    
                     if (phase.Message.Length > 0)
                     {
                         L_Text.Text = phase.Message + ": " + phase.CountdownBegin;

@@ -26,7 +26,7 @@ namespace RLGL_Player
      */ 
     public class RLGLEnding
     {
-        private const ushort endingVersion = 1;
+        private const ushort endingVersion = 2;
         private int duration;
         private List<RLGLEndingPhase> endingPhases;
         private int currentPos;
@@ -89,6 +89,7 @@ namespace RLGL_Player
                 endingWriter.Write(endingPhases[i].CountdownBegin);
                 endingWriter.Write(endingPhases[i].CountdownEnd);
                 endingWriter.Write(endingPhases[i].CountdownStep);
+                endingWriter.Write(endingPhases[i].CountdownEdge);
             }
 
             endingWriter.Close();
@@ -105,7 +106,7 @@ namespace RLGL_Player
                 duration = endingReader.ReadInt32();
                 endingName = endingReader.ReadString();
                 int phaseCount = endingReader.ReadInt32();
-                for(int i=0;i<phaseCount;i++)
+                for (int i = 0; i < phaseCount; i++)
                 {
                     RLGLEndingPhase p = new RLGLEndingPhase();
                     p.Name = endingReader.ReadString();
@@ -115,20 +116,39 @@ namespace RLGL_Player
                     p.CountdownBegin = endingReader.ReadInt32();
                     p.CountdownEnd = endingReader.ReadInt32();
                     p.CountdownStep = endingReader.ReadInt32();
+                    p.CountdownEdge = endingReader.ReadBoolean();
                     endingPhases.Add(p);
                 }
-
-                endingReader.Close();
             }
             else
             {
                 LoadLegacyVersion(endingReader, version);
             }
+
+            endingReader.Close();
         }
 
         private void LoadLegacyVersion(BinaryReader endingReader, ushort version)
         {
-            //Do nothing there are no legacy versions at the moment.
+            if (version == 1)
+            {
+                duration = endingReader.ReadInt32();
+                endingName = endingReader.ReadString();
+                int phaseCount = endingReader.ReadInt32();
+                for (int i = 0; i < phaseCount; i++)
+                {
+                    RLGLEndingPhase p = new RLGLEndingPhase();
+                    p.Name = endingReader.ReadString();
+                    p.Duration = endingReader.ReadInt32();
+                    p.Message = endingReader.ReadString();
+                    p.Phase = (RLGLPhase)endingReader.ReadInt32();
+                    p.CountdownBegin = endingReader.ReadInt32();
+                    p.CountdownEnd = endingReader.ReadInt32();
+                    p.CountdownStep = endingReader.ReadInt32();
+                    p.CountdownEdge = false;
+                    endingPhases.Add(p);
+                }
+            }
         }
     }
 }
