@@ -179,14 +179,14 @@
             this.CB_AllowGreenLight.AutoSize = true;
             this.CB_AllowGreenLight.Location = new System.Drawing.Point(31, 302);
             this.CB_AllowGreenLight.Name = "CB_AllowGreenLight";
-            this.CB_AllowGreenLight.Size = new System.Drawing.Size(186, 17);
+            this.CB_AllowGreenLight.Size = new System.Drawing.Size(196, 17);
             this.CB_AllowGreenLight.TabIndex = 37;
-            this.CB_AllowGreenLight.Text = "Allow green light after edge phase";
+            this.CB_AllowGreenLight.Text = "Allow green phase after edge phase";
             this.CB_AllowGreenLight.UseVisualStyleBackColor = true;
             // 
             // NUD_MaxEdge
             // 
-            this.NUD_MaxEdge.Location = new System.Drawing.Point(207, 228);
+            this.NUD_MaxEdge.Location = new System.Drawing.Point(214, 228);
             this.NUD_MaxEdge.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -198,7 +198,7 @@
             0,
             0});
             this.NUD_MaxEdge.Name = "NUD_MaxEdge";
-            this.NUD_MaxEdge.Size = new System.Drawing.Size(353, 20);
+            this.NUD_MaxEdge.Size = new System.Drawing.Size(346, 20);
             this.NUD_MaxEdge.TabIndex = 34;
             this.NUD_MaxEdge.Value = new decimal(new int[] {
             10,
@@ -212,13 +212,13 @@
             this.L_MaxEdge.AutoSize = true;
             this.L_MaxEdge.Location = new System.Drawing.Point(28, 230);
             this.L_MaxEdge.Name = "L_MaxEdge";
-            this.L_MaxEdge.Size = new System.Drawing.Size(170, 13);
+            this.L_MaxEdge.Size = new System.Drawing.Size(180, 13);
             this.L_MaxEdge.TabIndex = 33;
-            this.L_MaxEdge.Text = "Maximum duration of edge light (s):";
+            this.L_MaxEdge.Text = "Maximum duration of edge phase (s):";
             // 
             // NUD_MinEdge
             // 
-            this.NUD_MinEdge.Location = new System.Drawing.Point(207, 200);
+            this.NUD_MinEdge.Location = new System.Drawing.Point(214, 200);
             this.NUD_MinEdge.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -230,7 +230,7 @@
             0,
             0});
             this.NUD_MinEdge.Name = "NUD_MinEdge";
-            this.NUD_MinEdge.Size = new System.Drawing.Size(353, 20);
+            this.NUD_MinEdge.Size = new System.Drawing.Size(346, 20);
             this.NUD_MinEdge.TabIndex = 32;
             this.NUD_MinEdge.Value = new decimal(new int[] {
             10,
@@ -244,20 +244,20 @@
             this.L_MinEdge.AutoSize = true;
             this.L_MinEdge.Location = new System.Drawing.Point(28, 204);
             this.L_MinEdge.Name = "L_MinEdge";
-            this.L_MinEdge.Size = new System.Drawing.Size(167, 13);
+            this.L_MinEdge.Size = new System.Drawing.Size(177, 13);
             this.L_MinEdge.TabIndex = 31;
-            this.L_MinEdge.Text = "Minimum duration of edge light: (s)";
+            this.L_MinEdge.Text = "Minimum duration of edge phase: (s)";
             // 
             // NUD_EdgeWarmup
             // 
-            this.NUD_EdgeWarmup.Location = new System.Drawing.Point(207, 172);
+            this.NUD_EdgeWarmup.Location = new System.Drawing.Point(214, 172);
             this.NUD_EdgeWarmup.Maximum = new decimal(new int[] {
             3600,
             0,
             0,
             0});
             this.NUD_EdgeWarmup.Name = "NUD_EdgeWarmup";
-            this.NUD_EdgeWarmup.Size = new System.Drawing.Size(353, 20);
+            this.NUD_EdgeWarmup.Size = new System.Drawing.Size(346, 20);
             this.NUD_EdgeWarmup.TabIndex = 30;
             this.NUD_EdgeWarmup.Value = new decimal(new int[] {
             60,
@@ -287,7 +287,7 @@
             // 
             // NUD_MaxRed
             // 
-            this.NUD_MaxRed.Location = new System.Drawing.Point(185, 115);
+            this.NUD_MaxRed.Location = new System.Drawing.Point(195, 115);
             this.NUD_MaxRed.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -299,7 +299,7 @@
             0,
             0});
             this.NUD_MaxRed.Name = "NUD_MaxRed";
-            this.NUD_MaxRed.Size = new System.Drawing.Size(375, 20);
+            this.NUD_MaxRed.Size = new System.Drawing.Size(365, 20);
             this.NUD_MaxRed.TabIndex = 7;
             this.NUD_MaxRed.Value = new decimal(new int[] {
             10,
@@ -313,13 +313,13 @@
             this.L_MaxRed.AutoSize = true;
             this.L_MaxRed.Location = new System.Drawing.Point(6, 117);
             this.L_MaxRed.Name = "L_MaxRed";
-            this.L_MaxRed.Size = new System.Drawing.Size(161, 13);
+            this.L_MaxRed.Size = new System.Drawing.Size(171, 13);
             this.L_MaxRed.TabIndex = 6;
-            this.L_MaxRed.Text = "Maximum duration of red light (s):";
+            this.L_MaxRed.Text = "Maximum duration of red phase (s):";
             // 
             // NUD_MinRed
             // 
-            this.NUD_MinRed.Location = new System.Drawing.Point(185, 87);
+            this.NUD_MinRed.Location = new System.Drawing.Point(195, 87);
             this.NUD_MinRed.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -331,7 +331,7 @@
             0,
             0});
             this.NUD_MinRed.Name = "NUD_MinRed";
-            this.NUD_MinRed.Size = new System.Drawing.Size(375, 20);
+            this.NUD_MinRed.Size = new System.Drawing.Size(365, 20);
             this.NUD_MinRed.TabIndex = 5;
             this.NUD_MinRed.Value = new decimal(new int[] {
             10,
@@ -345,13 +345,13 @@
             this.L_MinRed.AutoSize = true;
             this.L_MinRed.Location = new System.Drawing.Point(6, 89);
             this.L_MinRed.Name = "L_MinRed";
-            this.L_MinRed.Size = new System.Drawing.Size(158, 13);
+            this.L_MinRed.Size = new System.Drawing.Size(168, 13);
             this.L_MinRed.TabIndex = 4;
-            this.L_MinRed.Text = "Minimum duration of red light (s):";
+            this.L_MinRed.Text = "Minimum duration of red phase (s):";
             // 
             // NUD_MaxGreen
             // 
-            this.NUD_MaxGreen.Location = new System.Drawing.Point(185, 56);
+            this.NUD_MaxGreen.Location = new System.Drawing.Point(195, 56);
             this.NUD_MaxGreen.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -363,7 +363,7 @@
             0,
             0});
             this.NUD_MaxGreen.Name = "NUD_MaxGreen";
-            this.NUD_MaxGreen.Size = new System.Drawing.Size(375, 20);
+            this.NUD_MaxGreen.Size = new System.Drawing.Size(365, 20);
             this.NUD_MaxGreen.TabIndex = 3;
             this.NUD_MaxGreen.Value = new decimal(new int[] {
             10,
@@ -377,13 +377,13 @@
             this.L_MaxGreen.AutoSize = true;
             this.L_MaxGreen.Location = new System.Drawing.Point(6, 58);
             this.L_MaxGreen.Name = "L_MaxGreen";
-            this.L_MaxGreen.Size = new System.Drawing.Size(173, 13);
+            this.L_MaxGreen.Size = new System.Drawing.Size(183, 13);
             this.L_MaxGreen.TabIndex = 2;
-            this.L_MaxGreen.Text = "Maximum duration of green light (s):";
+            this.L_MaxGreen.Text = "Maximum duration of green phase (s):";
             // 
             // NUD_MinGreen
             // 
-            this.NUD_MinGreen.Location = new System.Drawing.Point(185, 28);
+            this.NUD_MinGreen.Location = new System.Drawing.Point(195, 28);
             this.NUD_MinGreen.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -395,7 +395,7 @@
             0,
             0});
             this.NUD_MinGreen.Name = "NUD_MinGreen";
-            this.NUD_MinGreen.Size = new System.Drawing.Size(375, 20);
+            this.NUD_MinGreen.Size = new System.Drawing.Size(365, 20);
             this.NUD_MinGreen.TabIndex = 1;
             this.NUD_MinGreen.Value = new decimal(new int[] {
             10,
@@ -409,9 +409,9 @@
             this.L_GreenMin.AutoSize = true;
             this.L_GreenMin.Location = new System.Drawing.Point(6, 30);
             this.L_GreenMin.Name = "L_GreenMin";
-            this.L_GreenMin.Size = new System.Drawing.Size(170, 13);
+            this.L_GreenMin.Size = new System.Drawing.Size(180, 13);
             this.L_GreenMin.TabIndex = 0;
-            this.L_GreenMin.Text = "Minimum duration of green light (s):";
+            this.L_GreenMin.Text = "Minimum duration of green phase (s):";
             // 
             // GB_ProgramSettings
             // 
@@ -684,9 +684,9 @@
             this.L_EdgeLightColor.AutoSize = true;
             this.L_EdgeLightColor.Location = new System.Drawing.Point(6, 94);
             this.L_EdgeLightColor.Name = "L_EdgeLightColor";
-            this.L_EdgeLightColor.Size = new System.Drawing.Size(83, 13);
+            this.L_EdgeLightColor.Size = new System.Drawing.Size(93, 13);
             this.L_EdgeLightColor.TabIndex = 4;
-            this.L_EdgeLightColor.Text = "Edge light color:";
+            this.L_EdgeLightColor.Text = "Edge phase color:";
             // 
             // P_RedLightColor
             // 
@@ -702,9 +702,9 @@
             this.L_RedLightColor.AutoSize = true;
             this.L_RedLightColor.Location = new System.Drawing.Point(6, 62);
             this.L_RedLightColor.Name = "L_RedLightColor";
-            this.L_RedLightColor.Size = new System.Drawing.Size(78, 13);
+            this.L_RedLightColor.Size = new System.Drawing.Size(88, 13);
             this.L_RedLightColor.TabIndex = 2;
-            this.L_RedLightColor.Text = "Red light color:";
+            this.L_RedLightColor.Text = "Red phase color:";
             // 
             // P_GreenLightColor
             // 
@@ -720,9 +720,9 @@
             this.L_GreenLightColor.AutoSize = true;
             this.L_GreenLightColor.Location = new System.Drawing.Point(6, 30);
             this.L_GreenLightColor.Name = "L_GreenLightColor";
-            this.L_GreenLightColor.Size = new System.Drawing.Size(87, 13);
+            this.L_GreenLightColor.Size = new System.Drawing.Size(97, 13);
             this.L_GreenLightColor.TabIndex = 0;
-            this.L_GreenLightColor.Text = "Green light color:";
+            this.L_GreenLightColor.Text = "Green phase color:";
             // 
             // B_SaveExit
             // 
@@ -990,9 +990,9 @@
             this.CB_CensorOnlyGreen.Enabled = false;
             this.CB_CensorOnlyGreen.Location = new System.Drawing.Point(28, 83);
             this.CB_CensorOnlyGreen.Name = "CB_CensorOnlyGreen";
-            this.CB_CensorOnlyGreen.Size = new System.Drawing.Size(177, 17);
+            this.CB_CensorOnlyGreen.Size = new System.Drawing.Size(187, 17);
             this.CB_CensorOnlyGreen.TabIndex = 29;
-            this.CB_CensorOnlyGreen.Text = "Censor only on green/edge light";
+            this.CB_CensorOnlyGreen.Text = "Censor only on green/edge phase";
             this.CB_CensorOnlyGreen.UseVisualStyleBackColor = true;
             // 
             // CB_Censoring

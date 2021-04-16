@@ -40,6 +40,7 @@ namespace RLGL_Player
             this.B_Cancel = new System.Windows.Forms.Button();
             this.B_OK = new System.Windows.Forms.Button();
             this.GB_FineTuning = new System.Windows.Forms.GroupBox();
+            this.CB_UseEdgeLight = new System.Windows.Forms.CheckBox();
             this.B_Apply = new System.Windows.Forms.Button();
             this.NUD_CountdownStepDuration = new System.Windows.Forms.NumericUpDown();
             this.L_CountdownStepDuration = new System.Windows.Forms.Label();
@@ -58,7 +59,6 @@ namespace RLGL_Player
             this.RB_EdgeLight = new System.Windows.Forms.RadioButton();
             this.RB_RuinedOrgasm = new System.Windows.Forms.RadioButton();
             this.L_Phase = new System.Windows.Forms.Label();
-            this.CB_UseEdgeLight = new System.Windows.Forms.CheckBox();
             this.GB_EndingParts.SuspendLayout();
             this.GB_FineTuning.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_CountdownStepDuration)).BeginInit();
@@ -198,6 +198,16 @@ namespace RLGL_Player
             this.GB_FineTuning.TabIndex = 3;
             this.GB_FineTuning.TabStop = false;
             this.GB_FineTuning.Text = "Phase-Settings";
+            // 
+            // CB_UseEdgeLight
+            // 
+            this.CB_UseEdgeLight.AutoSize = true;
+            this.CB_UseEdgeLight.Location = new System.Drawing.Point(253, 206);
+            this.CB_UseEdgeLight.Name = "CB_UseEdgeLight";
+            this.CB_UseEdgeLight.Size = new System.Drawing.Size(223, 17);
+            this.CB_UseEdgeLight.TabIndex = 20;
+            this.CB_UseEdgeLight.Text = "Display countdown with edge phase color";
+            this.CB_UseEdgeLight.UseVisualStyleBackColor = true;
             // 
             // B_Apply
             // 
@@ -362,10 +372,10 @@ namespace RLGL_Player
             this.RB_GreenLight.AutoSize = true;
             this.RB_GreenLight.Location = new System.Drawing.Point(3, 3);
             this.RB_GreenLight.Name = "RB_GreenLight";
-            this.RB_GreenLight.Size = new System.Drawing.Size(76, 17);
+            this.RB_GreenLight.Size = new System.Drawing.Size(86, 17);
             this.RB_GreenLight.TabIndex = 0;
             this.RB_GreenLight.TabStop = true;
-            this.RB_GreenLight.Text = "Green light";
+            this.RB_GreenLight.Text = "Green phase";
             this.RB_GreenLight.UseVisualStyleBackColor = true;
             this.RB_GreenLight.Click += new System.EventHandler(this.RB_Phase_Click);
             // 
@@ -374,10 +384,10 @@ namespace RLGL_Player
             this.RB_RedLight.AutoSize = true;
             this.RB_RedLight.Location = new System.Drawing.Point(3, 29);
             this.RB_RedLight.Name = "RB_RedLight";
-            this.RB_RedLight.Size = new System.Drawing.Size(67, 17);
+            this.RB_RedLight.Size = new System.Drawing.Size(77, 17);
             this.RB_RedLight.TabIndex = 2;
             this.RB_RedLight.TabStop = true;
-            this.RB_RedLight.Text = "Red light";
+            this.RB_RedLight.Text = "Red phase";
             this.RB_RedLight.UseVisualStyleBackColor = true;
             this.RB_RedLight.Click += new System.EventHandler(this.RB_Phase_Click);
             // 
@@ -398,10 +408,10 @@ namespace RLGL_Player
             this.RB_EdgeLight.AutoSize = true;
             this.RB_EdgeLight.Location = new System.Drawing.Point(144, 3);
             this.RB_EdgeLight.Name = "RB_EdgeLight";
-            this.RB_EdgeLight.Size = new System.Drawing.Size(72, 17);
+            this.RB_EdgeLight.Size = new System.Drawing.Size(82, 17);
             this.RB_EdgeLight.TabIndex = 3;
             this.RB_EdgeLight.TabStop = true;
-            this.RB_EdgeLight.Text = "Edge light";
+            this.RB_EdgeLight.Text = "Edge phase";
             this.RB_EdgeLight.UseVisualStyleBackColor = true;
             this.RB_EdgeLight.Click += new System.EventHandler(this.RB_Phase_Click);
             // 
@@ -425,16 +435,6 @@ namespace RLGL_Player
             this.L_Phase.Size = new System.Drawing.Size(40, 13);
             this.L_Phase.TabIndex = 1;
             this.L_Phase.Text = "Phase:";
-            // 
-            // CB_UseEdgeLight
-            // 
-            this.CB_UseEdgeLight.AutoSize = true;
-            this.CB_UseEdgeLight.Location = new System.Drawing.Point(253, 206);
-            this.CB_UseEdgeLight.Name = "CB_UseEdgeLight";
-            this.CB_UseEdgeLight.Size = new System.Drawing.Size(223, 17);
-            this.CB_UseEdgeLight.TabIndex = 20;
-            this.CB_UseEdgeLight.Text = "Display countdown with edge phase color";
-            this.CB_UseEdgeLight.UseVisualStyleBackColor = true;
             // 
             // EndingConfiguratorDlg
             // 
