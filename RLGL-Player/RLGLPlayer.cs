@@ -24,6 +24,9 @@ using System.Windows.Forms;
 using System.IO;
 using System.Media;
 using System.Collections.Generic;
+using LibVLCSharp.WinForms;
+using LibVLCSharp.Shared;
+using System.Threading.Tasks;
 
 namespace RLGL_Player
 {
@@ -55,8 +58,17 @@ public partial class RLGLPlayer : Form
         private PreferencesDlg preferencesDlg;
         private VolumeBar volumeBar;
 
+        private LibVLC libVLC;
+        private MediaPlayer mediaPlayer;
+
         public RLGLPlayer()
         {
+            Core.Initialize();
+            libVLC = new LibVLC();
+            mediaPlayer = new MediaPlayer(libVLC);
+
+            mediaPlayer.EndReached += new EventHandler<EventArgs>(VLC_Control_EndReached);
+
             randomNumberGenerator = new Random();
             rlglPreferences = new RLGLPreferences();
             metronome = new SoundPlayer();
@@ -70,13 +82,14 @@ public partial class RLGLPlayer : Form
             fullscreen = false;
             preferencesDlg = new PreferencesDlg();
             volumeBar = new VolumeBar();
+
             InitializeComponent();
         }
 
         //Load a new media queue, play it and start with the first phase.
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RLGLPlayingQueueDlg rlglPlayingQueueDlg = new RLGLPlayingQueueDlg();
+            RLGLPlayingQueueDlg rlglPlayingQueueDlg = new RLGLPlayingQueueDlg(libVLC);
 
             if(rlglPlayingQueueDlg.ShowDialog() == DialogResult.OK)
             {
@@ -179,7 +192,7 @@ public partial class RLGLPlayer : Form
             else
             {
                 RLGL_CountdownTimer.Stop();
-                currentEndingPhase = rlglCurrentMedia.Ending.GetNextPhase();
+                currentEndingPhase = rlglVideoQueue.Ending.GetNextPhase();
                 if (currentEndingPhase != null)
                 {
                     ShowPhase(currentEndingPhase);
@@ -199,7 +212,7 @@ public partial class RLGLPlayer : Form
 
         //Load necessary files at startup.
         private void Form1_Load(object sender, EventArgs e)
-        {
+        {           
             rlglPreferences.LoadPreferencesFromFile("Preferences.config");
             RLGL_EdgingTimer.Interval = rlglPreferences.EdgingWarmup * 1000;
             UpdateRLGLLayoutSizes();
@@ -209,6 +222,7 @@ public partial class RLGLPlayer : Form
 
             ResizeAndPositionVolumeBar();
             volumeBar.Show(this);
+            VLC_Control.MediaPlayer = mediaPlayer;
         }
 
         //Save the preferences to the disc.
@@ -218,15 +232,9 @@ public partial class RLGLPlayer : Form
         }
 
         //After the video is finished, reset the information.
-        private void VLC_Control_EndReached(object sender, Vlc.DotNet.Core.VlcMediaPlayerEndReachedEventArgs e)
+        private void VLC_Control_EndReached(object sender, EventArgs e)
         {
             this.BeginInvoke(new Action(() => ResetRLGLInfo()));
-        }
-
-        //As soon as the video is playing set the information.
-        private void VLC_Control_Playing(object sender, Vlc.DotNet.Core.VlcMediaPlayerPlayingEventArgs e)
-        {
-            this.BeginInvoke(new Action(() => SetVideoEndTimer()));
         }
 
         //Near the end of the video stop random mode and show the ending phases.
@@ -236,36 +244,29 @@ public partial class RLGLPlayer : Form
             Console.Out.WriteLine("Videos remaining: " + rlglVideoQueue.VideosRemaining());
             RLGL_SwitchTimer.Stop();
             RLGL_VideoEndTimer.Stop();
-            
-            if (rlglVideoQueue.VideosRemaining() == 0)
-            {
-                playEnding = true;
-                currentEndingPhase = rlglCurrentMedia.Ending.GetNextPhase();
-                if (currentEndingPhase != null)
-                {
-                    ShowPhase(currentEndingPhase);
-                    RLGL_SwitchTimer.Interval = currentEndingPhase.Duration * 1000;
-                    RLGL_SwitchTimer.Start();
 
-                    if (currentEndingPhase.Phase == RLGLPhase.Countdown)
-                    {
-                        currentEndingCountdown = currentEndingPhase.CountdownBegin;
-                        RLGL_CountdownTimer.Interval = currentEndingPhase.CountdownStep * 1000;
-                        RLGL_CountdownTimer.Start();
-                    }
-                }
-            }
-            else
+            playEnding = true;
+            currentEndingPhase = rlglVideoQueue.Ending.GetNextPhase();
+            if (currentEndingPhase != null)
             {
-                ShowPhase(RLGLPhase.Red);
+                ShowPhase(currentEndingPhase);
+                RLGL_SwitchTimer.Interval = currentEndingPhase.Duration * 1000;
+                RLGL_SwitchTimer.Start();
+
+                if (currentEndingPhase.Phase == RLGLPhase.Countdown)
+                {
+                    currentEndingCountdown = currentEndingPhase.CountdownBegin;
+                    RLGL_CountdownTimer.Interval = currentEndingPhase.CountdownStep * 1000;
+                    RLGL_CountdownTimer.Start();
+                }
             }
         }
 
         //Calculates the duration of the video and sets the timer accordingly.
         private void SetVideoEndTimer()
         {
-            Console.Out.WriteLine(VLC_Control.GetCurrentMedia().Duration.TotalMilliseconds);
-            int duration = (int)(VLC_Control.GetCurrentMedia().Duration - (rlglCurrentMedia.End + TimeSpan.FromSeconds(2))).TotalMilliseconds;
+            Console.Out.WriteLine(rlglVideoQueue.Duration);
+            int duration = (int)(TimeSpan.FromMilliseconds(rlglVideoQueue.Duration) - (TimeSpan.FromSeconds(rlglVideoQueue.Ending.Duration + 2))).TotalMilliseconds;
 
             if (duration < 1)
             {
@@ -519,52 +520,17 @@ public partial class RLGLPlayer : Form
         // Play the next video in the currently selected queue
         private void PlayNextVideo(bool sessionStart)
         {
-            string fileName = rlglVideoQueue.GetNextVideo();
-            FileStream fs = File.OpenRead(fileName);
-            VLC_Control.SetMedia(fs);
-
-            TimeSpan lastDuration = TimeSpan.FromSeconds(0);
-            RLGLEnding ending = null;
-
-            if (rlglVideoQueue.VideosRemaining() == 0)
-            {
-                int selector = randomNumberGenerator.Next(1, 100);
-                int currentOffset = 0;
-                for(int i=0;i<rlglPreferences.Ending.Count;i++)
-                {
-                    if (rlglPreferences.Ending[i].Enabled)
-                    {
-                        if (selector <= rlglPreferences.Ending[i].Chance + currentOffset)
-                        {
-                            ending = rlglPreferences.Ending[i].Ending;
-                            break;
-                        }
-                        else
-                        {
-                            currentOffset += rlglPreferences.Ending[i].Chance;
-                        }
-                    }
-                }
-
-                lastDuration = TimeSpan.FromSeconds(ending.Duration);
-                Console.Out.WriteLine("Decided for ending: " + ending.EndingName);
-            }
-            else
-            {
-                lastDuration = TimeSpan.FromSeconds(randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed));
-            }
-
+            (Media, string) nextVid = rlglVideoQueue.GetNextVideo();
+            VLC_Control.MediaPlayer.Media = nextVid.Item1;
             if (sessionStart)
             {
-                rlglCurrentMedia = new RLGLCurrentMedia(fileName,
-                    DateTime.Now, lastDuration, RLGLPhase.Green, ending);
+                rlglCurrentMedia = new RLGLCurrentMedia(nextVid.Item1, nextVid.Item2,
+                    RLGLPhase.Green);
             }
             else
             {
-                rlglCurrentMedia = new RLGLCurrentMedia(fileName,
-                    DateTime.Now, lastDuration,
-                    (RLGLPhase)randomNumberGenerator.Next(0, 2),
-                    ending);
+                rlglCurrentMedia = new RLGLCurrentMedia(nextVid.Item1, nextVid.Item2,                   
+                    (RLGLPhase)randomNumberGenerator.Next(0, 2));
             }
 
             for (int i = 0; i < censorbars.Count; i++)
@@ -574,7 +540,7 @@ public partial class RLGLPlayer : Form
 
             censorbars.Clear();
 
-            rlglCensorData = RLGLCensorData.ReadFromFile(fileName);
+            rlglCensorData = RLGLCensorData.ReadFromFile(nextVid.Item2);
             RLGL_Censor.Stop();
 
             if (rlglCensorData != null)
@@ -589,55 +555,58 @@ public partial class RLGLPlayer : Form
             else
             {
                 censorbars.Add(new Blackbar());
-            }
+            }            
 
-            ShowPhase(rlglCurrentMedia.CurrentPhase);
+            VLC_Control.MediaPlayer.Play();
 
-            VLC_Control.Play();
-
-            if (rlglCurrentMedia.CurrentPhase == RLGLPhase.Red)
+            if (!playEnding)
             {
-                RLGL_SwitchTimer.Stop();
-                RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed) * 1000;
-                RLGL_SwitchTimer.Start();
-            }
-            else
-            {
-                RLGL_SwitchTimer.Stop();
-                RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen) * 1000;
-                RLGL_SwitchTimer.Start();
+                ShowPhase(rlglCurrentMedia.CurrentPhase);
+
+                if (rlglCurrentMedia.CurrentPhase == RLGLPhase.Red)
+                {
+                    RLGL_SwitchTimer.Stop();
+                    RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed) * 1000;
+                    RLGL_SwitchTimer.Start();
+                }
+                else
+                {
+                    RLGL_SwitchTimer.Stop();
+                    RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen) * 1000;
+                    RLGL_SwitchTimer.Start();
+                }
             }
         }
 
         //Reset the visible interface. 
         private void ResetRLGLInfo()
-        {
-            RLGL_Layout.BackColor = SystemColors.Control;
-            volumeBar.SetBackgroundColor(SystemColors.Control);
-            L_Text.BackColor = SystemColors.Control;
-            L_Text.Text = "";
-            StopMetronome();
-            RLGL_SwitchTimer.Stop();
-            RLGL_VideoEndTimer.Stop();
-            RLGL_Censor.Stop();
-            RLGL_CountdownTimer.Stop();
-            playEnding = false;
-            currentEndingCountdown = -1;
-            currentEndingPhase = null;
-
+        {  
             if (rlglVideoQueue.VideosRemaining() > 0)
             {
                 PlayNextVideo(false);
             }
             else
             {
+                RLGL_Layout.BackColor = SystemColors.Control;
+                volumeBar.SetBackgroundColor(SystemColors.Control);
+                L_Text.BackColor = SystemColors.Control;
+                L_Text.Text = "";
+                StopMetronome();
+                RLGL_SwitchTimer.Stop();
+                RLGL_VideoEndTimer.Stop();
+                RLGL_Censor.Stop();
+                RLGL_CountdownTimer.Stop();
+                playEnding = false;
+                currentEndingCountdown = -1;
+                currentEndingPhase = null;
+
                 edging = false;
                 StopEdging();
                 sessionToolStripMenuItem.Visible = false;
 
-                if (rlglCurrentMedia.Ending != null)
+                if (rlglVideoQueue.Ending != null)
                 {
-                    rlglCurrentMedia.Ending.ResetPhasePointer();
+                    rlglVideoQueue.Ending.ResetPhasePointer();
                 }
 
                 RLGL_HideVolumeBar.Stop();
@@ -743,7 +712,7 @@ public partial class RLGLPlayer : Form
             }
             else
             {
-                Dictionary<int, CensorbarInfo<PointF>> relativePositions = rlglCensorData.GetAllCensorPositionsAndSizes((int)(rlglCensorData.Duration.TotalSeconds * VLC_Control.Position));
+                Dictionary<int, CensorbarInfo<PointF>> relativePositions = rlglCensorData.GetAllCensorPositionsAndSizes((int)(rlglCensorData.Duration.TotalSeconds * VLC_Control.MediaPlayer.Position));
                 
                 foreach(int id in relativePositions.Keys)
                 {
@@ -875,7 +844,7 @@ public partial class RLGLPlayer : Form
         //Change the volume of the currently played media.
         public void SetVolume(int volume)
         {
-            VLC_Control.Audio.Volume = volume;
+            VLC_Control.MediaPlayer.Volume = volume;            
         }
 
         //Show an about dialog.
@@ -884,12 +853,6 @@ public partial class RLGLPlayer : Form
             AboutDlg aboutDlg = new AboutDlg();
 
             aboutDlg.ShowDialog();
-        }
-
-        //Set the directory of the vlc-media-player.
-        private void VLC_Control_VlcLibDirectoryNeeded(object sender, Vlc.DotNet.Forms.VlcLibDirectoryNeededEventArgs e)
-        {
-            e.VlcLibDirectory = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
         }
 
         //Update a censorbars position.
@@ -940,7 +903,7 @@ public partial class RLGLPlayer : Form
                 }
                 else
                 {
-                    Dictionary<int, CensorbarInfo<PointF>> relativePositions = rlglCensorData.GetAllCensorPositionsAndSizes((float)(rlglCensorData.Duration.TotalSeconds * VLC_Control.Position));
+                    Dictionary<int, CensorbarInfo<PointF>> relativePositions = rlglCensorData.GetAllCensorPositionsAndSizes((float)(rlglCensorData.Duration.TotalSeconds * VLC_Control.MediaPlayer.Position));
 
                     foreach (int id in relativePositions.Keys)
                     {
@@ -986,6 +949,49 @@ public partial class RLGLPlayer : Form
             {
                 sessionToolStripMenuItem.Visible = true;
 
+                RLGLEnding ending = null;
+                                
+                int selector = randomNumberGenerator.Next(1, 100);
+                int currentOffset = 0;
+                for (int i = 0; i < rlglPreferences.Ending.Count; i++)
+                {
+                    if (rlglPreferences.Ending[i].Enabled && rlglPreferences.Ending[i].Ending.Duration * 1000 <= rlglVideoQueue.Duration)
+                    {
+                        if (selector <= rlglPreferences.Ending[i].Chance + currentOffset)
+                        {
+                            ending = rlglPreferences.Ending[i].Ending;
+                            break;
+                        }
+                        else
+                        {
+                            currentOffset += rlglPreferences.Ending[i].Chance;
+                        }
+                    }
+                }
+
+                if(ending == null)
+                {
+                    Console.Out.WriteLine("No ending with shorter duration than playlist found! Choosing the shortest possible...");
+                    int shortestDuration = int.MaxValue;
+
+                    for (int i = 0; i < rlglPreferences.Ending.Count; i++)
+                    {
+                        if (rlglPreferences.Ending[i].Enabled)
+                        {
+                            if(rlglPreferences.Ending[i].Ending.Duration < shortestDuration)
+                            {
+                                ending = rlglPreferences.Ending[i].Ending;
+                                shortestDuration = ending.Duration;
+                            }
+                        }
+                    }
+                }
+                
+                Console.Out.WriteLine("Decided for ending: " + ending.EndingName);
+                rlglVideoQueue.Ending = ending;
+
+                SetVideoEndTimer();
+
                 edging = false;
                 if (rlglPreferences.Edging)
                 {
@@ -1008,7 +1014,7 @@ public partial class RLGLPlayer : Form
         {
             if (rlglVideoQueue != null)
             {
-                VLC_Control.Stop();
+                VLC_Control.MediaPlayer.Stop();
                 rlglVideoQueue.CancelQueue();
                 ResetRLGLInfo();
             }

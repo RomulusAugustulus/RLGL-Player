@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+using LibVLCSharp.Shared;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,12 +28,14 @@ namespace RLGL_Player
         private List<(string, string)> videos;
         private RLGLVideoQueue videoQueue;
         public RLGLVideoQueue VideoQueue { get => videoQueue; }
+        public LibVLC LibVLC { get; set; }
 
-        public RLGLPlayingQueueDlg()
+        public RLGLPlayingQueueDlg(LibVLC libVLC)
         {
             InitializeComponent();
             EnableControls(false);
-            videoQueue = new RLGLVideoQueue();
+            LibVLC = libVLC;
+            videoQueue = new RLGLVideoQueue(libVLC);
             videos = new List<(string, string)>();
             L_FullPath.Text = "";
         }
@@ -150,7 +153,7 @@ namespace RLGL_Player
 
             if (NUD_Loop.Value != 0)
             {
-                videoQueue = new RLGLVideoQueue((int)NUD_Loop.Value);
+                videoQueue = new RLGLVideoQueue(LibVLC, (int)NUD_Loop.Value);
             }
 
             if (CB_Shuffle.Checked)
@@ -186,7 +189,7 @@ namespace RLGL_Player
             {
                 if (OpenQueueDlg.ShowDialog() == DialogResult.OK)
                 {
-                    videoQueue = new RLGLVideoQueue();
+                    videoQueue = new RLGLVideoQueue(LibVLC);
                     (bool, string) loadedQueue = videoQueue.LoadVideoQueue(OpenQueueDlg.FileName);
 
                     if (loadedQueue.Item1)

@@ -45,7 +45,6 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.VLC_Panel = new System.Windows.Forms.Panel();
             this.RLGL_Layout = new System.Windows.Forms.TableLayoutPanel();
-            this.VLC_Control = new Vlc.DotNet.Forms.VlcControl();
             this.L_Text = new System.Windows.Forms.Label();
             this.L_TimePassed = new System.Windows.Forms.Label();
             this.P_ShowVolumeBar = new System.Windows.Forms.Panel();
@@ -59,6 +58,7 @@
             this.SaveQueueDlg = new System.Windows.Forms.SaveFileDialog();
             this.RLGL_HideVolumeBar = new System.Windows.Forms.Timer(this.components);
             this.RLGL_CountdownTimer = new System.Windows.Forms.Timer(this.components);
+            this.VLC_Control = new LibVLCSharp.WinForms.VideoView();
             this.MainMenu.SuspendLayout();
             this.VLC_Panel.SuspendLayout();
             this.RLGL_Layout.SuspendLayout();
@@ -204,25 +204,6 @@
             this.RLGL_Layout.Size = new System.Drawing.Size(1076, 563);
             this.RLGL_Layout.TabIndex = 1;
             // 
-            // VLC_Control
-            // 
-            this.VLC_Control.BackColor = System.Drawing.Color.Black;
-            this.VLC_Control.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VLC_Control.Location = new System.Drawing.Point(50, 50);
-            this.VLC_Control.Margin = new System.Windows.Forms.Padding(0);
-            this.VLC_Control.Name = "VLC_Control";
-            this.RLGL_Layout.SetRowSpan(this.VLC_Control, 2);
-            this.VLC_Control.Size = new System.Drawing.Size(976, 463);
-            this.VLC_Control.Spu = -1;
-            this.VLC_Control.TabIndex = 0;
-            this.VLC_Control.Text = "vlcControl1";
-            this.VLC_Control.VlcLibDirectory = null;
-            this.VLC_Control.VlcMediaplayerOptions = null;
-            this.VLC_Control.VlcLibDirectoryNeeded += new System.EventHandler<Vlc.DotNet.Forms.VlcLibDirectoryNeededEventArgs>(this.VLC_Control_VlcLibDirectoryNeeded);
-            this.VLC_Control.EndReached += new System.EventHandler<Vlc.DotNet.Core.VlcMediaPlayerEndReachedEventArgs>(this.VLC_Control_EndReached);
-            this.VLC_Control.Playing += new System.EventHandler<Vlc.DotNet.Core.VlcMediaPlayerPlayingEventArgs>(this.VLC_Control_Playing);
-            this.VLC_Control.KeyDown += new System.Windows.Forms.KeyEventHandler(this.VLC_Control_KeyDown);
-            // 
             // L_Text
             // 
             this.L_Text.AutoSize = true;
@@ -301,6 +282,19 @@
             // 
             this.RLGL_CountdownTimer.Tick += new System.EventHandler(this.RLGL_CountdownTimer_Tick);
             // 
+            // VLC_Control
+            // 
+            this.VLC_Control.BackColor = System.Drawing.Color.Black;
+            this.VLC_Control.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VLC_Control.Location = new System.Drawing.Point(53, 53);
+            this.VLC_Control.MediaPlayer = null;
+            this.VLC_Control.Name = "VLC_Control";
+            this.RLGL_Layout.SetRowSpan(this.VLC_Control, 2);
+            this.VLC_Control.Size = new System.Drawing.Size(970, 457);
+            this.VLC_Control.TabIndex = 2;
+            this.VLC_Control.Text = "videoView1";
+            this.VLC_Control.KeyDown += new System.Windows.Forms.KeyEventHandler(this.VLC_Control_KeyDown);
+            // 
             // RLGLPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -357,8 +351,8 @@
         private System.Windows.Forms.ToolStripMenuItem endSessionToolStripMenuItem;
         private System.Windows.Forms.Timer RLGL_HideVolumeBar;
         private System.Windows.Forms.Timer RLGL_CountdownTimer;
-        private Vlc.DotNet.Forms.VlcControl VLC_Control;
         private System.Windows.Forms.Panel P_ShowVolumeBar;
+        private LibVLCSharp.WinForms.VideoView VLC_Control;
     }
 }
 

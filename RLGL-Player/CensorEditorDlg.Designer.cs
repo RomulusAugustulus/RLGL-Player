@@ -37,7 +37,6 @@ namespace RLGL_Player
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TLP_CensorEditor = new System.Windows.Forms.TableLayoutPanel();
-            this.VLC_Editor = new Vlc.DotNet.Forms.VlcControl();
             this.FLP_PauseResume = new System.Windows.Forms.FlowLayoutPanel();
             this.CB_GeneralCensorbarSize = new System.Windows.Forms.ComboBox();
             this.B_PauseResume = new System.Windows.Forms.Button();
@@ -61,14 +60,15 @@ namespace RLGL_Player
             this.SB_Keyframes = new System.Windows.Forms.VScrollBar();
             this.TB_VideoPosition = new System.Windows.Forms.TrackBar();
             this.ColorPicker = new System.Windows.Forms.ColorDialog();
+            this.VLC_Editor = new LibVLCSharp.WinForms.VideoView();
             this.CensorEditorMenu.SuspendLayout();
             this.TLP_CensorEditor.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VLC_Editor)).BeginInit();
             this.FLP_PauseResume.SuspendLayout();
             this.GB_Censorbar.SuspendLayout();
             this.CB_KeyframeOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PB_KeyframeDrawingWindow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TB_VideoPosition)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VLC_Editor)).BeginInit();
             this.SuspendLayout();
             // 
             // CensorEditorMenu
@@ -135,13 +135,13 @@ namespace RLGL_Player
             this.TLP_CensorEditor.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.TLP_CensorEditor.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.TLP_CensorEditor.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.TLP_CensorEditor.Controls.Add(this.VLC_Editor, 1, 0);
             this.TLP_CensorEditor.Controls.Add(this.FLP_PauseResume, 0, 1);
             this.TLP_CensorEditor.Controls.Add(this.GB_Censorbar, 0, 0);
             this.TLP_CensorEditor.Controls.Add(this.CB_KeyframeOptions, 0, 3);
             this.TLP_CensorEditor.Controls.Add(this.PB_KeyframeDrawingWindow, 1, 3);
             this.TLP_CensorEditor.Controls.Add(this.SB_Keyframes, 2, 3);
             this.TLP_CensorEditor.Controls.Add(this.TB_VideoPosition, 1, 2);
+            this.TLP_CensorEditor.Controls.Add(this.VLC_Editor, 1, 0);
             this.TLP_CensorEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TLP_CensorEditor.Location = new System.Drawing.Point(0, 24);
             this.TLP_CensorEditor.Name = "TLP_CensorEditor";
@@ -152,24 +152,6 @@ namespace RLGL_Player
             this.TLP_CensorEditor.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 160F));
             this.TLP_CensorEditor.Size = new System.Drawing.Size(1036, 635);
             this.TLP_CensorEditor.TabIndex = 1;
-            // 
-            // VLC_Editor
-            // 
-            this.VLC_Editor.BackColor = System.Drawing.Color.Black;
-            this.VLC_Editor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VLC_Editor.Location = new System.Drawing.Point(203, 3);
-            this.VLC_Editor.Name = "VLC_Editor";
-            this.TLP_CensorEditor.SetRowSpan(this.VLC_Editor, 2);
-            this.VLC_Editor.Size = new System.Drawing.Size(810, 429);
-            this.VLC_Editor.Spu = -1;
-            this.VLC_Editor.TabIndex = 0;
-            this.VLC_Editor.Text = "vlcControl1";
-            this.VLC_Editor.VlcLibDirectory = null;
-            this.VLC_Editor.VlcMediaplayerOptions = null;
-            this.VLC_Editor.VlcLibDirectoryNeeded += new System.EventHandler<Vlc.DotNet.Forms.VlcLibDirectoryNeededEventArgs>(this.VLC_Editor_VlcLibDirectoryNeeded);
-            this.VLC_Editor.Playing += new System.EventHandler<Vlc.DotNet.Core.VlcMediaPlayerPlayingEventArgs>(this.VLC_Editor_Playing);
-            this.VLC_Editor.PositionChanged += new System.EventHandler<Vlc.DotNet.Core.VlcMediaPlayerPositionChangedEventArgs>(this.VLC_Editor_PositionChanged);
-            this.VLC_Editor.Stopped += new System.EventHandler<Vlc.DotNet.Core.VlcMediaPlayerStoppedEventArgs>(this.VLC_Editor_Stopped);
             // 
             // FLP_PauseResume
             // 
@@ -430,6 +412,18 @@ namespace RLGL_Player
             // 
             this.ColorPicker.Color = System.Drawing.Color.Red;
             // 
+            // VLC_Editor
+            // 
+            this.VLC_Editor.BackColor = System.Drawing.Color.Black;
+            this.VLC_Editor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VLC_Editor.Location = new System.Drawing.Point(203, 3);
+            this.VLC_Editor.MediaPlayer = null;
+            this.VLC_Editor.Name = "VLC_Editor";
+            this.TLP_CensorEditor.SetRowSpan(this.VLC_Editor, 2);
+            this.VLC_Editor.Size = new System.Drawing.Size(810, 429);
+            this.VLC_Editor.TabIndex = 8;
+            this.VLC_Editor.Text = "videoView1";
+            // 
             // CensorEditorDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -450,13 +444,13 @@ namespace RLGL_Player
             this.CensorEditorMenu.PerformLayout();
             this.TLP_CensorEditor.ResumeLayout(false);
             this.TLP_CensorEditor.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VLC_Editor)).EndInit();
             this.FLP_PauseResume.ResumeLayout(false);
             this.GB_Censorbar.ResumeLayout(false);
             this.CB_KeyframeOptions.ResumeLayout(false);
             this.CB_KeyframeOptions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PB_KeyframeDrawingWindow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TB_VideoPosition)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VLC_Editor)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -472,7 +466,6 @@ namespace RLGL_Player
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel TLP_CensorEditor;
-        private Vlc.DotNet.Forms.VlcControl VLC_Editor;
         private System.Windows.Forms.TrackBar TB_VideoPosition;
         private System.Windows.Forms.Button B_PauseResume;
         private System.Windows.Forms.FlowLayoutPanel FLP_PauseResume;
@@ -496,5 +489,6 @@ namespace RLGL_Player
         private System.Windows.Forms.ComboBox CB_CensorSize;
         private System.Windows.Forms.Label L_SpecialCensorbarSize;
         private System.Windows.Forms.ComboBox CB_GeneralCensorbarSize;
+        private LibVLCSharp.WinForms.VideoView VLC_Editor;
     }
 }

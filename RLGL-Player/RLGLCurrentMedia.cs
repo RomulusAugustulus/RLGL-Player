@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using LibVLCSharp.Shared;
 
 namespace RLGL_Player
 {   
@@ -29,32 +30,23 @@ namespace RLGL_Player
      */ 
     class RLGLCurrentMedia
     {
-        private string media;
-        private DateTime start;
-        private TimeSpan end;
+        private Media media;
+        private string path;
         private RLGLPhase currentPhase;
         private Dictionary<int, PointF> currentCensor;
-        private RLGLEnding ending;
 
         //Full path to the current played media-file.
-        public string Media { get => media; }
-        //The date and time at which the media-file is started.
-        public DateTime Start { get => start; set => start = value; }
-        //The duration of the last phase.
-        public TimeSpan End { get => end; set => end = value; }
+        public Media Media { get => media; }
         //The currently played phase.
         public RLGLPhase CurrentPhase { get => currentPhase; set => currentPhase = value; }
-        //The ending for this video. It is currently only used for the last video in a playlist!
-        public RLGLEnding Ending { get => ending; }
+        public string Path { get => path; }
 
-        public RLGLCurrentMedia(string media, DateTime start, TimeSpan end, RLGLPhase startPhase, RLGLEnding ending)
+        public RLGLCurrentMedia(Media media, string path, RLGLPhase startPhase)
         {
             this.media = media;
-            this.start = start;
-            this.end = end;
+            this.path = path;
             currentPhase = startPhase;
             currentCensor = new Dictionary<int, PointF>();
-            this.ending = ending;
         }
 
         //Set the relative dimensions of the censorbars to their default values.

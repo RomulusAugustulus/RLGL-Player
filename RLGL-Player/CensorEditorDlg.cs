@@ -20,6 +20,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
+using LibVLCSharp.Shared;
+using System.Threading.Tasks;
 
 namespace RLGL_Player
 {
@@ -39,11 +41,20 @@ namespace RLGL_Player
         private RLGLCensorFrame selectedKeyframe;
         private bool dirty;
         private int selectedCensorbarSize;
-        private bool freshLoad;
+        private LibVLC libVLC;
+        private MediaPlayer mediaPlayer;
 
         public CensorEditorDlg()
         {
+            Core.Initialize();
+
+            libVLC = new LibVLC("--input-repeat=2");
+            mediaPlayer = new MediaPlayer(libVLC);
+            mediaPlayer.PositionChanged += new EventHandler<MediaPlayerPositionChangedEventArgs>(VLC_Editor_PositionChanged);
+            
             InitializeComponent();
+
+            VLC_Editor.MediaPlayer = mediaPlayer;
 
             CS_Censorbar = new List<CensorbarSetting>();
 
@@ -57,7 +68,6 @@ namespace RLGL_Player
             L_CensorbarIdValue.Text = "";
             L_TimeStampValue.Text = "";
             dirty = false;
-            freshLoad = true;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -69,12 +79,6 @@ namespace RLGL_Player
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
-        }
-
-        //Set the vlclib directory for the video-control
-        private void VLC_Editor_VlcLibDirectoryNeeded(object sender, Vlc.DotNet.Forms.VlcLibDirectoryNeededEventArgs e)
-        {
-            e.VlcLibDirectory = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
         }
 
         //Loads a new video that can be edited.
@@ -89,15 +93,20 @@ namespace RLGL_Player
             }
 
             OpenFileDialog openFileDlg = new OpenFileDialog();
-            openFileDlg.Filter = "Video files (*.avi , *.flv , *.mkv , *.mov , *.mp4 , *.wmv)|*.avi;*.flv;*.mkv;*.mov;*.mp4;*.wmv";
+            openFileDlg.Filter = "Video files (*.avi , *.flv , *.mkv , *.mov , *.mp4 , *.wmv, *.webm)|*.avi;*.flv;*.mkv;*.mov;*.mp4;*.wmv;*.webm";
             openFileDlg.FileName = "";
             openFileDlg.Title = "Select a file...";
 
             if(openFileDlg.ShowDialog() == DialogResult.OK)
             {
                 rlglCensorData = null;
-                VLC_Editor.Stop();
-                rlglCurrentMedia = new RLGLCurrentMedia(openFileDlg.FileName, DateTime.Now, TimeSpan.Zero, RLGLPhase.Green, null);
+                VLC_Editor.MediaPlayer.Stop();
+
+                Media m = new Media(libVLC, openFileDlg.FileName);
+                Task<MediaParsedStatus> parse = m.Parse();
+                parse.Wait();
+                rlglCurrentMedia = new RLGLCurrentMedia(m, openFileDlg.FileName, RLGLPhase.Green);
+
                 InitEditor();
                 PB_KeyframeDrawingWindow.Invalidate();
             }
@@ -118,16 +127,19 @@ namespace RLGL_Player
             }
 
             OpenFileDialog openFileDlg = new OpenFileDialog();
-            openFileDlg.Filter = "Video files (*.avi , *.flv , *.mkv , *.mov , *.mp4 , *.wmv)|*.avi;*.flv;*.mkv;*.mov;*.mp4;*.wmv";
+            openFileDlg.Filter = "Video files (*.avi , *.flv , *.mkv , *.mov , *.mp4 , *.wmv, *.webm)|*.avi;*.flv;*.mkv;*.mov;*.mp4;*.wmv;*.webm";
             openFileDlg.FileName = "";
             openFileDlg.Title = "Select a file...";
 
             if(openFileDlg.ShowDialog() == DialogResult.OK)
             {
                 rlglCensorData = RLGLCensorData.ReadFromFile(openFileDlg.FileName);
-                rlglCurrentMedia = new RLGLCurrentMedia(openFileDlg.FileName, DateTime.Now, TimeSpan.Zero, RLGLPhase.Green, null);
+                Media m = new Media(libVLC, openFileDlg.FileName);
+                Task<MediaParsedStatus> parse = m.Parse();
+                parse.Wait();
+                rlglCurrentMedia = new RLGLCurrentMedia(m, openFileDlg.FileName, RLGLPhase.Green);
 
-                VLC_Editor.Stop();
+                VLC_Editor.MediaPlayer.Stop();
 
                 InitEditor();
                 PB_KeyframeDrawingWindow.Invalidate();
@@ -170,16 +182,16 @@ namespace RLGL_Player
 
         private void TB_VideoPosition_Scroll(object sender, EventArgs e)
         {
-            VLC_Editor.Position = (float)TB_VideoPosition.Value / (float)TB_VideoPosition.Maximum;
+            VLC_Editor.MediaPlayer.Position = (float)TB_VideoPosition.Value / (float)TB_VideoPosition.Maximum;
         }
 
         //Set up all the relevant controls and datastructures in the editor.
         private void InitEditor()
         {
-            freshLoad = true;
-            FileStream fs = File.OpenRead(rlglCurrentMedia.Media);
-            VLC_Editor.SetMedia(fs);            
+            VLC_Editor.MediaPlayer.Media = rlglCurrentMedia.Media;            
             VLC_Editor.Cursor = Cursors.Cross;
+
+            InitTrackBar();
 
             FLP_Censorbars.Controls.Clear();
             CS_Censorbar.Clear();
@@ -188,9 +200,6 @@ namespace RLGL_Player
             {
                 paintingOverlay.Show(this);
             }
-
-            VLC_Editor.GetCurrentMedia().ParsedChanged += new EventHandler<Vlc.DotNet.Core.VlcMediaParsedChangedEventArgs>(this.MediaParsedChanged);
-            VLC_Editor.GetCurrentMedia().ParseAsync();
 
             RelocatePaintingOverlay();
             selectedCensorbar = 0;
@@ -204,7 +213,7 @@ namespace RLGL_Player
             B_PauseResume.Enabled = true;
             B_NewCensorbar.Enabled = true;
             B_Delete.Enabled = true;
-            VLC_Editor.Play();
+            VLC_Editor.MediaPlayer.Play();
         }
 
         //Setup the trackbar and all structures that depend on the meta-data of the video
@@ -214,7 +223,8 @@ namespace RLGL_Player
 
             if (rlglCensorData == null)
             {
-                rlglCensorData = new RLGLCensorData(rlglCurrentMedia.Media);
+                rlglCensorData = new RLGLCensorData(rlglCurrentMedia.Path);
+                rlglCensorData.SetDuration(TimeSpan.FromMilliseconds(VLC_Editor.MediaPlayer.Media.Duration));
                 AddNewCensorbar();
                 CS_Censorbar[0].Checked = true;                
             }
@@ -250,29 +260,11 @@ namespace RLGL_Player
             TB_VideoPosition.Maximum = (int)rlglCensorData.Duration.TotalSeconds;
             TB_VideoPosition.Value = 0;
 
-            VLC_Editor.Position = (float)TB_VideoPosition.Value / (float)TB_VideoPosition.Maximum;
+            VLC_Editor.MediaPlayer.Position = (float)TB_VideoPosition.Value / (float)TB_VideoPosition.Maximum;
 
             editorCensorbarColors = rlglCensorData.EditorCensorbarColor;
 
             paintingOverlay.SetCensorbarColorScheme(editorCensorbarColors);
-        }
-
-        //Set the duration of the loaded media and update the trackbar
-        private void SetMediaDuration()
-        {
-            rlglCensorData.SetDuration(VLC_Editor.GetCurrentMedia().Duration);
-            TB_VideoPosition.Minimum = 0;
-            TB_VideoPosition.Maximum = (int)rlglCensorData.Duration.TotalSeconds;
-            TB_VideoPosition.Value = 0;
-
-            VLC_Editor.Position = (float)TB_VideoPosition.Value / (float)TB_VideoPosition.Maximum;
-            freshLoad = false;
-        }
-
-        private void MediaParsedChanged(object sender, Vlc.DotNet.Core.VlcMediaParsedChangedEventArgs e)
-        {
-            InitTrackBar();
-            VLC_Editor.GetCurrentMedia().ParsedChanged -= MediaParsedChanged;
         }
 
         /*
@@ -281,16 +273,16 @@ namespace RLGL_Player
          */
         private void UpdateTrackBarPosition()
         {
-            TB_VideoPosition.Value = (int)(VLC_Editor.Position * TB_VideoPosition.Maximum);
+            TB_VideoPosition.Value = (int)(VLC_Editor.MediaPlayer.Position * TB_VideoPosition.Maximum);
 
             if (rlglCensorData != null)
             {
                 paintingOverlay.UpdatePositions(rlglCensorData.GetAllCensorPositions(TB_VideoPosition.Value));
             }
 
-            if(VLC_Editor.Audio.Volume != 0)
+            if(VLC_Editor.MediaPlayer.Volume != 0)
             {
-                VLC_Editor.Audio.Volume = 0;
+                VLC_Editor.MediaPlayer.Volume = 0;
             }
         }
 
@@ -300,7 +292,7 @@ namespace RLGL_Player
             paintingOverlay.SetBounds(pos.X, pos.Y, VLC_Editor.Width, VLC_Editor.Height);
         }
 
-        private void VLC_Editor_PositionChanged(object sender, Vlc.DotNet.Core.VlcMediaPlayerPositionChangedEventArgs e)
+        private void VLC_Editor_PositionChanged(object sender, MediaPlayerPositionChangedEventArgs e)
         {
             this.BeginInvoke(new Action(() => UpdateTrackBarPosition())); 
         }
@@ -318,7 +310,7 @@ namespace RLGL_Player
         private void Pause(bool pause)
         {
             isPaused = pause;
-            VLC_Editor.SetPause(isPaused);
+            VLC_Editor.MediaPlayer.SetPause(isPaused);
 
             if (isPaused)
             {
@@ -424,7 +416,7 @@ namespace RLGL_Player
 
             if (selectedKeyframe != null)
             {
-                VLC_Editor.Position = (float)((double)selectedKeyframe.TimePos / rlglCensorData.Duration.TotalSeconds);
+                VLC_Editor.MediaPlayer.Position = (float)((double)selectedKeyframe.TimePos / rlglCensorData.Duration.TotalSeconds);
                 UpdateTrackBarPosition();
                 Pause(true);
                 PB_KeyframeDrawingWindow.Invalidate();
@@ -515,16 +507,16 @@ namespace RLGL_Player
         /*
          * Play the selected video in a loop
          */ 
-        private void VLC_Editor_Stopped(object sender, Vlc.DotNet.Core.VlcMediaPlayerStoppedEventArgs e)
+        /*private void VLC_Editor_Stopped(object sender, Vlc.DotNet.Core.VlcMediaPlayerStoppedEventArgs e)
         {
             if (rlglCensorData != null)
             {
                 this.BeginInvoke(new Action(() => ResetPlayingToStart()));
             }
-        }
+        }*/
 
         //Reloads the video and resets the paintingOverlay to the first frame of the video
-        private void ResetPlayingToStart()
+        /*private void ResetPlayingToStart()
         {
             TB_VideoPosition.Value = 0;
             paintingOverlay.UpdatePositions(rlglCensorData.GetAllCensorPositions(TB_VideoPosition.Value));
@@ -532,7 +524,7 @@ namespace RLGL_Player
             FileStream fs = File.OpenRead(rlglCensorData.Media);
             VLC_Editor.SetMedia(fs);
             VLC_Editor.Play();
-        }
+        }*/
 
         /*
          * Update the selected keyframe with the values from the options-controls
@@ -635,14 +627,6 @@ namespace RLGL_Player
         private void CB_GeneralCensorbarSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedCensorbarSize = CB_GeneralCensorbarSize.SelectedIndex;
-        }
-
-        private void VLC_Editor_Playing(object sender, Vlc.DotNet.Core.VlcMediaPlayerPlayingEventArgs e)
-        {
-            if (freshLoad)
-            {
-                this.Invoke(new Action(() => SetMediaDuration()));
-            }
         }
     }
 }

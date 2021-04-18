@@ -15,9 +15,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+using LibVLCSharp.Shared;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace RLGL_Player
 {
@@ -31,37 +33,66 @@ namespace RLGL_Player
         private int currentVideo;
         private int loop;
         private int initLoop;
-        public RLGLVideoQueue()
+        private long duration;
+        private List<Media> media;
+        private LibVLC libVLC;
+
+        public long Duration { get => duration; }
+        public RLGLEnding Ending { get; set; }
+
+        public RLGLVideoQueue(LibVLC libVLC)
         {
             videos = new List<string>();
             currentVideo = 0;
             loop = 0;
             initLoop = 0;
+            this.libVLC = libVLC;
+            media = new List<Media>();
         }
 
-        public RLGLVideoQueue(int loop)
+        public RLGLVideoQueue(LibVLC libVLC, int loop)
         {
             videos = new List<string>();
             currentVideo = 0;
             this.loop = loop;
             initLoop = loop;
+            this.libVLC = libVLC;
+            media = new List<Media>();
         }
 
         //Adds a video at the end of the queue.
         public void AddVideo(string vid)
         {
             videos.Add(vid);
+            string ext = Path.GetExtension(vid);
+            Media m = null;
+            if (ext.Equals(".jpg"))
+            {
+                m = new Media(libVLC, vid, FromType.FromPath, new string[] { ":image-duration=20" });
+            }
+            else
+            {
+                m = new Media(libVLC, vid);
+            }
+
+            Task<MediaParsedStatus> parse = m.Parse();
+            parse.Wait();
+
+            duration += m.Duration;
+
+            media.Add(m);
         }
 
         /*
-         * Gets the next link or an empty string if the queue has no links left.
+         * Gets the next media and it's path or null if the queue has no media left.
          * Has ability to loop the playlist.
          */ 
-        public string GetNextVideo()
+        public (Media, string) GetNextVideo()
         {
             if(currentVideo < videos.Count)
             {
-                string vid = videos[currentVideo];
+                Media vid = media[currentVideo];
+                string path = videos[currentVideo];
                 currentVideo++;
 
                 if(currentVideo == videos.Count && loop > 0)
@@ -70,10 +101,10 @@ namespace RLGL_Player
                     loop--;
                 }
 
-                return vid;
+                return (vid, path);
             }
 
-            return "";
+            return (null, "");
         }
 
         //Returns the number of videos remaining until the end of the queue.
@@ -123,7 +154,7 @@ namespace RLGL_Player
 
                 for (int i = 0; i < numVid; i++)
                 {
-                    videos.Add(fileReader.ReadString());
+                    AddVideo(fileReader.ReadString());
                 }
                 
                 if (version < QueueVersion)
