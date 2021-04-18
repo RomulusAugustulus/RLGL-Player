@@ -58,7 +58,7 @@
             this.L_AboutInfo.Name = "L_AboutInfo";
             this.L_AboutInfo.Size = new System.Drawing.Size(121, 13);
             this.L_AboutInfo.TabIndex = 1;
-            this.L_AboutInfo.Text = "RLGL-Player    v. 0.11.0";
+            this.L_AboutInfo.Text = "RLGL-Player    v. 0.12.0";
             // 
             // L_Copyright
             // 
