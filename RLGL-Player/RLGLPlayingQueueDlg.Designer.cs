@@ -30,6 +30,7 @@ namespace RLGL_Player
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RLGLPlayingQueueDlg));
             this.LB_Queue = new System.Windows.Forms.ListBox();
             this.L_Queue = new System.Windows.Forms.Label();
             this.B_Load = new System.Windows.Forms.Button();
@@ -123,9 +124,7 @@ namespace RLGL_Player
             // 
             // OpenVideoDlg
             // 
-            this.OpenVideoDlg.Filter = "Video files (*.avi , *.flv , *.mkv , *.mov , *.mp4 , *.wmv, *.webm)|*.avi;*.flv;*" +
-    ".mkv;*.mov;*.mp4;*.wmv;*.webm|Image-Files(*.jpg, *.png, *.bmp, *.webp)|*.jpg;*.j" +
-    "peg;*.png;*.bmp;*.webp";
+            this.OpenVideoDlg.Filter = resources.GetString("OpenVideoDlg.Filter");
             this.OpenVideoDlg.Multiselect = true;
             this.OpenVideoDlg.Title = "Load...";
             // 
