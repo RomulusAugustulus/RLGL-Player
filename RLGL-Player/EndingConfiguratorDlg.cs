@@ -74,6 +74,7 @@ namespace RLGL_Player
                 p.CountdownEnd = 0;
                 p.CountdownStep = 1;
                 p.CountdownEdge = false;
+                p.EndingMetronome = true;
 
                 phases.Add(p);
                 LB_EndingParts.Items.Add(p.Name);
@@ -183,6 +184,8 @@ namespace RLGL_Player
                     currentPhase.Phase = RLGLPhase.Ruin;
                 }
 
+                currentPhase.EndingMetronome = CB_EndingMetronome.Checked;
+
                 currentPhase.CountdownBegin = (int)NUD_CountdownBegin.Value;
                 currentPhase.CountdownEnd = (int)NUD_CountdownEnd.Value;
                 currentPhase.CountdownStep = (int)NUD_CountdownStepDuration.Value;
@@ -219,6 +222,7 @@ namespace RLGL_Player
             B_Up.Enabled = enable;
             B_Down.Enabled = enable;
             B_Delete.Enabled = enable;
+            B_Rename.Enabled = enable;
 
             GB_FineTuning.Enabled = enable;
 
@@ -254,6 +258,8 @@ namespace RLGL_Player
                 NUD_CountdownEnd.Value = Math.Min(NUD_CountdownEnd.Maximum, Math.Max(currentPhase.CountdownEnd, NUD_CountdownEnd.Minimum));
                 NUD_CountdownStepDuration.Value = Math.Min(NUD_CountdownStepDuration.Maximum, Math.Max(currentPhase.CountdownStep, NUD_CountdownStepDuration.Minimum));
                 CB_UseEdgeLight.Checked = currentPhase.CountdownEdge;
+
+                CB_EndingMetronome.Checked = currentPhase.EndingMetronome;
 
                 EnableCountdownControls();
             }
@@ -321,6 +327,21 @@ namespace RLGL_Player
                 {
                     ending.AddPhase(phases[i]);
                 }
+            }
+        }
+
+        private void B_Rename_Click(object sender, EventArgs e)
+        {
+            EnterNameDlg enterNameDlg = new EnterNameDlg();
+
+            if (enterNameDlg.ShowDialog() == DialogResult.OK)
+            {
+                currentPhase.Name = enterNameDlg.Input;
+                int index = LB_EndingParts.SelectedIndex;
+                LB_EndingParts.Items.RemoveAt(index);
+                currentPhase = phases[index];
+                LB_EndingParts.Items.Insert(index, currentPhase.Name);
+                LB_EndingParts.SelectedIndex = index;
             }
         }
     }

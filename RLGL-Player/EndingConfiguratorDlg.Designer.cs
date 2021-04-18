@@ -59,6 +59,8 @@ namespace RLGL_Player
             this.RB_EdgeLight = new System.Windows.Forms.RadioButton();
             this.RB_RuinedOrgasm = new System.Windows.Forms.RadioButton();
             this.L_Phase = new System.Windows.Forms.Label();
+            this.B_Rename = new System.Windows.Forms.Button();
+            this.CB_EndingMetronome = new System.Windows.Forms.CheckBox();
             this.GB_EndingParts.SuspendLayout();
             this.GB_FineTuning.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_CountdownStepDuration)).BeginInit();
@@ -70,6 +72,7 @@ namespace RLGL_Player
             // 
             // GB_EndingParts
             // 
+            this.GB_EndingParts.Controls.Add(this.B_Rename);
             this.GB_EndingParts.Controls.Add(this.B_AddPhase);
             this.GB_EndingParts.Controls.Add(this.B_Delete);
             this.GB_EndingParts.Controls.Add(this.B_Up);
@@ -79,14 +82,14 @@ namespace RLGL_Player
             this.GB_EndingParts.Controls.Add(this.LB_EndingParts);
             this.GB_EndingParts.Location = new System.Drawing.Point(12, 12);
             this.GB_EndingParts.Name = "GB_EndingParts";
-            this.GB_EndingParts.Size = new System.Drawing.Size(390, 261);
+            this.GB_EndingParts.Size = new System.Drawing.Size(390, 294);
             this.GB_EndingParts.TabIndex = 0;
             this.GB_EndingParts.TabStop = false;
             this.GB_EndingParts.Text = "Ending";
             // 
             // B_AddPhase
             // 
-            this.B_AddPhase.Location = new System.Drawing.Point(9, 224);
+            this.B_AddPhase.Location = new System.Drawing.Point(9, 257);
             this.B_AddPhase.Name = "B_AddPhase";
             this.B_AddPhase.Size = new System.Drawing.Size(375, 31);
             this.B_AddPhase.TabIndex = 11;
@@ -97,7 +100,7 @@ namespace RLGL_Player
             // B_Delete
             // 
             this.B_Delete.Enabled = false;
-            this.B_Delete.Location = new System.Drawing.Point(309, 197);
+            this.B_Delete.Location = new System.Drawing.Point(309, 224);
             this.B_Delete.Name = "B_Delete";
             this.B_Delete.Size = new System.Drawing.Size(75, 23);
             this.B_Delete.TabIndex = 10;
@@ -108,7 +111,7 @@ namespace RLGL_Player
             // B_Up
             // 
             this.B_Up.Enabled = false;
-            this.B_Up.Location = new System.Drawing.Point(309, 139);
+            this.B_Up.Location = new System.Drawing.Point(309, 137);
             this.B_Up.Name = "B_Up";
             this.B_Up.Size = new System.Drawing.Size(75, 23);
             this.B_Up.TabIndex = 9;
@@ -119,7 +122,7 @@ namespace RLGL_Player
             // B_Down
             // 
             this.B_Down.Enabled = false;
-            this.B_Down.Location = new System.Drawing.Point(309, 168);
+            this.B_Down.Location = new System.Drawing.Point(309, 166);
             this.B_Down.Name = "B_Down";
             this.B_Down.Size = new System.Drawing.Size(75, 23);
             this.B_Down.TabIndex = 8;
@@ -150,14 +153,14 @@ namespace RLGL_Player
             this.LB_EndingParts.FormattingEnabled = true;
             this.LB_EndingParts.Location = new System.Drawing.Point(6, 35);
             this.LB_EndingParts.Name = "LB_EndingParts";
-            this.LB_EndingParts.Size = new System.Drawing.Size(294, 186);
+            this.LB_EndingParts.Size = new System.Drawing.Size(294, 212);
             this.LB_EndingParts.TabIndex = 0;
             this.LB_EndingParts.SelectedIndexChanged += new System.EventHandler(this.LB_EndingParts_SelectedIndexChanged);
             // 
             // B_Cancel
             // 
             this.B_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.B_Cancel.Location = new System.Drawing.Point(12, 279);
+            this.B_Cancel.Location = new System.Drawing.Point(12, 312);
             this.B_Cancel.Name = "B_Cancel";
             this.B_Cancel.Size = new System.Drawing.Size(90, 23);
             this.B_Cancel.TabIndex = 1;
@@ -167,7 +170,7 @@ namespace RLGL_Player
             // B_OK
             // 
             this.B_OK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.B_OK.Location = new System.Drawing.Point(800, 279);
+            this.B_OK.Location = new System.Drawing.Point(800, 312);
             this.B_OK.Name = "B_OK";
             this.B_OK.Size = new System.Drawing.Size(90, 23);
             this.B_OK.TabIndex = 2;
@@ -177,6 +180,7 @@ namespace RLGL_Player
             // 
             // GB_FineTuning
             // 
+            this.GB_FineTuning.Controls.Add(this.CB_EndingMetronome);
             this.GB_FineTuning.Controls.Add(this.CB_UseEdgeLight);
             this.GB_FineTuning.Controls.Add(this.B_Apply);
             this.GB_FineTuning.Controls.Add(this.NUD_CountdownStepDuration);
@@ -194,7 +198,7 @@ namespace RLGL_Player
             this.GB_FineTuning.Enabled = false;
             this.GB_FineTuning.Location = new System.Drawing.Point(408, 12);
             this.GB_FineTuning.Name = "GB_FineTuning";
-            this.GB_FineTuning.Size = new System.Drawing.Size(482, 261);
+            this.GB_FineTuning.Size = new System.Drawing.Size(482, 294);
             this.GB_FineTuning.TabIndex = 3;
             this.GB_FineTuning.TabStop = false;
             this.GB_FineTuning.Text = "Phase-Settings";
@@ -202,7 +206,7 @@ namespace RLGL_Player
             // CB_UseEdgeLight
             // 
             this.CB_UseEdgeLight.AutoSize = true;
-            this.CB_UseEdgeLight.Location = new System.Drawing.Point(253, 206);
+            this.CB_UseEdgeLight.Location = new System.Drawing.Point(253, 236);
             this.CB_UseEdgeLight.Name = "CB_UseEdgeLight";
             this.CB_UseEdgeLight.Size = new System.Drawing.Size(223, 17);
             this.CB_UseEdgeLight.TabIndex = 20;
@@ -211,7 +215,7 @@ namespace RLGL_Player
             // 
             // B_Apply
             // 
-            this.B_Apply.Location = new System.Drawing.Point(392, 232);
+            this.B_Apply.Location = new System.Drawing.Point(392, 265);
             this.B_Apply.Name = "B_Apply";
             this.B_Apply.Size = new System.Drawing.Size(84, 23);
             this.B_Apply.TabIndex = 19;
@@ -221,7 +225,7 @@ namespace RLGL_Player
             // 
             // NUD_CountdownStepDuration
             // 
-            this.NUD_CountdownStepDuration.Location = new System.Drawing.Point(156, 205);
+            this.NUD_CountdownStepDuration.Location = new System.Drawing.Point(156, 235);
             this.NUD_CountdownStepDuration.Maximum = new decimal(new int[] {
             60,
             0,
@@ -245,7 +249,7 @@ namespace RLGL_Player
             // L_CountdownStepDuration
             // 
             this.L_CountdownStepDuration.AutoSize = true;
-            this.L_CountdownStepDuration.Location = new System.Drawing.Point(6, 207);
+            this.L_CountdownStepDuration.Location = new System.Drawing.Point(6, 237);
             this.L_CountdownStepDuration.Name = "L_CountdownStepDuration";
             this.L_CountdownStepDuration.Size = new System.Drawing.Size(144, 13);
             this.L_CountdownStepDuration.TabIndex = 17;
@@ -253,7 +257,7 @@ namespace RLGL_Player
             // 
             // NUD_CountdownEnd
             // 
-            this.NUD_CountdownEnd.Location = new System.Drawing.Point(352, 170);
+            this.NUD_CountdownEnd.Location = new System.Drawing.Point(352, 200);
             this.NUD_CountdownEnd.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -267,7 +271,7 @@ namespace RLGL_Player
             // L_CountdownEnd
             // 
             this.L_CountdownEnd.AutoSize = true;
-            this.L_CountdownEnd.Location = new System.Drawing.Point(261, 172);
+            this.L_CountdownEnd.Location = new System.Drawing.Point(261, 202);
             this.L_CountdownEnd.Name = "L_CountdownEnd";
             this.L_CountdownEnd.Size = new System.Drawing.Size(85, 13);
             this.L_CountdownEnd.TabIndex = 15;
@@ -275,7 +279,7 @@ namespace RLGL_Player
             // 
             // NUD_CountdownBegin
             // 
-            this.NUD_CountdownBegin.Location = new System.Drawing.Point(105, 170);
+            this.NUD_CountdownBegin.Location = new System.Drawing.Point(105, 200);
             this.NUD_CountdownBegin.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -294,7 +298,7 @@ namespace RLGL_Player
             // L_CountdownBegin
             // 
             this.L_CountdownBegin.AutoSize = true;
-            this.L_CountdownBegin.Location = new System.Drawing.Point(6, 172);
+            this.L_CountdownBegin.Location = new System.Drawing.Point(6, 202);
             this.L_CountdownBegin.Name = "L_CountdownBegin";
             this.L_CountdownBegin.Size = new System.Drawing.Size(93, 13);
             this.L_CountdownBegin.TabIndex = 13;
@@ -436,13 +440,34 @@ namespace RLGL_Player
             this.L_Phase.TabIndex = 1;
             this.L_Phase.Text = "Phase:";
             // 
+            // B_Rename
+            // 
+            this.B_Rename.Enabled = false;
+            this.B_Rename.Location = new System.Drawing.Point(309, 195);
+            this.B_Rename.Name = "B_Rename";
+            this.B_Rename.Size = new System.Drawing.Size(75, 23);
+            this.B_Rename.TabIndex = 12;
+            this.B_Rename.Text = "Rename";
+            this.B_Rename.UseVisualStyleBackColor = true;
+            this.B_Rename.Click += new System.EventHandler(this.B_Rename_Click);
+            // 
+            // CB_EndingMetronome
+            // 
+            this.CB_EndingMetronome.AutoSize = true;
+            this.CB_EndingMetronome.Location = new System.Drawing.Point(105, 166);
+            this.CB_EndingMetronome.Name = "CB_EndingMetronome";
+            this.CB_EndingMetronome.Size = new System.Drawing.Size(191, 17);
+            this.CB_EndingMetronome.TabIndex = 21;
+            this.CB_EndingMetronome.Text = "Use special metronome for endings";
+            this.CB_EndingMetronome.UseVisualStyleBackColor = true;
+            // 
             // EndingConfiguratorDlg
             // 
             this.AcceptButton = this.B_Apply;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.B_Cancel;
-            this.ClientSize = new System.Drawing.Size(902, 314);
+            this.ClientSize = new System.Drawing.Size(902, 347);
             this.Controls.Add(this.GB_FineTuning);
             this.Controls.Add(this.B_OK);
             this.Controls.Add(this.B_Cancel);
@@ -501,5 +526,7 @@ namespace RLGL_Player
         private System.Windows.Forms.Label L_Phase;
         private System.Windows.Forms.Button B_Apply;
         private System.Windows.Forms.CheckBox CB_UseEdgeLight;
+        private System.Windows.Forms.Button B_Rename;
+        private System.Windows.Forms.CheckBox CB_EndingMetronome;
     }
 }

@@ -31,7 +31,7 @@ namespace RLGL_Player
         public int CountdownBegin { get; set; }
         public int CountdownEnd { get; set; }
         public int CountdownStep { get; set; }
-
         public bool CountdownEdge { get; set; }
+        public bool EndingMetronome { get; set; }
     }
 }

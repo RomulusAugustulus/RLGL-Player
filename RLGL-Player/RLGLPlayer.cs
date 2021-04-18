@@ -380,9 +380,20 @@ public partial class RLGLPlayer : Form
                     L_Text.BackColor = rlglPreferences.GreenLightColor;
                     L_Text.Text = phase.Message;                    
 
-                    if (rlglPreferences.Metronome && randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeEndingChance)
+                    if (rlglPreferences.Metronome)
                     {
-                        SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinEndingBpm, rlglPreferences.MaxEndingBpm + 1));
+                        if(phase.EndingMetronome && randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeEndingChance)
+                        {
+                            SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinEndingBpm, rlglPreferences.MaxEndingBpm + 1));
+                        }
+                        else if(randomNumberGenerator.Next(1,101) <= rlglPreferences.MetronomeChance)
+                        {
+                            SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinBpm, rlglPreferences.MaxBpm + 1));
+                        }
+                        else
+                        {
+                            StopMetronome();
+                        }
                     }
                     else
                     {
@@ -428,9 +439,20 @@ public partial class RLGLPlayer : Form
                     L_Text.BackColor = rlglPreferences.EdgeColor;
                     L_Text.Text = phase.Message;
 
-                    if (rlglPreferences.Metronome && randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeEndingChance)
+                    if (rlglPreferences.Metronome)
                     {
-                        SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinEndingBpm, rlglPreferences.MaxEndingBpm + 1));
+                        if (phase.EndingMetronome && randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeEndingChance)
+                        {
+                            SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinEndingBpm, rlglPreferences.MaxEndingBpm + 1));
+                        }
+                        else if(randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeEdgeChance)
+                        {
+                            SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinEdgeBpm, rlglPreferences.MaxEdgeBpm + 1));
+                        }
+                        else
+                        {
+                            StopMetronome();
+                        }
                     }
                     else
                     {
@@ -493,9 +515,38 @@ public partial class RLGLPlayer : Form
                         L_Text.Text = phase.CountdownBegin.ToString();
                     }
 
-                    if (rlglPreferences.Metronome && randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeEndingChance)
+                    if (rlglPreferences.Metronome) 
                     {
-                        SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinEndingBpm, rlglPreferences.MaxEndingBpm + 1));
+                        if (phase.EndingMetronome)
+                        {
+                            if (randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeEndingChance)
+                            {
+                                SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinEndingBpm, rlglPreferences.MaxEndingBpm + 1));
+                            }
+                            else
+                            {
+                                StopMetronome();
+                            }
+                        }
+                        else if(phase.CountdownEdge)
+                        {
+                            if(randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeEdgeChance)
+                            {
+                                SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinEdgeBpm, rlglPreferences.MaxEdgeBpm + 1));
+                            }
+                            else
+                            {
+                                StopMetronome();
+                            }
+                        }
+                        else if(randomNumberGenerator.Next(1, 101) <= rlglPreferences.MetronomeChance)
+                        {
+                            SetMetronome(randomNumberGenerator.Next(rlglPreferences.MinBpm, rlglPreferences.MaxBpm + 1));
+                        }
+                        else
+                        {
+                            StopMetronome();
+                        }
                     }
                     else
                     {

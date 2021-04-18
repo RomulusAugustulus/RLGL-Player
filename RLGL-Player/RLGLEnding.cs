@@ -26,7 +26,7 @@ namespace RLGL_Player
      */ 
     public class RLGLEnding
     {
-        private const ushort endingVersion = 2;
+        private const ushort endingVersion = 3;
         private int duration;
         private List<RLGLEndingPhase> endingPhases;
         private int currentPos;
@@ -90,6 +90,7 @@ namespace RLGL_Player
                 endingWriter.Write(endingPhases[i].CountdownEnd);
                 endingWriter.Write(endingPhases[i].CountdownStep);
                 endingWriter.Write(endingPhases[i].CountdownEdge);
+                endingWriter.Write(endingPhases[i].EndingMetronome);
             }
 
             endingWriter.Close();
@@ -117,6 +118,7 @@ namespace RLGL_Player
                     p.CountdownEnd = endingReader.ReadInt32();
                     p.CountdownStep = endingReader.ReadInt32();
                     p.CountdownEdge = endingReader.ReadBoolean();
+                    p.EndingMetronome = endingReader.ReadBoolean();
                     endingPhases.Add(p);
                 }
             }
@@ -146,6 +148,27 @@ namespace RLGL_Player
                     p.CountdownEnd = endingReader.ReadInt32();
                     p.CountdownStep = endingReader.ReadInt32();
                     p.CountdownEdge = false;
+                    p.EndingMetronome = true;
+                    endingPhases.Add(p);
+                }
+            }
+            else if(version == 2)
+            {
+                duration = endingReader.ReadInt32();
+                endingName = endingReader.ReadString();
+                int phaseCount = endingReader.ReadInt32();
+                for (int i = 0; i < phaseCount; i++)
+                {
+                    RLGLEndingPhase p = new RLGLEndingPhase();
+                    p.Name = endingReader.ReadString();
+                    p.Duration = endingReader.ReadInt32();
+                    p.Message = endingReader.ReadString();
+                    p.Phase = (RLGLPhase)endingReader.ReadInt32();
+                    p.CountdownBegin = endingReader.ReadInt32();
+                    p.CountdownEnd = endingReader.ReadInt32();
+                    p.CountdownStep = endingReader.ReadInt32();
+                    p.CountdownEdge = endingReader.ReadBoolean();
+                    p.EndingMetronome = true;
                     endingPhases.Add(p);
                 }
             }
