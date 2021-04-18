@@ -124,7 +124,8 @@ namespace RLGL_Player
             // OpenVideoDlg
             // 
             this.OpenVideoDlg.Filter = "Video files (*.avi , *.flv , *.mkv , *.mov , *.mp4 , *.wmv, *.webm)|*.avi;*.flv;*" +
-    ".mkv;*.mov;*.mp4;*.wmv;*.webm|Image-Files(*.jpg)|*.jpg";
+    ".mkv;*.mov;*.mp4;*.wmv;*.webm|Image-Files(*.jpg, *.png, *.bmp, *.webp)|*.jpg;*.j" +
+    "peg;*.png;*.bmp;*.webp";
             this.OpenVideoDlg.Multiselect = true;
             this.OpenVideoDlg.Title = "Load...";
             // 

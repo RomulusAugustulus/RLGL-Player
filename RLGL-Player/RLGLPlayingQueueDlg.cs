@@ -26,16 +26,19 @@ namespace RLGL_Player
     public partial class RLGLPlayingQueueDlg : Form
     {
         private List<(string, string)> videos;
+        private RLGLPreferences prefs;
         private RLGLVideoQueue videoQueue;
         public RLGLVideoQueue VideoQueue { get => videoQueue; }
         public LibVLC LibVLC { get; set; }
 
-        public RLGLPlayingQueueDlg(LibVLC libVLC)
+        public RLGLPlayingQueueDlg(LibVLC libVLC, RLGLPreferences prefs)
         {
             InitializeComponent();
             EnableControls(false);
             LibVLC = libVLC;
             videoQueue = new RLGLVideoQueue(libVLC);
+            this.prefs = prefs;
+            videoQueue.Prefs = prefs;
             videos = new List<(string, string)>();
             L_FullPath.Text = "";
         }
@@ -154,6 +157,7 @@ namespace RLGL_Player
             if (NUD_Loop.Value != 0)
             {
                 videoQueue = new RLGLVideoQueue(LibVLC, (int)NUD_Loop.Value);
+                videoQueue.Prefs = prefs;
             }
 
             if (CB_Shuffle.Checked)
@@ -190,6 +194,7 @@ namespace RLGL_Player
                 if (OpenQueueDlg.ShowDialog() == DialogResult.OK)
                 {
                     videoQueue = new RLGLVideoQueue(LibVLC);
+                    videoQueue.Prefs = prefs;
                     (bool, string) loadedQueue = videoQueue.LoadVideoQueue(OpenQueueDlg.FileName);
 
                     if (loadedQueue.Item1)

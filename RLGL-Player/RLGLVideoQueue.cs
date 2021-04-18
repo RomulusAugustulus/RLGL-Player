@@ -36,9 +36,14 @@ namespace RLGL_Player
         private long duration;
         private List<Media> media;
         private LibVLC libVLC;
+        private RLGLPhase currentPhase;
 
         public long Duration { get => duration; }
         public RLGLEnding Ending { get; set; }
+        public RLGLPreferences Prefs { get; set; }
+        //The currently played phase.
+        public RLGLPhase CurrentPhase { get => currentPhase; set => currentPhase = value; }
+        public int InitLoop { get => initLoop; }
 
         public RLGLVideoQueue(LibVLC libVLC)
         {
@@ -48,6 +53,7 @@ namespace RLGL_Player
             initLoop = 0;
             this.libVLC = libVLC;
             media = new List<Media>();
+            currentPhase = RLGLPhase.Green;
         }
 
         public RLGLVideoQueue(LibVLC libVLC, int loop)
@@ -58,6 +64,7 @@ namespace RLGL_Player
             initLoop = loop;
             this.libVLC = libVLC;
             media = new List<Media>();
+            currentPhase = RLGLPhase.Green;
         }
 
         //Adds a video at the end of the queue.
@@ -66,9 +73,9 @@ namespace RLGL_Player
             videos.Add(vid);
             string ext = Path.GetExtension(vid);
             Media m = null;
-            if (ext.Equals(".jpg"))
+            if (ext.Equals(".jpg") || ext.Equals(".jpeg") || ext.Equals(".png") || ext.Equals(".bmp") || ext.Equals(".webp"))
             {
-                m = new Media(libVLC, vid, FromType.FromPath, new string[] { ":image-duration=20" });
+                m = new Media(libVLC, vid, FromType.FromPath, new string[] { ":image-duration=" + Prefs.ImageDuration });
             }
             else
             {

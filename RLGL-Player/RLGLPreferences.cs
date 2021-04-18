@@ -33,7 +33,7 @@ namespace RLGL_Player
     public class RLGLPreferences
     {
         //The current version of the file. Used to preserve backwards-compatibility.
-        private string preferencesFileVersion = "v.7";
+        private string preferencesFileVersion = "v.8";
         private int minGreen;
         private int maxGreen;
         private int minRed;
@@ -71,6 +71,7 @@ namespace RLGL_Player
         private Color edgeColor;
         private Color ruinedOrgasmColor;
         private List<int> customColors;
+        private int imageDuration;
 
         //Minimum number of seconds a green phase will last.
         public int MinGreen { get => minGreen; }
@@ -144,6 +145,8 @@ namespace RLGL_Player
         public bool CensorOnlyGreen { get => censorOnlyGreen; }
         //Gets the color of the ruined orgasm phases.
         public Color RuinedOrgasmColor { get => ruinedOrgasmColor; }
+        //Gets the duration a single image is displayed.
+        public int ImageDuration { get => imageDuration; }
 
         public RLGLPreferences()
         {
@@ -184,7 +187,7 @@ namespace RLGL_Player
             censorOnlyGreen = false;
             ruinedOrgasmColor = Color.FromArgb(255, 199, 107, 243);
             customColors = new List<int>();
-
+            imageDuration = 10;
             LoadEndings();
         }
 
@@ -196,7 +199,7 @@ namespace RLGL_Player
                                 int censorChance, bool censorOnlyGreen, Color censorColor, string censorPath,
                                 int leftBorder, int rightBorder, int topBorder, int bottomBorder,
                                 bool edging, int edgingWarmup, int minEdge, int maxEdge, int edgeChance,
-                                bool greenAfterEdge, Color edgeColor, Color ruinedOrgasmColor)
+                                bool greenAfterEdge, Color edgeColor, Color ruinedOrgasmColor, int imageDuration)
         {
             this.minGreen = minGreen;
             this.maxGreen = maxGreen;
@@ -234,6 +237,7 @@ namespace RLGL_Player
             this.greenAfterEdge = greenAfterEdge;
             this.edgeColor = edgeColor;
             this.ruinedOrgasmColor = ruinedOrgasmColor;
+            this.imageDuration = imageDuration;
 
             customColors = new List<int>();
         }
@@ -301,6 +305,8 @@ namespace RLGL_Player
             prefDlg.ETB_EdgeChance.Enabled = edging;
             prefDlg.CB_AllowGreenLight.Enabled = edging;
 
+            prefDlg.NUD_ImageDuration.Value = imageDuration;
+
             prefDlg.EndingSettings = ending;
 
             prefDlg.CustomColorDlgColors = customColors;
@@ -350,6 +356,8 @@ namespace RLGL_Player
             maxEdge = (int)prefDlg.NUD_MaxEdge.Value;
             edgeChance = prefDlg.ETB_EdgeChance.Value;
             greenAfterEdge = prefDlg.CB_AllowGreenLight.Checked;
+
+            imageDuration = (int)prefDlg.NUD_ImageDuration.Value;
 
             ending = prefDlg.EndingSettings;
 
@@ -404,6 +412,7 @@ namespace RLGL_Player
                     greenAfterEdge = bool.Parse(prefFile.ReadLine());
                     edgeColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
                     ruinedOrgasmColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                    imageDuration = int.Parse(prefFile.ReadLine());
                     int endingCount = int.Parse(prefFile.ReadLine());
                     for (int i = 0; i < endingCount; i++)
                     {
@@ -801,6 +810,56 @@ namespace RLGL_Player
                     customColors.Add(int.Parse(prefFile.ReadLine()));
                 }
             }
+            else if(version.Equals("v.7"))
+            {
+                Ending.Clear();
+
+                maxGreen = int.Parse(prefFile.ReadLine());
+                maxRed = int.Parse(prefFile.ReadLine());
+                minGreen = int.Parse(prefFile.ReadLine());
+                minRed = int.Parse(prefFile.ReadLine());
+                metronome = bool.Parse(prefFile.ReadLine());
+                minBpm = int.Parse(prefFile.ReadLine());
+                maxBpm = int.Parse(prefFile.ReadLine());
+                metronomeChance = int.Parse(prefFile.ReadLine());
+                minEdgeBpm = int.Parse(prefFile.ReadLine());
+                maxEdgeBpm = int.Parse(prefFile.ReadLine());
+                metronomeEdgeChance = int.Parse(prefFile.ReadLine());
+                minEndingBpm = int.Parse(prefFile.ReadLine());
+                maxEndingBpm = int.Parse(prefFile.ReadLine());
+                metronomeEndingChance = int.Parse(prefFile.ReadLine());
+                greenLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                redLightColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                censoring = bool.Parse(prefFile.ReadLine());
+                censorType = (RLGLCensorType)int.Parse(prefFile.ReadLine());
+                censorSize = (RLGLCensorSize)int.Parse(prefFile.ReadLine());
+                censorChance = int.Parse(prefFile.ReadLine());
+                censorOnlyGreen = bool.Parse(prefFile.ReadLine());
+                censorColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                censorPath = prefFile.ReadLine();
+                leftBorder = int.Parse(prefFile.ReadLine());
+                rightBorder = int.Parse(prefFile.ReadLine());
+                topBorder = int.Parse(prefFile.ReadLine());
+                bottomBorder = int.Parse(prefFile.ReadLine());
+                edging = bool.Parse(prefFile.ReadLine());
+                edgingWarmup = int.Parse(prefFile.ReadLine());
+                minEdge = int.Parse(prefFile.ReadLine());
+                maxEdge = int.Parse(prefFile.ReadLine());
+                edgeChance = int.Parse(prefFile.ReadLine());
+                greenAfterEdge = bool.Parse(prefFile.ReadLine());
+                edgeColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                ruinedOrgasmColor = Color.FromArgb(int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()));
+                int endingCount = int.Parse(prefFile.ReadLine());
+                for (int i = 0; i < endingCount; i++)
+                {
+                    ending.Add(new RLGLInternEnding(bool.Parse(prefFile.ReadLine()), bool.Parse(prefFile.ReadLine()), int.Parse(prefFile.ReadLine()), prefFile.ReadLine(), null));
+                }
+                int customColorCount = int.Parse(prefFile.ReadLine());
+                for (int i = 0; i < customColorCount; i++)
+                {
+                    customColors.Add(int.Parse(prefFile.ReadLine()));
+                }
+            }
             else
             {
                 //Not a correct version. Do nothing for now.                
@@ -901,6 +960,7 @@ namespace RLGL_Player
             prefFile.WriteLine(ruinedOrgasmColor.R);
             prefFile.WriteLine(ruinedOrgasmColor.G);
             prefFile.WriteLine(ruinedOrgasmColor.B);
+            prefFile.WriteLine(imageDuration);
             prefFile.WriteLine(ending.Count);
             
             foreach (RLGLInternEnding e in ending)

@@ -32,20 +32,16 @@ namespace RLGL_Player
     {
         private Media media;
         private string path;
-        private RLGLPhase currentPhase;
         private Dictionary<int, PointF> currentCensor;
 
         //Full path to the current played media-file.
         public Media Media { get => media; }
-        //The currently played phase.
-        public RLGLPhase CurrentPhase { get => currentPhase; set => currentPhase = value; }
         public string Path { get => path; }
 
-        public RLGLCurrentMedia(Media media, string path, RLGLPhase startPhase)
+        public RLGLCurrentMedia(Media media, string path)
         {
             this.media = media;
             this.path = path;
-            currentPhase = startPhase;
             currentCensor = new Dictionary<int, PointF>();
         }
 

@@ -24,9 +24,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Media;
 using System.Collections.Generic;
-using LibVLCSharp.WinForms;
 using LibVLCSharp.Shared;
-using System.Threading.Tasks;
 
 namespace RLGL_Player
 {
@@ -61,6 +59,8 @@ public partial class RLGLPlayer : Form
         private LibVLC libVLC;
         private MediaPlayer mediaPlayer;
 
+        private DateTime sessionStart;
+
         public RLGLPlayer()
         {
             Core.Initialize();
@@ -82,14 +82,14 @@ public partial class RLGLPlayer : Form
             fullscreen = false;
             preferencesDlg = new PreferencesDlg();
             volumeBar = new VolumeBar();
-
+            sessionStart = DateTime.Now;
             InitializeComponent();
         }
 
         //Load a new media queue, play it and start with the first phase.
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RLGLPlayingQueueDlg rlglPlayingQueueDlg = new RLGLPlayingQueueDlg(libVLC);
+            RLGLPlayingQueueDlg rlglPlayingQueueDlg = new RLGLPlayingQueueDlg(libVLC, rlglPreferences);
 
             if(rlglPlayingQueueDlg.ShowDialog() == DialogResult.OK)
             {
@@ -127,7 +127,7 @@ public partial class RLGLPlayer : Form
         {
             if (!playEnding)
             {
-                if (rlglCurrentMedia.CurrentPhase == RLGLPhase.Green)
+                if (rlglVideoQueue.CurrentPhase == RLGLPhase.Green)
                 {
                     bool edge = false;
                     if (edging)
@@ -141,7 +141,7 @@ public partial class RLGLPlayer : Form
                     if (edge)
                     {
                         ShowPhase(RLGLPhase.Edge);
-                        rlglCurrentMedia.CurrentPhase = RLGLPhase.Edge;
+                        rlglVideoQueue.CurrentPhase = RLGLPhase.Edge;
                         RLGL_SwitchTimer.Stop();
                         RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinEdge, rlglPreferences.MaxEdge) * 1000;
                         RLGL_SwitchTimer.Start();
@@ -149,16 +149,16 @@ public partial class RLGLPlayer : Form
                     else
                     {
                         ShowPhase(RLGLPhase.Red);
-                        rlglCurrentMedia.CurrentPhase = RLGLPhase.Red;
+                        rlglVideoQueue.CurrentPhase = RLGLPhase.Red;
                         RLGL_SwitchTimer.Stop();
                         RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed) * 1000;
                         RLGL_SwitchTimer.Start();
                     }
                 }
-                else if (rlglCurrentMedia.CurrentPhase == RLGLPhase.Red)
+                else if (rlglVideoQueue.CurrentPhase == RLGLPhase.Red)
                 {
                     ShowPhase(RLGLPhase.Green);
-                    rlglCurrentMedia.CurrentPhase = RLGLPhase.Green;
+                    rlglVideoQueue.CurrentPhase = RLGLPhase.Green;
                     RLGL_SwitchTimer.Stop();
                     RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen) * 1000;
                     RLGL_SwitchTimer.Start();
@@ -174,7 +174,7 @@ public partial class RLGLPlayer : Form
                     if (green)
                     {
                         ShowPhase(RLGLPhase.Green);
-                        rlglCurrentMedia.CurrentPhase = RLGLPhase.Green;
+                        rlglVideoQueue.CurrentPhase = RLGLPhase.Green;
                         RLGL_SwitchTimer.Stop();
                         RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen) * 1000;
                         RLGL_SwitchTimer.Start();
@@ -182,7 +182,7 @@ public partial class RLGLPlayer : Form
                     else
                     {
                         ShowPhase(RLGLPhase.Red);
-                        rlglCurrentMedia.CurrentPhase = RLGLPhase.Red;
+                        rlglVideoQueue.CurrentPhase = RLGLPhase.Red;
                         RLGL_SwitchTimer.Stop();
                         RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed) * 1000;
                         RLGL_SwitchTimer.Start();
@@ -265,8 +265,8 @@ public partial class RLGLPlayer : Form
         //Calculates the duration of the video and sets the timer accordingly.
         private void SetVideoEndTimer()
         {
-            Console.Out.WriteLine(rlglVideoQueue.Duration);
-            int duration = (int)(TimeSpan.FromMilliseconds(rlglVideoQueue.Duration) - (TimeSpan.FromSeconds(rlglVideoQueue.Ending.Duration + 2))).TotalMilliseconds;
+            Console.Out.WriteLine(rlglVideoQueue.Duration * (rlglVideoQueue.InitLoop+1));
+            int duration = (int)(TimeSpan.FromMilliseconds(rlglVideoQueue.Duration * (rlglVideoQueue.InitLoop+1)) - (TimeSpan.FromSeconds(rlglVideoQueue.Ending.Duration + 2))).TotalMilliseconds;
 
             if (duration < 1)
             {
@@ -522,16 +522,8 @@ public partial class RLGLPlayer : Form
         {
             (Media, string) nextVid = rlglVideoQueue.GetNextVideo();
             VLC_Control.MediaPlayer.Media = nextVid.Item1;
-            if (sessionStart)
-            {
-                rlglCurrentMedia = new RLGLCurrentMedia(nextVid.Item1, nextVid.Item2,
-                    RLGLPhase.Green);
-            }
-            else
-            {
-                rlglCurrentMedia = new RLGLCurrentMedia(nextVid.Item1, nextVid.Item2,                   
-                    (RLGLPhase)randomNumberGenerator.Next(0, 2));
-            }
+            
+            rlglCurrentMedia = new RLGLCurrentMedia(nextVid.Item1, nextVid.Item2);
 
             for (int i = 0; i < censorbars.Count; i++)
             {
@@ -559,22 +551,14 @@ public partial class RLGLPlayer : Form
 
             VLC_Control.MediaPlayer.Play();
 
-            if (!playEnding)
+            if (sessionStart)
             {
-                ShowPhase(rlglCurrentMedia.CurrentPhase);
+                ShowPhase(rlglVideoQueue.CurrentPhase);
 
-                if (rlglCurrentMedia.CurrentPhase == RLGLPhase.Red)
-                {
-                    RLGL_SwitchTimer.Stop();
-                    RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed) * 1000;
-                    RLGL_SwitchTimer.Start();
-                }
-                else
-                {
-                    RLGL_SwitchTimer.Stop();
-                    RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen) * 1000;
-                    RLGL_SwitchTimer.Start();
-                }
+                RLGL_SwitchTimer.Stop();
+                RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen) * 1000;
+                RLGL_SwitchTimer.Start();
+
             }
         }
 
@@ -615,7 +599,7 @@ public partial class RLGLPlayer : Form
                     volumeBar.Show(this);
                     this.Focus();
                 }
-                //RLGL_Timer.Stop();
+                RLGL_Timer.Stop();
             }
         }
 
@@ -936,7 +920,7 @@ public partial class RLGLPlayer : Form
 
         private void RLGL_Timer_Tick(object sender, EventArgs e)
         {
-            //L_TimePassed.Text = (DateTime.Now - rlglCurrentMedia.Start).ToString(@"hh\:mm\:ss");
+            L_TimePassed.Text = (DateTime.Now - sessionStart).ToString(@"hh\:mm\:ss");
         }
 
         /*
@@ -948,6 +932,7 @@ public partial class RLGLPlayer : Form
             if (rlglVideoQueue.VideosRemaining() > 0)
             {
                 sessionToolStripMenuItem.Visible = true;
+                sessionStart = DateTime.Now;
 
                 RLGLEnding ending = null;
                                 
@@ -1005,7 +990,7 @@ public partial class RLGLPlayer : Form
                     volumeBar.Hide();
                 }
                  
-                //RLGL_Timer.Start();
+                RLGL_Timer.Start();
             }
         }
 

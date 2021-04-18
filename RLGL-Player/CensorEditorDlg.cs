@@ -105,7 +105,7 @@ namespace RLGL_Player
                 Media m = new Media(libVLC, openFileDlg.FileName);
                 Task<MediaParsedStatus> parse = m.Parse();
                 parse.Wait();
-                rlglCurrentMedia = new RLGLCurrentMedia(m, openFileDlg.FileName, RLGLPhase.Green);
+                rlglCurrentMedia = new RLGLCurrentMedia(m, openFileDlg.FileName);
 
                 InitEditor();
                 PB_KeyframeDrawingWindow.Invalidate();
@@ -137,7 +137,7 @@ namespace RLGL_Player
                 Media m = new Media(libVLC, openFileDlg.FileName);
                 Task<MediaParsedStatus> parse = m.Parse();
                 parse.Wait();
-                rlglCurrentMedia = new RLGLCurrentMedia(m, openFileDlg.FileName, RLGLPhase.Green);
+                rlglCurrentMedia = new RLGLCurrentMedia(m, openFileDlg.FileName);
 
                 VLC_Editor.MediaPlayer.Stop();
 

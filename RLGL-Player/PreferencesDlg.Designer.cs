@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.ColorPicker = new System.Windows.Forms.ColorDialog();
             this.GB_RLGLSettings = new System.Windows.Forms.GroupBox();
             this.ETB_EdgeChance = new RLGL_Player.ExtendedTrackBar();
@@ -117,6 +118,9 @@
             this.COMB_CensorSize = new System.Windows.Forms.ComboBox();
             this.L_CensorType = new System.Windows.Forms.Label();
             this.B_Apply = new System.Windows.Forms.Button();
+            this.L_ImageDuration = new System.Windows.Forms.Label();
+            this.NUD_ImageDuration = new System.Windows.Forms.NumericUpDown();
+            this.PreferencesToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.GB_RLGLSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MaxEdge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_MinEdge)).BeginInit();
@@ -145,6 +149,7 @@
             this.GB_EndingSettings.SuspendLayout();
             this.TAB_Censor.SuspendLayout();
             this.GB_CensorSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_ImageDuration)).BeginInit();
             this.SuspendLayout();
             // 
             // ColorPicker
@@ -154,6 +159,8 @@
             // 
             // GB_RLGLSettings
             // 
+            this.GB_RLGLSettings.Controls.Add(this.NUD_ImageDuration);
+            this.GB_RLGLSettings.Controls.Add(this.L_ImageDuration);
             this.GB_RLGLSettings.Controls.Add(this.ETB_EdgeChance);
             this.GB_RLGLSettings.Controls.Add(this.CB_AllowGreenLight);
             this.GB_RLGLSettings.Controls.Add(this.NUD_MaxEdge);
@@ -1277,6 +1284,38 @@
             this.B_Apply.UseVisualStyleBackColor = true;
             this.B_Apply.Click += new System.EventHandler(this.B_Apply_Click);
             // 
+            // L_ImageDuration
+            // 
+            this.L_ImageDuration.AutoSize = true;
+            this.L_ImageDuration.Location = new System.Drawing.Point(6, 350);
+            this.L_ImageDuration.Name = "L_ImageDuration";
+            this.L_ImageDuration.Size = new System.Drawing.Size(195, 13);
+            this.L_ImageDuration.TabIndex = 39;
+            this.L_ImageDuration.Text = "Duration single images are displayed (s):";
+            // 
+            // NUD_ImageDuration
+            // 
+            this.NUD_ImageDuration.Location = new System.Drawing.Point(207, 348);
+            this.NUD_ImageDuration.Maximum = new decimal(new int[] {
+            3600,
+            0,
+            0,
+            0});
+            this.NUD_ImageDuration.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NUD_ImageDuration.Name = "NUD_ImageDuration";
+            this.NUD_ImageDuration.Size = new System.Drawing.Size(353, 20);
+            this.NUD_ImageDuration.TabIndex = 40;
+            this.PreferencesToolTip.SetToolTip(this.NUD_ImageDuration, "Changing the duration will not affect any currently played sessions!");
+            this.NUD_ImageDuration.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
             // PreferencesDlg
             // 
             this.AcceptButton = this.B_Apply;
@@ -1329,6 +1368,7 @@
             this.TAB_Censor.ResumeLayout(false);
             this.GB_CensorSettings.ResumeLayout(false);
             this.GB_CensorSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_ImageDuration)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1424,5 +1464,8 @@
         private System.Windows.Forms.Label L_MaxMetronomeEdge;
         public System.Windows.Forms.NumericUpDown NUD_MinMetronomeEdge;
         private System.Windows.Forms.Label L_MinMetronomeEdge;
+        private System.Windows.Forms.ToolTip PreferencesToolTip;
+        private System.Windows.Forms.Label L_ImageDuration;
+        public System.Windows.Forms.NumericUpDown NUD_ImageDuration;
     }
 }
