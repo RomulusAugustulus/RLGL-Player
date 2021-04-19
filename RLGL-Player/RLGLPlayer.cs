@@ -68,6 +68,7 @@ public partial class RLGLPlayer : Form
             mediaPlayer = new MediaPlayer(libVLC);
 
             mediaPlayer.EndReached += new EventHandler<EventArgs>(VLC_Control_EndReached);
+            mediaPlayer.Playing += new EventHandler<EventArgs>(VLC_Control_Playing);
 
             randomNumberGenerator = new Random();
             rlglPreferences = new RLGLPreferences();
@@ -1135,6 +1136,16 @@ public partial class RLGLPlayer : Form
             {
                 RLGL_CountdownTimer.Stop();
             }
+        }
+
+        private void VLC_Control_Playing(object sender, EventArgs e)
+        {
+            this.BeginInvoke(new Action(() => FocusCensorbars()));
+        }
+
+        private void FocusCensorbars()
+        {
+            ShowCensoring(false);
         }
     }
 }

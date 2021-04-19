@@ -31,7 +31,7 @@ namespace RLGL_Player
         private void L_LinktToVLC_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             L_LinktToVLC.LinkVisited = true;
-            System.Diagnostics.Process.Start("https://github.com/videolan/vlc");
+            System.Diagnostics.Process.Start("https://github.com/videolan/libvlcsharp");
         }
 
         //provide link to gnu.

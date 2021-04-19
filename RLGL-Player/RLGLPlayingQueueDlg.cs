@@ -25,9 +25,12 @@ namespace RLGL_Player
 {
     public partial class RLGLPlayingQueueDlg : Form
     {
+        private enum CreatingFlag { None, StartSession, SaveList, LoadList }
+        private WorkingDlg workingDlg;
         private List<(string, string)> videos;
         private RLGLPreferences prefs;
         private RLGLVideoQueue videoQueue;
+        private CreatingFlag flag;
         public RLGLVideoQueue VideoQueue { get => videoQueue; }
         public LibVLC LibVLC { get; set; }
 
@@ -41,6 +44,8 @@ namespace RLGL_Player
             videoQueue.Prefs = prefs;
             videos = new List<(string, string)>();
             L_FullPath.Text = "";
+            workingDlg = new WorkingDlg();
+            flag = CreatingFlag.None;
         }
 
         //Changes the appearance of the dialog to alter an existing queue.
@@ -97,6 +102,7 @@ namespace RLGL_Player
 
         private void B_OK_Click(object sender, EventArgs e)
         {
+            flag = CreatingFlag.StartSession;
             CreateRLGLVideoQueue();
         }
 
@@ -152,30 +158,11 @@ namespace RLGL_Player
 
         private void CreateRLGLVideoQueue()
         {
-            Random rand = new Random();
+            this.DialogResult = DialogResult.None;
+            workingDlg.InitProgressbar();
+            workingDlg.Show(this);
+            BG_CreatePlaylist.RunWorkerAsync();
 
-            if (NUD_Loop.Value != 0)
-            {
-                videoQueue = new RLGLVideoQueue(LibVLC, (int)NUD_Loop.Value);
-                videoQueue.Prefs = prefs;
-            }
-
-            if (CB_Shuffle.Checked)
-            {
-                while (videos.Count != 0)
-                {
-                    int vid = rand.Next(videos.Count);
-                    videoQueue.AddVideo(videos[vid].Item2);
-                    videos.RemoveAt(vid);
-                }
-            }
-            else
-            {
-                for (int i = 0; i < videos.Count; i++)
-                {
-                    videoQueue.AddVideo(videos[i].Item2);
-                }
-            }
         }
 
         private void B_LoadPlaylist_Click(object sender, EventArgs e)
@@ -193,25 +180,11 @@ namespace RLGL_Player
             {
                 if (OpenQueueDlg.ShowDialog() == DialogResult.OK)
                 {
-                    videoQueue = new RLGLVideoQueue(LibVLC);
-                    videoQueue.Prefs = prefs;
-                    (bool, string) loadedQueue = videoQueue.LoadVideoQueue(OpenQueueDlg.FileName);
-
-                    if (loadedQueue.Item1)
-                    {
-                        InitCustomizationDlg(videoQueue);
-
-                        if (loadedQueue.Item2.Length != 0)
-                        {
-                            MessageBox.Show(loadedQueue.Item2, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-
-                        B_SavePlaylist.Enabled = true;
-                    }
-                    else
-                    {
-                        MessageBox.Show(loadedQueue.Item2, "Error");
-                    }
+                    flag = CreatingFlag.LoadList;
+                    workingDlg.InitProgressbar();
+                    workingDlg.SetMarquee(true);
+                    workingDlg.Show(this);
+                    BG_CreatePlaylist.RunWorkerAsync();
                 }
             }
         }
@@ -220,9 +193,99 @@ namespace RLGL_Player
         {
             if (SaveQueueDlg.ShowDialog() == DialogResult.OK)
             {
-                CreateRLGLVideoQueue();
+                flag = CreatingFlag.SaveList;
+                CreateRLGLVideoQueue();                
+            }
+        }
+
+        private void BG_CreatePlaylist_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            if (flag != CreatingFlag.LoadList)
+            {
+                Random rand = new Random();
+                float progress = 0.0f;
+                float progressIncrease = 100.0f / videos.Count;
+                BG_CreatePlaylist.ReportProgress((int)progress);
+
+                if (NUD_Loop.Value != 0)
+                {
+                    videoQueue = new RLGLVideoQueue(LibVLC, (int)NUD_Loop.Value);
+                    videoQueue.Prefs = prefs;
+                }
+
+                if (CB_Shuffle.Checked)
+                {
+                    while (videos.Count != 0)
+                    {
+                        int vid = rand.Next(videos.Count);
+                        videoQueue.AddVideo(videos[vid].Item2);
+                        videos.RemoveAt(vid);
+
+                        progress += progressIncrease;
+                        BG_CreatePlaylist.ReportProgress(Math.Min(100, (int)progress));
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < videos.Count; i++)
+                    {
+                        videoQueue.AddVideo(videos[i].Item2);
+
+                        progress += progressIncrease;
+                        BG_CreatePlaylist.ReportProgress(Math.Min(100, (int)progress));
+                    }
+                }
+            }
+            else
+            {
+                videoQueue = new RLGLVideoQueue(LibVLC);
+                videoQueue.Prefs = prefs;
+                (bool, string) loadedQueue = videoQueue.LoadVideoQueue(OpenQueueDlg.FileName, true);
+                e.Result = loadedQueue;
+            }
+        }
+
+        private void BG_CreatePlaylist_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        {
+            workingDlg.SetProgress(e.ProgressPercentage);
+        }
+
+        private void BG_CreatePlaylist_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            workingDlg.Hide();
+
+            if (flag == CreatingFlag.StartSession)
+            {
+                flag = CreatingFlag.None;
+                this.DialogResult = DialogResult.OK;
+            }
+            else if(flag == CreatingFlag.SaveList)
+            {
+                flag = CreatingFlag.None;
                 videoQueue.SaveVideoQueue(SaveQueueDlg.FileName);
                 MessageBox.Show("Saved playlist.", "Save");
+            }
+            else if(flag == CreatingFlag.LoadList)
+            {
+                (bool, string) loadedQueue = ((bool, string)) e.Result;
+                flag = CreatingFlag.None;
+                workingDlg.SetMarquee(false);
+
+                if (loadedQueue.Item1)
+                {
+                    InitCustomizationDlg(videoQueue);
+
+                    if (loadedQueue.Item2.Length != 0)
+                    {
+                        MessageBox.Show(loadedQueue.Item2, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
+                    B_SavePlaylist.Enabled = true;
+                }
+                else
+                {
+                    MessageBox.Show(loadedQueue.Item2, "Error");
+                }
             }
         }
     }

@@ -58,7 +58,7 @@
             this.L_AboutInfo.Name = "L_AboutInfo";
             this.L_AboutInfo.Size = new System.Drawing.Size(121, 13);
             this.L_AboutInfo.TabIndex = 1;
-            this.L_AboutInfo.Text = "RLGL-Player    v. 0.12.0";
+            this.L_AboutInfo.Text = "RLGL-Player    v. 0.12.1";
             // 
             // L_Copyright
             // 
@@ -92,10 +92,10 @@
             this.L_LinktToVLC.AutoSize = true;
             this.L_LinktToVLC.Location = new System.Drawing.Point(12, 332);
             this.L_LinktToVLC.Name = "L_LinktToVLC";
-            this.L_LinktToVLC.Size = new System.Drawing.Size(159, 13);
+            this.L_LinktToVLC.Size = new System.Drawing.Size(195, 13);
             this.L_LinktToVLC.TabIndex = 5;
             this.L_LinktToVLC.TabStop = true;
-            this.L_LinktToVLC.Text = "https://github.com/videolan/vlc";
+            this.L_LinktToVLC.Text = "https://github.com/videolan/libvlcsharp";
             this.L_LinktToVLC.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.L_LinktToVLC_LinkClicked);
             // 
             // B_OK

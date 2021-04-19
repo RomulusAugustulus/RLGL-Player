@@ -90,10 +90,28 @@ namespace RLGL_Player
             media.Add(m);
         }
 
+        //Adds a video at the end of the queue but does not get any media information.
+        public void AddVideoLazy(string vid)
+        {
+            videos.Add(vid);
+            string ext = Path.GetExtension(vid);
+            Media m = null;
+            if (ext.Equals(".jpg") || ext.Equals(".jpeg") || ext.Equals(".png") || ext.Equals(".bmp") || ext.Equals(".webp"))
+            {
+                m = new Media(libVLC, vid, FromType.FromPath, new string[] { ":image-duration=" + Prefs.ImageDuration });
+            }
+            else
+            {
+                m = new Media(libVLC, vid);
+            }
+
+            media.Add(m);
+        }
+
         /*
          * Gets the next media and it's path or null if the queue has no media left.
          * Has ability to loop the playlist.
-         */ 
+         */
         public (Media, string) GetNextVideo()
         {
             if(currentVideo < videos.Count)
@@ -147,7 +165,7 @@ namespace RLGL_Player
         /*
          * Load a queue from a file. Returns true if the queue was loaded successfully and adds a message indicating problems.
          */ 
-        public (bool, string) LoadVideoQueue(string filename)
+        public (bool, string) LoadVideoQueue(string filename, bool lazy)
         {
             string message = "";
             try
@@ -161,7 +179,14 @@ namespace RLGL_Player
 
                 for (int i = 0; i < numVid; i++)
                 {
-                    AddVideo(fileReader.ReadString());
+                    if (lazy)
+                    {
+                        AddVideoLazy(fileReader.ReadString());
+                    }
+                    else
+                    {
+                        AddVideo(fileReader.ReadString());
+                    }
                 }
                 
                 if (version < QueueVersion)

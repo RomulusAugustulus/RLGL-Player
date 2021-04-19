@@ -49,6 +49,7 @@ namespace RLGL_Player
             this.B_SavePlaylist = new System.Windows.Forms.Button();
             this.SaveQueueDlg = new System.Windows.Forms.SaveFileDialog();
             this.OpenQueueDlg = new System.Windows.Forms.OpenFileDialog();
+            this.BG_CreatePlaylist = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Loop)).BeginInit();
             this.SuspendLayout();
             // 
@@ -217,6 +218,13 @@ namespace RLGL_Player
             this.OpenQueueDlg.Filter = "RLGL-Playlist (*.rgp)|*.rgp";
             this.OpenQueueDlg.Title = "Load Playlist...";
             // 
+            // BG_CreatePlaylist
+            // 
+            this.BG_CreatePlaylist.WorkerReportsProgress = true;
+            this.BG_CreatePlaylist.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BG_CreatePlaylist_DoWork);
+            this.BG_CreatePlaylist.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BG_CreatePlaylist_ProgressChanged);
+            this.BG_CreatePlaylist.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BG_CreatePlaylist_RunWorkerCompleted);
+            // 
             // RLGLPlayingQueueDlg
             // 
             this.AcceptButton = this.B_OK;
@@ -272,5 +280,6 @@ namespace RLGL_Player
         private System.Windows.Forms.Button B_SavePlaylist;
         private System.Windows.Forms.SaveFileDialog SaveQueueDlg;
         private System.Windows.Forms.OpenFileDialog OpenQueueDlg;
+        private System.ComponentModel.BackgroundWorker BG_CreatePlaylist;
     }
 }
