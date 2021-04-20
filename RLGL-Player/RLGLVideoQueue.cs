@@ -145,6 +145,14 @@ namespace RLGL_Player
             currentVideo = videos.Count;
         }
 
+        //Reset the queue to allow replayability
+        public void ResetQueue()
+        {
+            loop = initLoop;
+            currentVideo = 0;
+            currentPhase = RLGLPhase.Green;
+        }
+
         //Save a video queue as a file.
         public void SaveVideoQueue(string filename)
         {

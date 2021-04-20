@@ -638,12 +638,13 @@ public partial class RLGLPlayer : Form
 
                 edging = false;
                 StopEdging();
-                sessionToolStripMenuItem.Visible = false;
+                endSessionToolStripMenuItem.Enabled = false;
 
                 if (rlglVideoQueue.Ending != null)
                 {
                     rlglVideoQueue.Ending.ResetPhasePointer();
                 }
+                rlglVideoQueue.ResetQueue();
 
                 RLGL_HideVolumeBar.Stop();
                 if(!volumeBar.Visible)
@@ -861,7 +862,7 @@ public partial class RLGLPlayer : Form
                     censorbars[i].Show(VLC_Control);
                 }
             }
-
+            
             for(int i=pos.Count;i<censorbars.Count;i++)
             {
                 if(censorbars[i].Visible)
@@ -869,6 +870,8 @@ public partial class RLGLPlayer : Form
                     censorbars[i].Hide();
                 }
             }
+
+            this.Focus();
         }
 
         //Play the metronome-sound.
@@ -983,7 +986,9 @@ public partial class RLGLPlayer : Form
         {
             if (rlglVideoQueue.VideosRemaining() > 0)
             {
-                sessionToolStripMenuItem.Visible = true;
+                endSessionToolStripMenuItem.Enabled = true;
+                restartSessionToolStripMenuItem.Enabled = true;
+                saveSessionToolStripMenuItem.Enabled = true;
                 sessionStart = DateTime.Now;
 
                 RLGLEnding ending = null;
@@ -1145,7 +1150,33 @@ public partial class RLGLPlayer : Form
 
         private void FocusCensorbars()
         {
-            ShowCensoring(false);
+            if (censoring)
+            {
+                ShowCensoring(false);
+            }
+        }
+
+        private void restartSessionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (rlglVideoQueue != null)
+            {
+                VLC_Control.MediaPlayer.Stop();
+                rlglVideoQueue.CancelQueue();
+                ResetRLGLInfo();
+            }
+
+            StartQueue();
+        }
+
+        private void saveSessionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (rlglVideoQueue != null)
+            {
+                if (SaveQueueDlg.ShowDialog() == DialogResult.OK)
+                {
+                    rlglVideoQueue.SaveVideoQueue(SaveQueueDlg.FileName);
+                }
+            }
         }
     }
 }

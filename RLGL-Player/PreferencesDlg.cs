@@ -446,7 +446,7 @@ namespace RLGL_Player
                     {
                         RLGLInternEnding setting = EndingSettings[i];
 
-                        if (!((setting.Locked || setting.EndingName.Equals(currentElement.Text) && setting.Enabled)))
+                        if ((!(setting.Locked || setting.EndingName.Equals(currentElement.Text)) && setting.Enabled))
                         {
                             int c = EndingSettings[i].Chance + diff + carry;
                             if (c > lockValue)

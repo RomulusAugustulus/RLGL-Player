@@ -45,6 +45,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.VLC_Panel = new System.Windows.Forms.Panel();
             this.RLGL_Layout = new System.Windows.Forms.TableLayoutPanel();
+            this.VLC_Control = new LibVLCSharp.WinForms.VideoView();
             this.L_Text = new System.Windows.Forms.Label();
             this.L_TimePassed = new System.Windows.Forms.Label();
             this.P_ShowVolumeBar = new System.Windows.Forms.Panel();
@@ -58,7 +59,9 @@
             this.SaveQueueDlg = new System.Windows.Forms.SaveFileDialog();
             this.RLGL_HideVolumeBar = new System.Windows.Forms.Timer(this.components);
             this.RLGL_CountdownTimer = new System.Windows.Forms.Timer(this.components);
-            this.VLC_Control = new LibVLCSharp.WinForms.VideoView();
+            this.saveSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restartSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.MainMenu.SuspendLayout();
             this.VLC_Panel.SuspendLayout();
             this.RLGL_Layout.SuspendLayout();
@@ -127,17 +130,20 @@
             // sessionToolStripMenuItem
             // 
             this.sessionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.endSessionToolStripMenuItem});
+            this.restartSessionToolStripMenuItem,
+            this.endSessionToolStripMenuItem,
+            this.toolStripMenuItem4,
+            this.saveSessionToolStripMenuItem});
             this.sessionToolStripMenuItem.Name = "sessionToolStripMenuItem";
             this.sessionToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
             this.sessionToolStripMenuItem.Text = "&Session";
-            this.sessionToolStripMenuItem.Visible = false;
             // 
             // endSessionToolStripMenuItem
             // 
+            this.endSessionToolStripMenuItem.Enabled = false;
             this.endSessionToolStripMenuItem.Name = "endSessionToolStripMenuItem";
             this.endSessionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.endSessionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.endSessionToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
             this.endSessionToolStripMenuItem.Text = "&End session";
             this.endSessionToolStripMenuItem.Click += new System.EventHandler(this.endSessionToolStripMenuItem_Click);
             // 
@@ -203,6 +209,19 @@
             this.RLGL_Layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.RLGL_Layout.Size = new System.Drawing.Size(1076, 563);
             this.RLGL_Layout.TabIndex = 1;
+            // 
+            // VLC_Control
+            // 
+            this.VLC_Control.BackColor = System.Drawing.Color.Black;
+            this.VLC_Control.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VLC_Control.Location = new System.Drawing.Point(53, 53);
+            this.VLC_Control.MediaPlayer = null;
+            this.VLC_Control.Name = "VLC_Control";
+            this.RLGL_Layout.SetRowSpan(this.VLC_Control, 2);
+            this.VLC_Control.Size = new System.Drawing.Size(970, 457);
+            this.VLC_Control.TabIndex = 2;
+            this.VLC_Control.Text = "videoView1";
+            this.VLC_Control.KeyDown += new System.Windows.Forms.KeyEventHandler(this.VLC_Control_KeyDown);
             // 
             // L_Text
             // 
@@ -282,18 +301,28 @@
             // 
             this.RLGL_CountdownTimer.Tick += new System.EventHandler(this.RLGL_CountdownTimer_Tick);
             // 
-            // VLC_Control
+            // saveSessionToolStripMenuItem
             // 
-            this.VLC_Control.BackColor = System.Drawing.Color.Black;
-            this.VLC_Control.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VLC_Control.Location = new System.Drawing.Point(53, 53);
-            this.VLC_Control.MediaPlayer = null;
-            this.VLC_Control.Name = "VLC_Control";
-            this.RLGL_Layout.SetRowSpan(this.VLC_Control, 2);
-            this.VLC_Control.Size = new System.Drawing.Size(970, 457);
-            this.VLC_Control.TabIndex = 2;
-            this.VLC_Control.Text = "videoView1";
-            this.VLC_Control.KeyDown += new System.Windows.Forms.KeyEventHandler(this.VLC_Control_KeyDown);
+            this.saveSessionToolStripMenuItem.Enabled = false;
+            this.saveSessionToolStripMenuItem.Name = "saveSessionToolStripMenuItem";
+            this.saveSessionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveSessionToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.saveSessionToolStripMenuItem.Text = "&Save last session as playlist";
+            this.saveSessionToolStripMenuItem.Click += new System.EventHandler(this.saveSessionToolStripMenuItem_Click);
+            // 
+            // restartSessionToolStripMenuItem
+            // 
+            this.restartSessionToolStripMenuItem.Enabled = false;
+            this.restartSessionToolStripMenuItem.Name = "restartSessionToolStripMenuItem";
+            this.restartSessionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.restartSessionToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.restartSessionToolStripMenuItem.Text = "&Restart last session";
+            this.restartSessionToolStripMenuItem.Click += new System.EventHandler(this.restartSessionToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(253, 6);
             // 
             // RLGLPlayer
             // 
@@ -353,6 +382,9 @@
         private System.Windows.Forms.Timer RLGL_CountdownTimer;
         private System.Windows.Forms.Panel P_ShowVolumeBar;
         private LibVLCSharp.WinForms.VideoView VLC_Control;
+        private System.Windows.Forms.ToolStripMenuItem saveSessionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem restartSessionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
     }
 }
 

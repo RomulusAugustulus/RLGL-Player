@@ -43,7 +43,6 @@ namespace RLGL_Player
         private int selectedCensorbarSize;
         private LibVLC libVLC;
         private MediaPlayer mediaPlayer;
-
         public CensorEditorDlg()
         {
             Core.Initialize();

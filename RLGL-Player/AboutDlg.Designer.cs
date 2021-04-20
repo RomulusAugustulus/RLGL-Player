@@ -38,6 +38,7 @@
             this.B_OK = new System.Windows.Forms.Button();
             this.L_License = new System.Windows.Forms.Label();
             this.L_LinkGNU = new System.Windows.Forms.LinkLabel();
+            this.L_SpecialThanks = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Icon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,7 +59,7 @@
             this.L_AboutInfo.Name = "L_AboutInfo";
             this.L_AboutInfo.Size = new System.Drawing.Size(121, 13);
             this.L_AboutInfo.TabIndex = 1;
-            this.L_AboutInfo.Text = "RLGL-Player    v. 0.12.1";
+            this.L_AboutInfo.Text = "RLGL-Player    v. 0.12.2";
             // 
             // L_Copyright
             // 
@@ -72,7 +73,7 @@
             // L_Idea
             // 
             this.L_Idea.AutoSize = true;
-            this.L_Idea.Location = new System.Drawing.Point(141, 93);
+            this.L_Idea.Location = new System.Drawing.Point(145, 92);
             this.L_Idea.Name = "L_Idea";
             this.L_Idea.Size = new System.Drawing.Size(104, 13);
             this.L_Idea.TabIndex = 3;
@@ -81,7 +82,7 @@
             // L_Videoplayer
             // 
             this.L_Videoplayer.AutoSize = true;
-            this.L_Videoplayer.Location = new System.Drawing.Point(9, 312);
+            this.L_Videoplayer.Location = new System.Drawing.Point(9, 369);
             this.L_Videoplayer.Name = "L_Videoplayer";
             this.L_Videoplayer.Size = new System.Drawing.Size(250, 13);
             this.L_Videoplayer.TabIndex = 4;
@@ -90,7 +91,7 @@
             // L_LinktToVLC
             // 
             this.L_LinktToVLC.AutoSize = true;
-            this.L_LinktToVLC.Location = new System.Drawing.Point(12, 332);
+            this.L_LinktToVLC.Location = new System.Drawing.Point(12, 389);
             this.L_LinktToVLC.Name = "L_LinktToVLC";
             this.L_LinktToVLC.Size = new System.Drawing.Size(195, 13);
             this.L_LinktToVLC.TabIndex = 5;
@@ -101,7 +102,7 @@
             // B_OK
             // 
             this.B_OK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.B_OK.Location = new System.Drawing.Point(160, 360);
+            this.B_OK.Location = new System.Drawing.Point(160, 415);
             this.B_OK.Name = "B_OK";
             this.B_OK.Size = new System.Drawing.Size(75, 23);
             this.B_OK.TabIndex = 6;
@@ -111,7 +112,7 @@
             // L_License
             // 
             this.L_License.AutoSize = true;
-            this.L_License.Location = new System.Drawing.Point(9, 125);
+            this.L_License.Location = new System.Drawing.Point(9, 182);
             this.L_License.Name = "L_License";
             this.L_License.Size = new System.Drawing.Size(375, 156);
             this.L_License.TabIndex = 7;
@@ -120,7 +121,7 @@
             // L_LinkGNU
             // 
             this.L_LinkGNU.AutoSize = true;
-            this.L_LinkGNU.Location = new System.Drawing.Point(178, 268);
+            this.L_LinkGNU.Location = new System.Drawing.Point(178, 325);
             this.L_LinkGNU.Name = "L_LinkGNU";
             this.L_LinkGNU.Size = new System.Drawing.Size(154, 13);
             this.L_LinkGNU.TabIndex = 8;
@@ -128,12 +129,22 @@
             this.L_LinkGNU.Text = "https://www.gnu.org/licenses/";
             this.L_LinkGNU.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.L_LinkGNU_LinkClicked);
             // 
+            // L_SpecialThanks
+            // 
+            this.L_SpecialThanks.Location = new System.Drawing.Point(61, 118);
+            this.L_SpecialThanks.Name = "L_SpecialThanks";
+            this.L_SpecialThanks.Size = new System.Drawing.Size(263, 47);
+            this.L_SpecialThanks.TabIndex = 9;
+            this.L_SpecialThanks.Text = "Special thanks for testing, suggestions and feedback:\r\n\r\nTriple Alfa\r\n";
+            this.L_SpecialThanks.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // AboutDlg
             // 
             this.AcceptButton = this.B_OK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(394, 397);
+            this.ClientSize = new System.Drawing.Size(394, 450);
+            this.Controls.Add(this.L_SpecialThanks);
             this.Controls.Add(this.L_LinkGNU);
             this.Controls.Add(this.L_License);
             this.Controls.Add(this.B_OK);
@@ -168,5 +179,6 @@
         private System.Windows.Forms.Button B_OK;
         private System.Windows.Forms.Label L_License;
         private System.Windows.Forms.LinkLabel L_LinkGNU;
+        private System.Windows.Forms.Label L_SpecialThanks;
     }
 }
