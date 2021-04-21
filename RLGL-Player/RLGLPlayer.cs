@@ -60,6 +60,7 @@ public partial class RLGLPlayer : Form
         private MediaPlayer mediaPlayer;
 
         private DateTime sessionStart;
+        private int sessionDurationBeforeEnding;
 
         public RLGLPlayer()
         {
@@ -126,6 +127,10 @@ public partial class RLGLPlayer : Form
         //Switches between the different phases.
         private void RLGL_SwitchTimer_Tick(object sender, EventArgs e)
         {
+            DateTime now = DateTime.Now;
+
+            int diffToEndingStart = sessionDurationBeforeEnding - (int)(now - sessionStart).TotalMilliseconds;
+
             if (!playEnding)
             {
                 if (rlglVideoQueue.CurrentPhase == RLGLPhase.Green)
@@ -139,7 +144,7 @@ public partial class RLGLPlayer : Form
                         }
                     }
 
-                    if (edge)
+                    if (edge && diffToEndingStart > rlglPreferences.MaxEdge + 5)
                     {
                         ShowPhase(RLGLPhase.Edge);
                         rlglVideoQueue.CurrentPhase = RLGLPhase.Edge;
@@ -151,8 +156,17 @@ public partial class RLGLPlayer : Form
                     {
                         ShowPhase(RLGLPhase.Red);
                         rlglVideoQueue.CurrentPhase = RLGLPhase.Red;
+
                         RLGL_SwitchTimer.Stop();
-                        RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed) * 1000;
+                        int chosenInterval = randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed) * 1000;
+                        if (chosenInterval < diffToEndingStart && chosenInterval + 10 > diffToEndingStart)
+                        {
+                            RLGL_SwitchTimer.Interval = diffToEndingStart + 5;
+                        }
+                        else
+                        {
+                            RLGL_SwitchTimer.Interval = chosenInterval;
+                        }
                         RLGL_SwitchTimer.Start();
                     }
                 }
@@ -161,7 +175,15 @@ public partial class RLGLPlayer : Form
                     ShowPhase(RLGLPhase.Green);
                     rlglVideoQueue.CurrentPhase = RLGLPhase.Green;
                     RLGL_SwitchTimer.Stop();
-                    RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen) * 1000;
+                    int chosenInterval = randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen) * 1000;
+                    if (chosenInterval < diffToEndingStart && chosenInterval + 10 > diffToEndingStart)
+                    {
+                        RLGL_SwitchTimer.Interval = diffToEndingStart + 5;
+                    }
+                    else
+                    {
+                        RLGL_SwitchTimer.Interval = chosenInterval;
+                    }
                     RLGL_SwitchTimer.Start();
                 }
                 else
@@ -177,7 +199,15 @@ public partial class RLGLPlayer : Form
                         ShowPhase(RLGLPhase.Green);
                         rlglVideoQueue.CurrentPhase = RLGLPhase.Green;
                         RLGL_SwitchTimer.Stop();
-                        RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen) * 1000;
+                        int chosenInterval = randomNumberGenerator.Next(rlglPreferences.MinGreen, rlglPreferences.MaxGreen) * 1000;
+                        if (chosenInterval < diffToEndingStart && chosenInterval + 10 > diffToEndingStart)
+                        {
+                            RLGL_SwitchTimer.Interval = diffToEndingStart + 5;
+                        }
+                        else
+                        {
+                            RLGL_SwitchTimer.Interval = chosenInterval;
+                        }
                         RLGL_SwitchTimer.Start();
                     }
                     else
@@ -185,7 +215,15 @@ public partial class RLGLPlayer : Form
                         ShowPhase(RLGLPhase.Red);
                         rlglVideoQueue.CurrentPhase = RLGLPhase.Red;
                         RLGL_SwitchTimer.Stop();
-                        RLGL_SwitchTimer.Interval = randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed) * 1000;
+                        int chosenInterval = randomNumberGenerator.Next(rlglPreferences.MinRed, rlglPreferences.MaxRed) * 1000;
+                        if (chosenInterval < diffToEndingStart && chosenInterval + 10 > diffToEndingStart)
+                        {
+                            RLGL_SwitchTimer.Interval = diffToEndingStart + 5;
+                        }
+                        else
+                        {
+                            RLGL_SwitchTimer.Interval = chosenInterval;
+                        }
                         RLGL_SwitchTimer.Start();
                     }
                 }
@@ -273,10 +311,12 @@ public partial class RLGLPlayer : Form
             {
                 MessageBox.Show("Current selected ending is " + Math.Abs(duration)/1000 + " seconds longer than the video! Session will end before ending has finished!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 RLGL_VideoEndTimer.Interval = 1;
+                sessionDurationBeforeEnding = 1;
             }
             else
             {
                 RLGL_VideoEndTimer.Interval = duration;
+                sessionDurationBeforeEnding = duration;
             }
 
             RLGL_VideoEndTimer.Start();
@@ -1086,6 +1126,7 @@ public partial class RLGLPlayer : Form
         {
             rlglPreferences.SavePreferences(preferencesDlg);
             RLGL_EdgingTimer.Interval = rlglPreferences.EdgingWarmup * 1000;
+            rlglPreferences.SavePreferencesToFile("Preferences.config");
             UpdateRLGLLayoutSizes();
         }
 

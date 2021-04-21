@@ -291,7 +291,7 @@ namespace RLGL_Player
 
         private void LB_Queue_KeyDown(object sender, KeyEventArgs e)
         {
-            if(LB_Queue.SelectedIndex != -1)
+            if(e.KeyCode == Keys.Delete && LB_Queue.SelectedIndex != -1)
             {
                 DeleteSelectedMedia();
             }
