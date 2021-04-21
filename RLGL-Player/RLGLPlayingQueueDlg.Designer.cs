@@ -50,7 +50,9 @@ namespace RLGL_Player
             this.SaveQueueDlg = new System.Windows.Forms.SaveFileDialog();
             this.OpenQueueDlg = new System.Windows.Forms.OpenFileDialog();
             this.BG_CreatePlaylist = new System.ComponentModel.BackgroundWorker();
+            this.PB_Preview = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Loop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Preview)).BeginInit();
             this.SuspendLayout();
             // 
             // LB_Queue
@@ -62,21 +64,22 @@ namespace RLGL_Player
             this.LB_Queue.Size = new System.Drawing.Size(351, 264);
             this.LB_Queue.TabIndex = 0;
             this.LB_Queue.SelectedIndexChanged += new System.EventHandler(this.LB_Queue_SelectedIndexChanged);
+            this.LB_Queue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LB_Queue_KeyDown);
             // 
             // L_Queue
             // 
             this.L_Queue.AutoSize = true;
             this.L_Queue.Location = new System.Drawing.Point(12, 9);
             this.L_Queue.Name = "L_Queue";
-            this.L_Queue.Size = new System.Drawing.Size(82, 13);
+            this.L_Queue.Size = new System.Drawing.Size(79, 13);
             this.L_Queue.TabIndex = 1;
-            this.L_Queue.Text = "Queued videos:";
+            this.L_Queue.Text = "Queued media:";
             // 
             // B_Load
             // 
             this.B_Load.Location = new System.Drawing.Point(386, 179);
             this.B_Load.Name = "B_Load";
-            this.B_Load.Size = new System.Drawing.Size(75, 23);
+            this.B_Load.Size = new System.Drawing.Size(125, 23);
             this.B_Load.TabIndex = 2;
             this.B_Load.Text = "Add...";
             this.B_Load.UseVisualStyleBackColor = true;
@@ -85,7 +88,7 @@ namespace RLGL_Player
             // B_OK
             // 
             this.B_OK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.B_OK.Location = new System.Drawing.Point(386, 415);
+            this.B_OK.Location = new System.Drawing.Point(436, 415);
             this.B_OK.Name = "B_OK";
             this.B_OK.Size = new System.Drawing.Size(75, 23);
             this.B_OK.TabIndex = 3;
@@ -107,7 +110,7 @@ namespace RLGL_Player
             // 
             this.B_Down.Location = new System.Drawing.Point(386, 237);
             this.B_Down.Name = "B_Down";
-            this.B_Down.Size = new System.Drawing.Size(75, 23);
+            this.B_Down.Size = new System.Drawing.Size(125, 23);
             this.B_Down.TabIndex = 5;
             this.B_Down.Text = "Down";
             this.B_Down.UseVisualStyleBackColor = true;
@@ -117,7 +120,7 @@ namespace RLGL_Player
             // 
             this.B_Up.Location = new System.Drawing.Point(386, 208);
             this.B_Up.Name = "B_Up";
-            this.B_Up.Size = new System.Drawing.Size(75, 23);
+            this.B_Up.Size = new System.Drawing.Size(125, 23);
             this.B_Up.TabIndex = 6;
             this.B_Up.Text = "Up";
             this.B_Up.UseVisualStyleBackColor = true;
@@ -133,7 +136,7 @@ namespace RLGL_Player
             // 
             this.B_Delete.Location = new System.Drawing.Point(386, 266);
             this.B_Delete.Name = "B_Delete";
-            this.B_Delete.Size = new System.Drawing.Size(75, 23);
+            this.B_Delete.Size = new System.Drawing.Size(125, 23);
             this.B_Delete.TabIndex = 7;
             this.B_Delete.Text = "Remove";
             this.B_Delete.UseVisualStyleBackColor = true;
@@ -144,7 +147,7 @@ namespace RLGL_Player
             this.L_FullPath.AutoEllipsis = true;
             this.L_FullPath.Location = new System.Drawing.Point(12, 292);
             this.L_FullPath.Name = "L_FullPath";
-            this.L_FullPath.Size = new System.Drawing.Size(449, 21);
+            this.L_FullPath.Size = new System.Drawing.Size(499, 21);
             this.L_FullPath.TabIndex = 8;
             this.L_FullPath.Text = "label1";
             this.L_FullPath.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -153,16 +156,16 @@ namespace RLGL_Player
             // CB_Shuffle
             // 
             this.CB_Shuffle.AutoSize = true;
-            this.CB_Shuffle.Location = new System.Drawing.Point(343, 389);
+            this.CB_Shuffle.Location = new System.Drawing.Point(393, 389);
             this.CB_Shuffle.Name = "CB_Shuffle";
             this.CB_Shuffle.Size = new System.Drawing.Size(93, 17);
             this.CB_Shuffle.TabIndex = 9;
-            this.CB_Shuffle.Text = "Shuffle videos";
+            this.CB_Shuffle.Text = "Shuffle playlist";
             this.CB_Shuffle.UseVisualStyleBackColor = true;
             // 
             // NUD_Loop
             // 
-            this.NUD_Loop.Location = new System.Drawing.Point(414, 363);
+            this.NUD_Loop.Location = new System.Drawing.Point(464, 363);
             this.NUD_Loop.Name = "NUD_Loop";
             this.NUD_Loop.Size = new System.Drawing.Size(47, 20);
             this.NUD_Loop.TabIndex = 10;
@@ -173,7 +176,7 @@ namespace RLGL_Player
             // L_Loop
             // 
             this.L_Loop.AutoSize = true;
-            this.L_Loop.Location = new System.Drawing.Point(340, 365);
+            this.L_Loop.Location = new System.Drawing.Point(390, 365);
             this.L_Loop.Name = "L_Loop";
             this.L_Loop.Size = new System.Drawing.Size(68, 13);
             this.L_Loop.TabIndex = 11;
@@ -188,7 +191,7 @@ namespace RLGL_Player
             // 
             // B_LoadPlaylist
             // 
-            this.B_LoadPlaylist.Location = new System.Drawing.Point(117, 316);
+            this.B_LoadPlaylist.Location = new System.Drawing.Point(142, 316);
             this.B_LoadPlaylist.Name = "B_LoadPlaylist";
             this.B_LoadPlaylist.Size = new System.Drawing.Size(116, 33);
             this.B_LoadPlaylist.TabIndex = 13;
@@ -199,7 +202,7 @@ namespace RLGL_Player
             // B_SavePlaylist
             // 
             this.B_SavePlaylist.Enabled = false;
-            this.B_SavePlaylist.Location = new System.Drawing.Point(239, 316);
+            this.B_SavePlaylist.Location = new System.Drawing.Point(264, 316);
             this.B_SavePlaylist.Name = "B_SavePlaylist";
             this.B_SavePlaylist.Size = new System.Drawing.Size(116, 33);
             this.B_SavePlaylist.TabIndex = 14;
@@ -225,13 +228,24 @@ namespace RLGL_Player
             this.BG_CreatePlaylist.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BG_CreatePlaylist_ProgressChanged);
             this.BG_CreatePlaylist.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BG_CreatePlaylist_RunWorkerCompleted);
             // 
+            // PB_Preview
+            // 
+            this.PB_Preview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PB_Preview.Location = new System.Drawing.Point(372, 25);
+            this.PB_Preview.Name = "PB_Preview";
+            this.PB_Preview.Size = new System.Drawing.Size(139, 148);
+            this.PB_Preview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PB_Preview.TabIndex = 15;
+            this.PB_Preview.TabStop = false;
+            // 
             // RLGLPlayingQueueDlg
             // 
             this.AcceptButton = this.B_OK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.B_Cancel;
-            this.ClientSize = new System.Drawing.Size(473, 450);
+            this.ClientSize = new System.Drawing.Size(523, 450);
+            this.Controls.Add(this.PB_Preview);
             this.Controls.Add(this.B_SavePlaylist);
             this.Controls.Add(this.B_LoadPlaylist);
             this.Controls.Add(this.L_Loop);
@@ -255,6 +269,7 @@ namespace RLGL_Player
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Load...";
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Loop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_Preview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -281,5 +296,6 @@ namespace RLGL_Player
         private System.Windows.Forms.SaveFileDialog SaveQueueDlg;
         private System.Windows.Forms.OpenFileDialog OpenQueueDlg;
         private System.ComponentModel.BackgroundWorker BG_CreatePlaylist;
+        private System.Windows.Forms.PictureBox PB_Preview;
     }
 }

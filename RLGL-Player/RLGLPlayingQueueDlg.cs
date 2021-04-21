@@ -18,6 +18,7 @@
 using LibVLCSharp.Shared;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -90,14 +91,7 @@ namespace RLGL_Player
 
         private void B_Delete_Click(object sender, EventArgs e)
         {
-            videos.RemoveAt(LB_Queue.SelectedIndex);
-            LB_Queue.Items.RemoveAt(LB_Queue.SelectedIndex);
-            LB_Queue.SelectedIndex = -1;
-
-            if(LB_Queue.Items.Count == 0)
-            {
-                B_SavePlaylist.Enabled = false;
-            }
+            DeleteSelectedMedia();
         }
 
         private void B_OK_Click(object sender, EventArgs e)
@@ -112,11 +106,17 @@ namespace RLGL_Player
             {
                 L_FullPath.Text = "";
                 EnableControls(false);
+                PB_Preview.Image = null;
             }
             else
             {
                 L_FullPath.Text = videos[LB_Queue.SelectedIndex].Item2;
                 EnableControls(true);
+                string ext = Path.GetExtension(videos[LB_Queue.SelectedIndex].Item2);
+                if (ext.Equals(".jpg") || ext.Equals(".jpeg") || ext.Equals(".png") || ext.Equals(".bmp") || ext.Equals(".webp"))
+                {
+                    PB_Preview.Image = Bitmap.FromFile(videos[LB_Queue.SelectedIndex].Item2);
+                }
             }
         }
 
@@ -286,6 +286,35 @@ namespace RLGL_Player
                 {
                     MessageBox.Show(loadedQueue.Item2, "Error");
                 }
+            }
+        }
+
+        private void LB_Queue_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(LB_Queue.SelectedIndex != -1)
+            {
+                DeleteSelectedMedia();
+            }
+        }
+
+        private void DeleteSelectedMedia()
+        {
+            int selIndex = LB_Queue.SelectedIndex;
+            videos.RemoveAt(selIndex);
+            LB_Queue.Items.RemoveAt(selIndex);
+
+            if (LB_Queue.Items.Count == 0)
+            {
+                LB_Queue.SelectedIndex = -1;
+                B_SavePlaylist.Enabled = false;
+            }
+            else if (LB_Queue.Items.Count <= selIndex)
+            {
+                LB_Queue.SelectedIndex = LB_Queue.Items.Count - 1;
+            }
+            else
+            {
+                LB_Queue.SelectedIndex = selIndex;
             }
         }
     }

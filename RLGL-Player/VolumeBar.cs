@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-using System.Collections.Generic;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -27,6 +27,7 @@ namespace RLGL_Player
      */ 
     public partial class VolumeBar : Form
     {
+        private int lastVolume;
         private bool mouseOnControl;
         public bool MouseOnControl { get => mouseOnControl; }
 
@@ -35,15 +36,11 @@ namespace RLGL_Player
             InitializeComponent();
             this.TransparencyKey = Color.Crimson;
 
+            lastVolume = 100;
             PB_VolumeImageOff.Visible = false;
             PB_VolumeImageLoud.Visible = true;
             mouseOnControl = false;
         }
-
-        /*protected override void OnPaintBackground(PaintEventArgs e)
-        {
-            //empty implementation
-        }*/
 
         public void SetBackgroundColor(Color backColor)
         {
@@ -108,6 +105,17 @@ namespace RLGL_Player
         private void PB_VolumeImageLoud_MouseLeave(object sender, System.EventArgs e)
         {
             mouseOnControl = false;
+        }
+
+        private void PB_VolumeImageOff_Click(object sender, System.EventArgs e)
+        {
+            TB_Volume.Value = lastVolume;
+        }
+
+        private void PB_VolumeImageLoud_Click(object sender, System.EventArgs e)
+        {
+            lastVolume = Math.Max(1, TB_Volume.Value);
+            TB_Volume.Value = 0;
         }
     }
 }

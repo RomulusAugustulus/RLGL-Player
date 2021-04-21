@@ -38,7 +38,10 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restartSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.endSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.saveSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.censorEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,9 +62,6 @@
             this.SaveQueueDlg = new System.Windows.Forms.SaveFileDialog();
             this.RLGL_HideVolumeBar = new System.Windows.Forms.Timer(this.components);
             this.RLGL_CountdownTimer = new System.Windows.Forms.Timer(this.components);
-            this.saveSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.restartSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.MainMenu.SuspendLayout();
             this.VLC_Panel.SuspendLayout();
             this.RLGL_Layout.SuspendLayout();
@@ -138,14 +138,37 @@
             this.sessionToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
             this.sessionToolStripMenuItem.Text = "&Session";
             // 
+            // restartSessionToolStripMenuItem
+            // 
+            this.restartSessionToolStripMenuItem.Enabled = false;
+            this.restartSessionToolStripMenuItem.Name = "restartSessionToolStripMenuItem";
+            this.restartSessionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.restartSessionToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.restartSessionToolStripMenuItem.Text = "&Restart session";
+            this.restartSessionToolStripMenuItem.Click += new System.EventHandler(this.restartSessionToolStripMenuItem_Click);
+            // 
             // endSessionToolStripMenuItem
             // 
             this.endSessionToolStripMenuItem.Enabled = false;
             this.endSessionToolStripMenuItem.Name = "endSessionToolStripMenuItem";
             this.endSessionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.endSessionToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.endSessionToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
             this.endSessionToolStripMenuItem.Text = "&End session";
             this.endSessionToolStripMenuItem.Click += new System.EventHandler(this.endSessionToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(232, 6);
+            // 
+            // saveSessionToolStripMenuItem
+            // 
+            this.saveSessionToolStripMenuItem.Enabled = false;
+            this.saveSessionToolStripMenuItem.Name = "saveSessionToolStripMenuItem";
+            this.saveSessionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveSessionToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.saveSessionToolStripMenuItem.Text = "&Save session as playlist";
+            this.saveSessionToolStripMenuItem.Click += new System.EventHandler(this.saveSessionToolStripMenuItem_Click);
             // 
             // editorToolStripMenuItem
             // 
@@ -300,29 +323,6 @@
             // RLGL_CountdownTimer
             // 
             this.RLGL_CountdownTimer.Tick += new System.EventHandler(this.RLGL_CountdownTimer_Tick);
-            // 
-            // saveSessionToolStripMenuItem
-            // 
-            this.saveSessionToolStripMenuItem.Enabled = false;
-            this.saveSessionToolStripMenuItem.Name = "saveSessionToolStripMenuItem";
-            this.saveSessionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveSessionToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
-            this.saveSessionToolStripMenuItem.Text = "&Save last session as playlist";
-            this.saveSessionToolStripMenuItem.Click += new System.EventHandler(this.saveSessionToolStripMenuItem_Click);
-            // 
-            // restartSessionToolStripMenuItem
-            // 
-            this.restartSessionToolStripMenuItem.Enabled = false;
-            this.restartSessionToolStripMenuItem.Name = "restartSessionToolStripMenuItem";
-            this.restartSessionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.restartSessionToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
-            this.restartSessionToolStripMenuItem.Text = "&Restart last session";
-            this.restartSessionToolStripMenuItem.Click += new System.EventHandler(this.restartSessionToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(253, 6);
             // 
             // RLGLPlayer
             // 

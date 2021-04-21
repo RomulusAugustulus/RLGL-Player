@@ -62,6 +62,7 @@ namespace RLGL_Player
             this.PB_VolumeImageLoud.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PB_VolumeImageLoud.TabIndex = 5;
             this.PB_VolumeImageLoud.TabStop = false;
+            this.PB_VolumeImageLoud.Click += new System.EventHandler(this.PB_VolumeImageLoud_Click);
             this.PB_VolumeImageLoud.MouseEnter += new System.EventHandler(this.PB_VolumeImageLoud_MouseEnter);
             this.PB_VolumeImageLoud.MouseLeave += new System.EventHandler(this.PB_VolumeImageLoud_MouseLeave);
             // 
@@ -75,6 +76,7 @@ namespace RLGL_Player
             this.PB_VolumeImageOff.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PB_VolumeImageOff.TabIndex = 6;
             this.PB_VolumeImageOff.TabStop = false;
+            this.PB_VolumeImageOff.Click += new System.EventHandler(this.PB_VolumeImageOff_Click);
             this.PB_VolumeImageOff.MouseEnter += new System.EventHandler(this.PB_VolumeImageOff_MouseEnter);
             this.PB_VolumeImageOff.MouseLeave += new System.EventHandler(this.PB_VolumeImageOff_MouseLeave);
             // 

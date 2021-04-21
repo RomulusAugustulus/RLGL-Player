@@ -356,16 +356,50 @@ namespace RLGL_Player
 
             if(end.Enabled)
             {
+                if (end.Locked)
+                {
+                    int othersLocked = GetLockValue(customEnding);
+                    
+                    if(othersLocked + end.Chance > 100)
+                    {
+                        end.Chance = 100 - othersLocked;
+                    }
+                }
+
                 CalculateCurrentChanceValues(customEnding);
             }
             else
             {
+                bool resetLock = false;
+                if(GetAllIncludedElements() == GetAllLockedElements())
+                {
+                    resetLock = true;
+                    foreach(CustomEndingListElement elem in EndingsLayout.Controls)
+                    {
+                        if(elem.IncludeElement)
+                        {
+                            elem.LockChance = false;
+                        }
+                    }
+                }
+
                 foreach(CustomEndingListElement elem in EndingsLayout.Controls)
                 {
                     if(elem.IncludeElement)
                     {
                         CalculateCurrentChanceValues(elem);
                         break;
+                    }
+                }
+
+                if(resetLock)
+                {
+                    foreach (CustomEndingListElement elem in EndingsLayout.Controls)
+                    {
+                        if (elem.IncludeElement)
+                        {
+                            elem.LockChance = true;
+                        }
                     }
                 }
             }
@@ -386,6 +420,54 @@ namespace RLGL_Player
             {
                 CalculateCurrentChanceValues(currentElement);
             }
+        }
+
+        private int GetAllIncludedElements()
+        {
+            int included = 0;
+
+            foreach (CustomEndingListElement elem in EndingsLayout.Controls)
+            {
+                if (elem.IncludeElement)
+                {
+                    included++;
+                }
+            }
+
+            return included;
+        }
+
+        private int GetAllLockedElements()
+        {
+            int locked = 0;
+
+            foreach (CustomEndingListElement elem in EndingsLayout.Controls)
+            {
+                if (elem.IncludeElement && elem.LockChance)
+                {
+                    locked++;
+                }
+            }
+
+            return locked;
+        }
+
+        private int GetLockValue(CustomEndingListElement currentElement)
+        {
+            int lockValue = 0;
+
+            foreach(CustomEndingListElement elem in EndingsLayout.Controls)
+            {
+                if(!elem.Equals(currentElement))
+                {
+                    if(elem.LockChance)
+                    {
+                        lockValue += elem.Chance;
+                    }
+                }
+            }
+
+            return lockValue;
         }
 
         //Calculate the chances for all enabled endings. They have to be 100 added all together!
@@ -533,7 +615,7 @@ namespace RLGL_Player
         {
             foreach(CustomEndingListElement e in EndingsLayout.Controls)
             {
-                if(!e.IsActive && e.IncludeElement)
+                if(e.IncludeElement)
                 {                    
                     RLGLInternEnding element = EndingSettings.Find(x => x.EndingName.Equals(e.Text));
                     e.Chance = element.Chance;

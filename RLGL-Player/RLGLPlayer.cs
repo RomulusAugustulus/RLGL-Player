@@ -572,6 +572,8 @@ public partial class RLGLPlayer : Form
         // Play the next video in the currently selected queue
         private void PlayNextVideo(bool sessionStart)
         {
+            VLC_Control.MediaPlayer.Stop();
+
             (Media, string) nextVid = rlglVideoQueue.GetNextVideo();
             VLC_Control.MediaPlayer.Media = nextVid.Item1;
             
@@ -653,6 +655,8 @@ public partial class RLGLPlayer : Form
                     this.Focus();
                 }
                 RLGL_Timer.Stop();
+
+                VLC_Control.MediaPlayer.Stop();
             }
         }
 
